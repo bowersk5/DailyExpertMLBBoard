@@ -1,4 +1,5 @@
 import { parseCoversMlbPicks } from "./coversParser.js";
+import { decodeEntities, fetchHtml } from "./utils.js";
 
 const sources = [
   {
@@ -23,14 +24,11 @@ const sources = [
 
 const teamAliases = {
   ARZ: "ARI",
-  ATH: "ATH",
   AZ: "ARI",
   CWS: "CHW",
   CHI: "CHC",
   LA: "LAD",
-  MIA: "MIA",
   MI: "MIA",
-  SF: "SF",
   SFG: "SF",
   WSH: "WAS"
 };
@@ -68,8 +66,23 @@ const teamNameAliases = [
   ["astros", "HOU"]
 ];
 
-export async function fetchMlbConsensus() {
-  const settled = await Promise.allSettled(sources.map(fetchSource));
+/**
+ * Fetch picks from all sources and build consensus groups.
+ *
+ * @param {object} [options]
+ * @param {string} [options.coversHtml] - Pre-fetched Covers HTML. When provided,
+ *   the Covers page is not fetched again, avoiding a duplicate HTTP request when
+ *   the caller (e.g. generateStaticData.js) has already fetched it.
+ */
+export async function fetchMlbConsensus({ coversHtml } = {}) {
+  const settled = await Promise.allSettled(
+    sources.map((source) =>
+      source.id === "covers" && coversHtml
+        ? fetchSourceFromHtml(source, coversHtml)
+        : fetchSource(source)
+    )
+  );
+
   const sourceResults = settled.map((result, index) => {
     if (result.status === "fulfilled") {
       return result.value;
@@ -83,6 +96,7 @@ export async function fetchMlbConsensus() {
       picks: []
     };
   });
+
   const allPicks = sourceResults.flatMap((source) => source.picks);
   const consensus = buildConsensus(allPicks);
 
@@ -160,6 +174,11 @@ export function buildConsensus(picks) {
 
 async function fetchSource(source) {
   const html = await fetchHtml(source.url);
+  return fetchSourceFromHtml(source, html);
+}
+
+/** Build a source result from already-fetched HTML (no network call). */
+function fetchSourceFromHtml(source, html) {
   const picks = source.parser(html).map((pick) => ({
     ...pick,
     sourceId: source.id,
@@ -173,22 +192,6 @@ async function fetchSource(source) {
     url: source.url,
     picks
   };
-}
-
-async function fetchHtml(url) {
-  const response = await fetch(url, {
-    headers: {
-      "accept": "text/html,application/xhtml+xml",
-      "accept-language": "en-US,en;q=0.9",
-      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36"
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error(`${url} returned ${response.status} ${response.statusText}`);
-  }
-
-  return response.text();
 }
 
 function parseCoversSource(html) {
@@ -428,26 +431,4 @@ function signedLine(value) {
 function readNextData(html) {
   const match = html.match(/<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/);
   return match ? JSON.parse(decodeEntities(match[1])) : null;
-}
-
-function decodeEntities(value) {
-  const named = {
-    amp: "&",
-    apos: "'",
-    gt: ">",
-    lt: "<",
-    nbsp: " ",
-    quot: "\"",
-    rsquo: "'",
-    lsquo: "'",
-    rdquo: "\"",
-    ldquo: "\"",
-    ndash: "-",
-    mdash: "-"
-  };
-
-  return `${value}`
-    .replace(/&([a-z]+);/gi, (_, entity) => named[entity] || `&${entity};`)
-    .replace(/&#x([0-9a-f]+);/gi, (_, number) => String.fromCharCode(parseInt(number, 16)))
-    .replace(/&#(\d+);/g, (_, number) => String.fromCharCode(Number(number)));
 }

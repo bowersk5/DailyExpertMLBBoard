@@ -32,11 +32,13 @@ async function loadPicks(refresh = false) {
       fetch(picksUrl(refresh)),
       fetch(consensusUrl(refresh))
     ]);
-    const response = picksResponse;
-    const data = await response.json();
+
+    // Parse both bodies before checking status so we can surface the
+    // server's JSON error message if available.
+    const data = await picksResponse.json();
     const consensusData = await consensusResponse.json();
 
-    if (!response.ok) {
+    if (!picksResponse.ok) {
       throw new Error(data.detail || data.error || "Unable to load picks.");
     }
     if (!consensusResponse.ok) {
@@ -56,7 +58,7 @@ async function loadPicks(refresh = false) {
     renderConsensus();
     renderPicks();
   } catch (error) {
-    els.pickList.innerHTML = `<div class="empty">Could not load today’s Covers picks. ${escapeHtml(error.message)}</div>`;
+    els.pickList.innerHTML = `<div class="empty">Could not load today's Covers picks. ${escapeHtml(error.message)}</div>`;
     els.consensusList.innerHTML = `<div class="empty">Could not compare picks. ${escapeHtml(error.message)}</div>`;
   } finally {
     setLoading(false);

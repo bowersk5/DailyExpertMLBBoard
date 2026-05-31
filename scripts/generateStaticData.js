@@ -2,6 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { parseCoversMlbPicks } from "../src/coversParser.js";
 import { fetchMlbConsensus } from "../src/consensus.js";
+import { fetchHtml } from "../src/utils.js";
 
 const sourceUrl = "https://www.covers.com/picks/mlb";
 const outputDir = join(process.cwd(), "public", "data");
@@ -9,19 +10,11 @@ const outputFile = join(outputDir, "picks.json");
 const consensusFile = join(outputDir, "consensus.json");
 
 async function main() {
-  const response = await fetch(sourceUrl, {
-    headers: {
-      "accept": "text/html,application/xhtml+xml",
-      "accept-language": "en-US,en;q=0.9",
-      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36"
-    }
-  });
+  // Fetch the Covers page once and reuse the HTML for both picks and consensus.
+  // Previously the page was fetched twice — once here and again inside
+  // fetchMlbConsensus — which wasted a request and risked inconsistent data.
+  const html = await fetchHtml(sourceUrl);
 
-  if (!response.ok) {
-    throw new Error(`Covers returned ${response.status} ${response.statusText}`);
-  }
-
-  const html = await response.text();
   const parsed = parseCoversMlbPicks(html, sourceUrl);
   const payload = {
     ...parsed,
@@ -31,10 +24,25 @@ async function main() {
 
   await mkdir(outputDir, { recursive: true });
   await writeFile(outputFile, `${JSON.stringify(payload, null, 2)}\n`);
-  const consensus = await fetchMlbConsensus();
-  await writeFile(consensusFile, `${JSON.stringify(consensus, null, 2)}\n`);
   console.log(`Wrote ${payload.counts.picks} expert picks to ${outputFile}`);
-  console.log(`Wrote ${consensus.counts.consensus} consensus groups to ${consensusFile}`);
+
+  // Consensus is best-effort: a failure from Pickswise or Action Network should
+  // not prevent the main picks page from deploying.
+  try {
+    const consensus = await fetchMlbConsensus({ coversHtml: html });
+    await writeFile(consensusFile, `${JSON.stringify(consensus, null, 2)}\n`);
+    console.log(`Wrote ${consensus.counts.consensus} consensus groups to ${consensusFile}`);
+  } catch (error) {
+    console.error("Consensus fetch failed — writing empty placeholder:", error.message);
+    const empty = {
+      generatedAt: new Date().toISOString(),
+      sources: [],
+      picks: [],
+      consensus: [],
+      counts: { sources: 0, activeSources: 0, picks: 0, consensus: 0 }
+    };
+    await writeFile(consensusFile, `${JSON.stringify(empty, null, 2)}\n`);
+  }
 }
 
 main().catch((error) => {

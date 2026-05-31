@@ -1,3 +1,5 @@
+import { decodeEntities } from "./utils.js";
+
 const gameLinePattern = /^([A-Z]{2,3})\s+@\s+([A-Z]{2,3})\s+(.+)$/;
 const marketNames = new Set([
   "Moneyline",
@@ -84,10 +86,10 @@ function buildPayload({ title, html, sourceUrl, games, picks }) {
   const expertGames = games
     .map((game) => ({
       ...game,
-      picks: game.picks.filter(isExpertPick)
+      picks: game.picks.filter(isTodayExpertPick)
     }))
     .filter((game) => game.picks.length > 0);
-  const expertPicks = picks.filter(isExpertPick);
+  const expertPicks = picks.filter(isTodayExpertPick);
 
   return {
     title,
@@ -106,6 +108,13 @@ function buildPayload({ title, html, sourceUrl, games, picks }) {
       computerPicks: 0
     }
   };
+}
+
+/** Keep only picks from a human expert published today (not days ago). */
+function isTodayExpertPick(pick) {
+  return Boolean(pick.analyst) &&
+    pick.source === "Covers" &&
+    !/\d+\s+days?\s+ago/i.test(pick.made || "");
 }
 
 function parseCardMarkup(html) {
@@ -210,10 +219,6 @@ function flattenPicks(games) {
   })));
 }
 
-function isExpertPick(pick) {
-  return Boolean(pick.analyst) && pick.source === "Covers";
-}
-
 function readPick(lines, startIndex, game) {
   const market = cleanLine(lines[startIndex]);
   const limit = findNextBoundary(lines, startIndex + 1);
@@ -303,14 +308,29 @@ function readAnalysis(block, analysisHeading) {
   return chunks.join(" ").replace(/\s+/g, " ").trim();
 }
 
+/**
+ * Score a pick for ranking purposes.
+ *
+ * Previously this only awarded a recency boost for "minutes" and
+ * the literal string "1 hours", leaving all other hour values at 0.
+ * Now it applies a smooth gradient so picks published moments ago
+ * rank above picks published several hours ago, which published an
+ * hour or two ago rank above much older ones.
+ */
 function rankPicks(picks) {
   return [...picks].sort((a, b) => scorePick(b) - scorePick(a));
 }
 
 function scorePick(pick) {
-  const ratingBoost = pick.rating * 100;
-  const madeBoost = pick.made.includes("minutes") ? 15 : pick.made.includes("1 hours") ? 10 : 0;
-  const oddsBoost = pick.odds.includes("+") ? 6 : 0;
+  const ratingBoost = (pick.rating || 0) * 100;
+  const made = pick.made || "";
+  const madeBoost =
+    /\d+\s+minutes?\s+ago/i.test(made) ? 20 :
+    /^1\s+hours?\s+ago/i.test(made) ? 15 :
+    /^[2-3]\s+hours?\s+ago/i.test(made) ? 10 :
+    /\d+\s+hours?\s+ago/i.test(made) ? 5 :
+    0;
+  const oddsBoost = (pick.odds || "").includes("+") ? 6 : 0;
   const expertBoost = pick.analyst ? 8 : 0;
   return ratingBoost + madeBoost + oddsBoost + expertBoost;
 }
@@ -332,28 +352,6 @@ function cleanLine(line) {
   return decodeEntities(line || "")
     .replace(/\s+/g, " ")
     .trim();
-}
-
-function decodeEntities(value) {
-  const named = {
-    amp: "&",
-    apos: "'",
-    gt: ">",
-    lt: "<",
-    nbsp: " ",
-    quot: "\"",
-    rsquo: "'",
-    lsquo: "'",
-    rdquo: "\"",
-    ldquo: "\"",
-    ndash: "-",
-    mdash: "-"
-  };
-
-  return value
-    .replace(/&([a-z]+);/gi, (_, entity) => named[entity] || `&${entity};`)
-    .replace(/&#x([0-9a-f]+);/gi, (_, number) => String.fromCharCode(parseInt(number, 16)))
-    .replace(/&#(\d+);/g, (_, number) => String.fromCharCode(Number(number)));
 }
 
 function isOddsRow(line) {

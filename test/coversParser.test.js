@@ -45,3 +45,29 @@ test("parses Covers MLB pick blocks into games and ranked picks", () => {
   assert.equal(result.picks[0].analyst, "Eric Rosales");
   assert.equal(result.bestPicks[0].market, "Moneyline");
 });
+
+test("filters out picks made days ago", () => {
+  const html = `
+    <html><head><title>Free MLB Picks</title></head><body>
+      <h1>MLB Picks</h1>
+      <p>Get free expert and computer MLB picks for every game.</p>
+      <div>TB @ NYY Tue, Sep 22 • 1:05 PM ET</div>
+      <div>1 Expert Picks 8 Computer Picks</div>
+      <div>Moneyline</div>
+      <div>TB (+115)</div>
+      <div>Best Odds</div>
+      <div></div>
+      <div>Pick made: 7 days ago</div>
+      <div>Aisha Quinones</div>
+      <div>Betting Analyst</div>
+      <div>Analysis</div>
+      <p>Drew Rasmussen vs. the New York Yankees is a mismatch.</p>
+      <div>Read Full Analysis</div>
+      <h2>What are Covers' MLB Free picks and predictions?</h2>
+    </body></html>
+  `;
+
+  const result = parseCoversMlbPicks(html);
+  assert.equal(result.counts.picks, 0, "stale picks should be filtered out");
+  assert.equal(result.counts.games, 0, "game with only stale picks should be dropped");
+});

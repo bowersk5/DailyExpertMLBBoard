@@ -1,0 +1,20 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Generated data (rebuilt by CI each day; committing these just creates noise)
+public/data/picks.json
+public/data/consensus.json
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Editor & OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
