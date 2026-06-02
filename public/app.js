@@ -8,38 +8,46 @@ const state = {
   market: ""
 };
 
-const teamNames = {
-  ARI: "Arizona Diamondbacks",
-  ATH: "Athletics",
-  ATL: "Atlanta Braves",
-  BAL: "Baltimore Orioles",
-  BOS: "Boston Red Sox",
-  CHC: "Chicago Cubs",
-  CHW: "Chicago White Sox",
-  CIN: "Cincinnati Reds",
-  CLE: "Cleveland Guardians",
-  COL: "Colorado Rockies",
-  DET: "Detroit Tigers",
-  HOU: "Houston Astros",
-  KC: "Kansas City Royals",
-  LAA: "Los Angeles Angels",
-  LAD: "Los Angeles Dodgers",
-  MIA: "Miami Marlins",
-  MIL: "Milwaukee Brewers",
-  MIN: "Minnesota Twins",
-  NYM: "New York Mets",
-  NYY: "New York Yankees",
-  PHI: "Philadelphia Phillies",
-  PIT: "Pittsburgh Pirates",
-  SD: "San Diego Padres",
-  SEA: "Seattle Mariners",
-  SF: "San Francisco Giants",
-  STL: "St. Louis Cardinals",
-  TB: "Tampa Bay Rays",
-  TEX: "Texas Rangers",
-  TOR: "Toronto Blue Jays",
-  WAS: "Washington Nationals"
+const teamAliases = {
+  ARI: ["ARI", "ARZ", "AZ", "Arizona", "Arizona Diamondbacks", "Diamondbacks", "D-backs", "Dbacks"],
+  ATH: ["ATH", "OAK", "Oakland", "Oakland Athletics", "Athletics", "A's", "As"],
+  ATL: ["ATL", "Atlanta", "Atlanta Braves", "Braves"],
+  BAL: ["BAL", "Baltimore", "Baltimore Orioles", "Orioles"],
+  BOS: ["BOS", "Boston", "Boston Red Sox", "Red Sox"],
+  CHC: ["CHC", "CHN", "Chicago Cubs", "Cubs"],
+  CHW: ["CHW", "CWS", "CHA", "Chicago White Sox", "White Sox"],
+  CIN: ["CIN", "Cincinnati", "Cincinnati Reds", "Reds"],
+  CLE: ["CLE", "Cleveland", "Cleveland Guardians", "Guardians"],
+  COL: ["COL", "Colorado", "Colorado Rockies", "Rockies"],
+  DET: ["DET", "Detroit", "Detroit Tigers", "Tigers"],
+  HOU: ["HOU", "Houston", "Houston Astros", "Astros"],
+  KC: ["KC", "KCR", "Kansas City", "Kansas City Royals", "Royals"],
+  LAA: ["LAA", "ANA", "Los Angeles Angels", "LA Angels", "Angels"],
+  LAD: ["LAD", "LA", "LAN", "Los Angeles Dodgers", "LA Dodgers", "Dodgers"],
+  MIA: ["MIA", "MI", "FLA", "Miami", "Miami Marlins", "Marlins"],
+  MIL: ["MIL", "Milwaukee", "Milwaukee Brewers", "Brewers"],
+  MIN: ["MIN", "Minnesota", "Minnesota Twins", "Twins"],
+  NYM: ["NYM", "NY Mets", "New York Mets", "Mets"],
+  NYY: ["NYY", "NY Yankees", "New York Yankees", "Yankees"],
+  PHI: ["PHI", "Philadelphia", "Philadelphia Phillies", "Phillies"],
+  PIT: ["PIT", "Pittsburgh", "Pittsburgh Pirates", "Pirates"],
+  SD: ["SD", "SDP", "San Diego", "San Diego Padres", "Padres"],
+  SEA: ["SEA", "Seattle", "Seattle Mariners", "Mariners"],
+  SF: ["SF", "SFG", "San Francisco", "San Francisco Giants", "Giants"],
+  STL: ["STL", "SLN", "St. Louis", "Saint Louis", "St Louis Cardinals", "St. Louis Cardinals", "Cardinals"],
+  TB: ["TB", "TBR", "Tampa Bay", "Tampa Bay Rays", "Rays"],
+  TEX: ["TEX", "Texas", "Texas Rangers", "Rangers"],
+  TOR: ["TOR", "Toronto", "Toronto Blue Jays", "Blue Jays"],
+  WAS: ["WAS", "WSH", "WSN", "Washington", "Washington Nationals", "Nationals"]
 };
+
+const abbreviationAliases = Object.fromEntries(
+  Object.entries(teamAliases).flatMap(([canonical, aliases]) =>
+    aliases
+      .filter((alias) => /^[A-Z]{2,4}$/.test(alias))
+      .map((alias) => [alias, canonical])
+  )
+);
 
 const els = {
   refreshButton: document.querySelector("#refreshButton"),
@@ -171,13 +179,14 @@ function renderPicks() {
 }
 
 function searchablePickText(pick) {
-  const teamText = expandTeamAbbreviations(`${pick.matchup} ${pick.selection}`);
+  const teamText = expandTeamAliases(`${pick.matchup} ${pick.selection}`);
   return `${pick.matchup} ${teamText} ${pick.market} ${pick.selection} ${pick.analyst}`.toLowerCase();
 }
 
-function expandTeamAbbreviations(value = "") {
-  const abbreviations = `${value}`.match(/\b[A-Z]{2,3}\b/g) || [];
-  return abbreviations.map((abbr) => teamNames[abbr] || "").filter(Boolean).join(" ");
+function expandTeamAliases(value = "") {
+  const abbreviations = `${value}`.match(/\b[A-Z]{2,4}\b/g) || [];
+  const canonicalTeams = new Set(abbreviations.map((abbr) => abbreviationAliases[abbr]).filter(Boolean));
+  return [...canonicalTeams].flatMap((team) => teamAliases[team]).join(" ");
 }
 
 function renderConsensus() {
