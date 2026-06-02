@@ -33,8 +33,6 @@ async function loadPicks(refresh = false) {
       fetch(consensusUrl(refresh))
     ]);
 
-    // Parse both bodies before checking status so we can surface the
-    // server's JSON error message if available.
     const data = await picksResponse.json();
     const consensusData = await consensusResponse.json();
 
@@ -49,52 +47,44 @@ async function loadPicks(refresh = false) {
     state.bestPicks = data.bestPicks || [];
     state.consensus = consensusData.consensus || [];
     state.markets = new Set(state.picks.map((pick) => pick.market).filter(Boolean));
+
     els.fetchedAt.textContent = formatDate(data.fetchedAt || data.generatedAt);
     els.gameCount.textContent = data.counts?.games ?? 0;
     els.pickCount.textContent = data.counts?.picks ?? 0;
     els.intro.textContent = data.intro || "";
     els.consensusIntro.textContent = consensusSummary(consensusData);
+
     renderMarketOptions();
     renderConsensus();
     renderPicks();
   } catch (error) {
-    els.pickList.innerHTML = `<div class="empty">Could not load today's Covers picks. ${escapeHtml(error.message)}</div>`;
-    els.consensusList.innerHTML = `<div class="empty">Could not compare picks. ${escapeHtml(error.message)}</div>`;
+    els.pickList.innerHTML = `<div class="empty">Could not load today's picks — ${escapeHtml(error.message)}</div>`;
+    els.consensusList.innerHTML = `<div class="empty">Could not compare picks — ${escapeHtml(error.message)}</div>`;
   } finally {
     setLoading(false);
   }
 }
 
 function picksUrl(refresh = false) {
-  const isLocalServer = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
+  const isLocal = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
   const cacheBust = refresh ? `?t=${Date.now()}` : "";
-
-  if (isLocalServer) {
-    return `/api/picks${refresh ? "?refresh=1" : ""}`;
-  }
-
-  return `data/picks.json${cacheBust}`;
+  return isLocal ? `/api/picks${refresh ? "?refresh=1" : ""}` : `data/picks.json${cacheBust}`;
 }
 
 function consensusUrl(refresh = false) {
-  const isLocalServer = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
+  const isLocal = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
   const cacheBust = refresh ? `?t=${Date.now()}` : "";
-
-  if (isLocalServer) {
-    return `/api/consensus${refresh ? "?refresh=1" : ""}`;
-  }
-
-  return `data/consensus.json${cacheBust}`;
+  return isLocal ? `/api/consensus${refresh ? "?refresh=1" : ""}` : `data/consensus.json${cacheBust}`;
 }
 
 function renderMarketOptions() {
   const current = els.marketSelect.value;
   els.marketSelect.innerHTML = '<option value="">All markets</option>';
   [...state.markets].sort().forEach((market) => {
-    const option = document.createElement("option");
-    option.value = market;
-    option.textContent = market;
-    els.marketSelect.append(option);
+    const opt = document.createElement("option");
+    opt.value = market;
+    opt.textContent = market;
+    els.marketSelect.append(opt);
   });
   els.marketSelect.value = current;
 }
@@ -103,13 +93,11 @@ function renderPicks() {
   const base = state.view === "best" ? state.bestPicks : state.picks;
   const query = state.query.toLowerCase();
   const filtered = base.filter((pick) => {
-    const haystack = `${pick.matchup} ${pick.market} ${pick.selection} ${pick.analyst}`.toLowerCase();
-    const matchesQuery = !query || haystack.includes(query);
-    const matchesMarket = !state.market || pick.market === state.market;
-    return matchesQuery && matchesMarket;
+    const hay = `${pick.matchup} ${pick.market} ${pick.selection} ${pick.analyst}`.toLowerCase();
+    return (!query || hay.includes(query)) && (!state.market || pick.market === state.market);
   });
 
-  els.listTitle.textContent = state.view === "best" ? "Best expert picks" : "All expert picks";
+  els.listTitle.textContent = state.view === "best" ? "Best Expert Picks" : "All Expert Picks";
   els.pickList.innerHTML = "";
 
   if (!filtered.length) {
@@ -117,17 +105,36 @@ function renderPicks() {
     return;
   }
 
-  filtered.forEach((pick) => {
+  filtered.forEach((pick, i) => {
     const node = els.template.content.cloneNode(true);
+    const card = node.querySelector(".pick-card");
+
+    // Set market data attribute for CSS color-coding
+    const market = pick.market || "Other";
+    card.setAttribute("data-market", market);
+    card.style.animationDelay = `${i * 40}ms`;
+
     node.querySelector(".matchup").textContent = pick.matchup;
+    node.querySelector(".starts").textContent = pick.startsAt || "";
     node.querySelector(".made").textContent = pick.made || "Fresh today";
     node.querySelector(".selection").textContent = pick.selection;
-    node.querySelector(".market").textContent = pick.market;
-    node.querySelector(".odds").textContent = pick.odds ? `Best odds ${pick.odds}` : "Odds unavailable";
-    node.querySelector(".rating").textContent = "Expert";
+    node.querySelector(".market").textContent = market;
+
+    // Odds badge: positive = green, negative = amber
+    const oddsEl = node.querySelector(".odds");
+    const oddsText = pick.odds ? pick.odds : "—";
+    oddsEl.textContent = oddsText;
+    if (pick.odds) {
+      const firstNum = pick.odds.match(/([+-]?\d+)/)?.[1];
+      if (firstNum) {
+        oddsEl.classList.add(Number(firstNum) > 0 ? "positive" : "negative");
+      }
+    }
+
     node.querySelector(".analysis").textContent = pick.analysis || "Open the source for the full write-up.";
     node.querySelector(".analyst").textContent = pick.analyst || pick.source || "Covers";
-    node.querySelector(".starts").textContent = pick.startsAt || "";
+    node.querySelector(".rating").textContent = pick.rating ? `★ ${pick.rating}` : "";
+
     els.pickList.append(node);
   });
 }
@@ -136,49 +143,79 @@ function renderConsensus() {
   const common = state.consensus.filter((pick) => pick.sourceCount > 1).slice(0, 8);
   const fallback = state.consensus.slice(0, 8);
   const picks = common.length ? common : fallback;
+
   els.consensusList.innerHTML = "";
 
   if (!picks.length) {
-    els.consensusList.innerHTML = '<div class="empty">No consensus picks are available right now.</div>';
+    els.consensusList.innerHTML = '<div class="empty">No consensus picks available right now.</div>';
     return;
   }
 
-  picks.forEach((pick) => {
+  picks.forEach((pick, i) => {
     const node = els.consensusTemplate.content.cloneNode(true);
-    node.querySelector(".matchup").textContent = pick.matchup;
-    node.querySelector(".agreement").textContent = `${pick.agreement} sources`;
+    const card = node.querySelector(".consensus-card");
+    card.style.animationDelay = `${i * 50}ms`;
+
+    // Mirror pick-card market badge via data-market on parent for CSS
+    node.querySelector(".market-badge").textContent = pick.market || "";
+    node.querySelector(".market-badge").setAttribute("data-market-type", pick.market || "");
+
+    // Apply market color to market-badge within consensus card
+    applyMarketBadgeColor(node.querySelector(".market-badge"), pick.market);
+
+    node.querySelector(".agreement").textContent = pick.agreement;
     node.querySelector(".selection").textContent = pick.selection;
-    node.querySelector(".market").textContent = pick.market;
-    node.querySelector(".source-count").textContent = `${pick.sourceCount} sites`;
-    node.querySelector(".pick-count").textContent = `${pick.pickCount} experts`;
-    node.querySelector(".source-list").textContent = pick.sources.map((source) => source.name).join(", ");
+    node.querySelector(".matchup").textContent = pick.matchup;
+    node.querySelector(".source-count").textContent = pick.sourceCount;
+    node.querySelector(".pick-count").textContent = pick.pickCount;
+    node.querySelector(".source-list").textContent = pick.sources.map((s) => s.name).join(" · ");
     node.querySelector(".example-list").textContent = sampleExamples(pick.examples);
+
     els.consensusList.append(node);
   });
 }
 
+/** Apply inline market-specific badge styling since consensus cards don't inherit data-market from .pick-card */
+function applyMarketBadgeColor(el, market) {
+  const styles = {
+    "Moneyline": { color: "var(--green)", background: "var(--green-dim)", borderColor: "rgba(31,192,94,0.25)" },
+    "Total":     { color: "var(--amber)", background: "var(--amber-dim)", borderColor: "rgba(232,151,42,0.25)" },
+    "Run Line":  { color: "var(--blue)",  background: "var(--blue-dim)",  borderColor: "rgba(74,173,255,0.25)" },
+    "Spread":    { color: "var(--blue)",  background: "var(--blue-dim)",  borderColor: "rgba(74,173,255,0.25)" },
+    "Prop":      { color: "var(--purple)",background: "var(--purple-dim)",borderColor: "rgba(181,123,255,0.25)" },
+    "Game Prop": { color: "var(--purple)",background: "var(--purple-dim)",borderColor: "rgba(181,123,255,0.25)" }
+  };
+  const s = styles[market];
+  if (s && el) {
+    el.style.color = s.color;
+    el.style.background = s.background;
+    el.style.borderColor = s.borderColor;
+    el.style.border = `1px solid ${s.borderColor}`;
+  }
+}
+
 function setLoading(isLoading) {
   els.refreshButton.disabled = isLoading;
-  els.refreshButton.textContent = isLoading ? "Loading" : "Refresh";
+  els.refreshButton.innerHTML = isLoading
+    ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Loading`
+    : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Refresh`;
 }
 
 function consensusSummary(data) {
-  const sources = (data.sources || []).filter((source) => !source.error && source.picks > 0);
-  const sourceNames = sources.map((source) => source.name).join(", ");
-  return `Comparing ${data.counts?.picks || 0} expert picks from ${sourceNames || "available sources"}.`;
+  const sources = (data.sources || []).filter((s) => !s.error && s.picks > 0);
+  const names = sources.map((s) => s.name).join(", ");
+  return `${data.counts?.picks || 0} expert picks across ${names || "available sources"}.`;
 }
 
 function sampleExamples(examples = []) {
   return examples
-    .slice(0, 4)
-    .map((example) => `${example.source}${example.expert ? ` (${example.expert})` : ""}${example.odds ? ` ${example.odds}` : ""}`)
-    .join(" • ");
+    .slice(0, 3)
+    .map((e) => `${e.source}${e.expert ? ` (${e.expert})` : ""}${e.odds ? ` ${e.odds}` : ""}`)
+    .join(" · ");
 }
 
 function formatDate(value) {
-  if (!value) {
-    return "Unknown";
-  }
+  if (!value) return "Unknown";
   return new Intl.DateTimeFormat(undefined, {
     month: "short",
     day: "numeric",
@@ -188,27 +225,20 @@ function formatDate(value) {
 }
 
 function escapeHtml(value) {
-  return value.replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    "\"": "&quot;",
-    "'": "&#39;"
-  })[char]);
+  return `${value}`.replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]
+  );
 }
 
+// Inject spin keyframe for loading icon
+const style = document.createElement("style");
+style.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
+document.head.append(style);
+
+// Event bindings
 els.refreshButton.addEventListener("click", () => loadPicks(true));
-els.searchInput.addEventListener("input", (event) => {
-  state.query = event.target.value;
-  renderPicks();
-});
-els.marketSelect.addEventListener("change", (event) => {
-  state.market = event.target.value;
-  renderPicks();
-});
-els.viewSelect.addEventListener("change", (event) => {
-  state.view = event.target.value;
-  renderPicks();
-});
+els.searchInput.addEventListener("input", (e) => { state.query = e.target.value; renderPicks(); });
+els.marketSelect.addEventListener("change", (e) => { state.market = e.target.value; renderPicks(); });
+els.viewSelect.addEventListener("change", (e) => { state.view = e.target.value; renderPicks(); });
 
 loadPicks();
