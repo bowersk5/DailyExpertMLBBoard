@@ -8,6 +8,39 @@ const state = {
   market: ""
 };
 
+const teamNames = {
+  ARI: "Arizona Diamondbacks",
+  ATH: "Athletics",
+  ATL: "Atlanta Braves",
+  BAL: "Baltimore Orioles",
+  BOS: "Boston Red Sox",
+  CHC: "Chicago Cubs",
+  CHW: "Chicago White Sox",
+  CIN: "Cincinnati Reds",
+  CLE: "Cleveland Guardians",
+  COL: "Colorado Rockies",
+  DET: "Detroit Tigers",
+  HOU: "Houston Astros",
+  KC: "Kansas City Royals",
+  LAA: "Los Angeles Angels",
+  LAD: "Los Angeles Dodgers",
+  MIA: "Miami Marlins",
+  MIL: "Milwaukee Brewers",
+  MIN: "Minnesota Twins",
+  NYM: "New York Mets",
+  NYY: "New York Yankees",
+  PHI: "Philadelphia Phillies",
+  PIT: "Pittsburgh Pirates",
+  SD: "San Diego Padres",
+  SEA: "Seattle Mariners",
+  SF: "San Francisco Giants",
+  STL: "St. Louis Cardinals",
+  TB: "Tampa Bay Rays",
+  TEX: "Texas Rangers",
+  TOR: "Toronto Blue Jays",
+  WAS: "Washington Nationals"
+};
+
 const els = {
   refreshButton: document.querySelector("#refreshButton"),
   fetchedAt: document.querySelector("#fetchedAt"),
@@ -93,7 +126,7 @@ function renderPicks() {
   const base = state.view === "best" ? state.bestPicks : state.picks;
   const query = state.query.toLowerCase();
   const filtered = base.filter((pick) => {
-    const hay = `${pick.matchup} ${pick.market} ${pick.selection} ${pick.analyst}`.toLowerCase();
+    const hay = searchablePickText(pick);
     return (!query || hay.includes(query)) && (!state.market || pick.market === state.market);
   });
 
@@ -135,6 +168,16 @@ function renderPicks() {
 
     els.pickList.append(node);
   });
+}
+
+function searchablePickText(pick) {
+  const teamText = expandTeamAbbreviations(`${pick.matchup} ${pick.selection}`);
+  return `${pick.matchup} ${teamText} ${pick.market} ${pick.selection} ${pick.analyst}`.toLowerCase();
+}
+
+function expandTeamAbbreviations(value = "") {
+  const abbreviations = `${value}`.match(/\b[A-Z]{2,3}\b/g) || [];
+  return abbreviations.map((abbr) => teamNames[abbr] || "").filter(Boolean).join(" ");
 }
 
 function renderConsensus() {
