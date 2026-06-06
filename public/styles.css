@@ -50,7 +50,6 @@
   --r-xl:  20px;
 
   /* Layout */
-  --sidebar-w: 360px;
   --content-max: 1400px;
 }
 
@@ -469,10 +468,7 @@ body {
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 36px clamp(16px, 3vw, 40px) 80px;
-  display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
-  gap: 40px;
-  align-items: start;
+  display: block;
 }
 
 /* ===================================================
@@ -519,17 +515,16 @@ body {
 }
 
 /* ===================================================
-   CONSENSUS SIDEBAR
+   CONSENSUS
    =================================================== */
-.sidebar {
-  position: sticky;
-  top: 80px;
+.consensus-section {
+  width: 100%;
 }
 
 .consensus-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
 }
 
 .consensus-card {
@@ -883,16 +878,7 @@ body {
    RESPONSIVE
    =================================================== */
 @media (max-width: 1024px) {
-  .page-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    position: static;
-  }
-
   .consensus-stack {
-    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 10px;
   }

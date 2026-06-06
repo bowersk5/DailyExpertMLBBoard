@@ -38,11 +38,11 @@
           </div>
           <div class="divider-v"></div>
           <div class="stat-chip">
-            <span class="stat-chip__label">Games</span>
+            <span class="stat-chip__label">Sources</span>
             <strong id="gameCount" class="stat-chip__value">—</strong>
           </div>
           <div class="stat-chip">
-            <span class="stat-chip__label">Picks</span>
+            <span class="stat-chip__label">Consensus</span>
             <strong id="pickCount" class="stat-chip__value">—</strong>
           </div>
           <div class="divider-v"></div>
@@ -66,39 +66,10 @@
 
     <main class="main-content">
 
-      <!-- Controls bar -->
-      <div class="controls-bar">
-        <div class="controls-inner">
-          <div class="search-wrap">
-            <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input id="searchInput" class="control-input search-input" type="search" placeholder="Search teams, analysts, markets…">
-          </div>
-          <div class="select-wrap">
-            <select id="marketSelect" class="control-input control-select">
-              <option value="">All Markets</option>
-            </select>
-            <svg class="select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="select-wrap">
-            <select id="viewSelect" class="control-input control-select">
-              <option value="best">Best Ranked</option>
-              <option value="all">All Expert Picks</option>
-            </select>
-            <svg class="select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="market-legend">
-            <span class="legend-item"><span class="legend-dot legend-dot--ml"></span>ML</span>
-            <span class="legend-item"><span class="legend-dot legend-dot--total"></span>Total</span>
-            <span class="legend-item"><span class="legend-dot legend-dot--rl"></span>RL</span>
-            <span class="legend-item"><span class="legend-dot legend-dot--prop"></span>Prop</span>
-          </div>
-        </div>
-      </div>
-
       <div class="page-layout">
 
-        <!-- Consensus sidebar -->
-        <aside class="sidebar">
+        <!-- Consensus picks -->
+        <section class="consensus-section">
           <div class="section-header">
             <div class="section-header__top">
               <span class="section-eyebrow">Consensus</span>
@@ -107,50 +78,10 @@
             <p id="consensusIntro" class="section-sub"></p>
           </div>
           <div id="consensusList" class="consensus-stack"></div>
-        </aside>
-
-        <!-- Main picks -->
-        <section class="picks-section">
-          <div class="section-header">
-            <div class="section-header__top">
-              <span class="section-eyebrow">Covers Experts</span>
-            </div>
-            <h2 id="listTitle" class="section-title">Best Expert Picks</h2>
-            <p id="intro" class="section-sub"></p>
-          </div>
-          <div id="pickList" class="pick-grid"></div>
         </section>
 
       </div>
     </main>
-
-    <!-- Pick card template -->
-    <template id="pickTemplate">
-      <article class="pick-card">
-        <div class="pick-card__accent"></div>
-        <div class="pick-card__inner">
-          <div class="pick-card__header">
-            <div class="pick-matchup-row">
-              <span class="pick-matchup matchup"></span>
-              <span class="pick-time starts"></span>
-            </div>
-            <span class="pick-made made"></span>
-          </div>
-          <div class="pick-card__body">
-            <h3 class="pick-selection selection"></h3>
-            <div class="pick-badges">
-              <span class="badge badge--market market"></span>
-              <span class="badge badge--odds odds"></span>
-            </div>
-            <p class="pick-analysis analysis"></p>
-          </div>
-          <footer class="pick-card__footer">
-            <span class="pick-analyst analyst"></span>
-            <span class="pick-rating rating"></span>
-          </footer>
-        </div>
-      </article>
-    </template>
 
     <!-- Consensus card template -->
     <template id="consensusTemplate">
