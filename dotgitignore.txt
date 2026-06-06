@@ -8,6 +8,10 @@ public/data/consensus.json
 public/data/nba/
 public/data/nhl/
 
+# Generated sport subdirectory pages (built by scripts/generateStaticData.js)
+public/nba/
+public/nhl/
+
 # Environment
 .env
 .env.local

@@ -69,21 +69,15 @@ async function writeSportHtml(config) {
   const sportDir = join(publicDir, config.id);
   await mkdir(sportDir, { recursive: true });
 
-  const label = config.label; // e.g. "NBA"
+  const label = config.label;
   const sourceUrl = config.sources.find((s) => s.id === "covers")?.url || `https://www.covers.com/picks/${config.id}`;
 
   const patched = rootHtml
-    // Title
     .replace(/<title>Daily Expert MLB Board<\/title>/, `<title>Daily Expert ${label} Board</title>`)
-    // Brand label
     .replace(/Expert MLB Board/, `Expert ${label} Board`)
-    // Local asset paths: href="styles.css" → href="../styles.css"
     .replace(/href="styles\.css"/, `href="../styles.css"`)
-    // Local asset paths: src="app.js" → src="../app.js"
     .replace(/src="app\.js"/, `src="../app.js"`)
-    // Source link default href
     .replace(/href="https:\/\/www\.covers\.com\/picks\/mlb"/, `href="${sourceUrl}"`)
-    // Sport tab hrefs: ./ → ../, nba/ → ../nba/, nhl/ → ../nhl/
     .replace(/href="\.\/"/, `href="../"`)
     .replace(/href="nba\/"/, `href="../nba/"`)
     .replace(/href="nhl\/"/, `href="../nhl/"`);
