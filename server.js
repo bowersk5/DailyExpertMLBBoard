@@ -18,11 +18,10 @@ const mimeTypes = {
   ".json": "application/json; charset=utf-8"
 };
 
-// All path forms that should serve the SPA shell (with and without trailing slash)
 const sportSlugs = new Set(Object.keys(sports));
 
 function isSportPath(pathname) {
-  const slug = pathname.replace(/^\/|\/$/g, ""); // strip leading/trailing slashes
+  const slug = pathname.replace(/^\/|\/$/g, "");
   return sportSlugs.has(slug);
 }
 
@@ -87,13 +86,52 @@ async function fetchDailyConsensus(sport, force = false) {
   return payload;
 }
 
+/**
+ * Read public/index.html and patch asset paths + sport-specific content
+ * for pages served from a subdirectory (e.g. /nba/, /nhl/).
+ * On the local dev server there are no pre-built sport subpages, so we
+ * generate the patched HTML on the fly — the same transformations that
+ * generateStaticData.js applies at build time.
+ */
+async function sportPageHtml(sport) {
+  const rootHtml = await readFile(join(publicDir, "index.html"), "utf8");
+  const config = sportConfig(sport);
+  const label = config.label;
+  const sourceUrl = config.sources.find((s) => s.id === "covers")?.url ||
+    `https://www.covers.com/picks/${config.id}`;
+
+  return rootHtml
+    .replace(/<title>Daily Expert MLB Board<\/title>/, `<title>Daily Expert ${label} Board</title>`)
+    .replace(/Expert MLB Board/, `Expert ${label} Board`)
+    .replace(/href="styles\.css"/, `href="../styles.css"`)
+    .replace(/src="app\.js"/, `src="../app.js"`)
+    .replace(/href="https:\/\/www\.covers\.com\/picks\/mlb"/, `href="${sourceUrl}"`)
+    .replace(/href="\.\/"/, `href="../"`)
+    .replace(/href="nba\/"/, `href="../nba/"`)
+    .replace(/href="nhl\/"/, `href="../nhl/"`);
+}
+
 async function serveStatic(pathname, res) {
-  // Sport landing pages (/nba, /nba/, /nhl, /nhl/, /mlb, /mlb/) all serve the
-  // root index.html. app.js reads the sport from window.location at runtime so
-  // no per-sport HTML file is needed on the local dev server.
-  if (pathname === "/" || isSportPath(pathname)) {
+  // Root → serve index.html as-is.
+  if (pathname === "/") {
     try {
       const body = await readFile(join(publicDir, "index.html"));
+      res.writeHead(200, { "content-type": mimeTypes[".html"] });
+      res.end(body);
+    } catch {
+      res.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
+      res.end("Not found");
+    }
+    return;
+  }
+
+  // Sport landing pages (/nba, /nba/, /nhl, /nhl/) — serve a patched version
+  // of index.html with sport-specific title and ../-prefixed asset paths so
+  // styles.css and app.js resolve correctly from the subdirectory.
+  if (isSportPath(pathname)) {
+    try {
+      const slug = pathname.replace(/^\/|\/$/g, "");
+      const body = await sportPageHtml(slug);
       res.writeHead(200, { "content-type": mimeTypes[".html"] });
       res.end(body);
     } catch {

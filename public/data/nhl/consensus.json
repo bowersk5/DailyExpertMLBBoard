@@ -1,7 +1,7 @@
 {
   "sport": "nhl",
   "sportLabel": "NHL",
-  "generatedAt": "2026-06-06T15:27:13.713Z",
+  "generatedAt": "2026-06-06T20:46:17.768Z",
   "sources": [
     {
       "id": "covers",
@@ -20,27 +20,27 @@
   ],
   "picks": [
     {
-      "matchup": "CAR @ VEG",
+      "matchup": "CAR @ VGK",
       "startsAt": "Sat, Jun 6 • 8:00 PM ET",
       "market": "Prop",
-      "selection": "Pavel Dorofeyev o0.5 Points (-125)",
-      "odds": "o0.5 -115",
-      "expert": "Todd Cordell",
-      "analysis": "Pavel Dorofeyev ranks second on the team with six chances through two games. Of the seven Golden Knights with at least four opportunities, he is the only guy who hasn’t picked up a point. I like him to get right in Game 3. Playable to -135.",
-      "key": "CAR @ VEG|Prop|pavel dorofeyev o0.5 points (-125)",
+      "selection": "3 LEG PARLAY Pavel Dorofeyev o0.5 Goals Scored Logan Stankoven o0.5 Goals Scored Brett Howden o0.5 Goals Scored",
+      "odds": "",
+      "expert": "Chris Faria",
+      "analysis": "Dorofeyev leads all skaters in the Final in individual expected goals (0.94), with nine shot attempts and six scoring chances through the first two games. He’s been a relatively slow starter in each series this postseason – he didn’t score until Game 4 of the first and second rounds.",
+      "key": "CAR @ VGK|Prop|3 leg parlay pavel dorofeyev o0.5 goals scored logan stankoven o0.5 goals scored brett howden o0.5 goals scored",
       "sourceId": "covers",
       "source": "Covers",
       "url": "https://www.covers.com/picks/nhl"
     },
     {
-      "matchup": "CAR @ VEG",
+      "matchup": "CAR @ VGK",
       "startsAt": "Sat, Jun 6 • 8:00 PM ET",
       "market": "Prop",
-      "selection": "Jackson Blake o0.5 Points (-115)",
-      "odds": "o0.5 -110",
-      "expert": "Todd Cordell",
-      "analysis": "Jackson Blake the entire playoffs in scoring chances during 5-on-5 play and has played almost 10 more minutes than any other Hurricanes forward in that game state. He does a lot of the facilitating for his line and should have plenty of the puck playing primarily against Noah Hanifin's pairing. Betable to -135.",
-      "key": "CAR @ VEG|Prop|jackson blake o0.5 points (-115)",
+      "selection": "Pavel Dorofeyev o0.5 Goals Scored (+205)",
+      "odds": "o0.5 +225",
+      "expert": "Chris Faria",
+      "analysis": "While Pavel Dorofeyev hasn't scored yet in the Final, he's due for a breakout. He leads all skaters this series in individual expected goals and has six scoring chances through two games.",
+      "key": "CAR @ VGK|Prop|pavel dorofeyev o0.5 goals scored (+205)",
       "sourceId": "covers",
       "source": "Covers",
       "url": "https://www.covers.com/picks/nhl"
@@ -48,11 +48,11 @@
   ],
   "consensus": [
     {
-      "key": "CAR @ VEG|Prop|jackson blake o0.5 points (-115)",
-      "matchup": "CAR @ VEG",
+      "key": "CAR @ VGK|Prop|3 leg parlay pavel dorofeyev o0.5 goals scored logan stankoven o0.5 goals scored brett howden o0.5 goals scored",
+      "matchup": "CAR @ VGK",
       "startsAt": "Sat, Jun 6 • 8:00 PM ET",
       "market": "Prop",
-      "selection": "Jackson Blake o0.5 Points (-115)",
+      "selection": "3 LEG PARLAY Pavel Dorofeyev o0.5 Goals Scored Logan Stankoven o0.5 Goals Scored Brett Howden o0.5 Goals Scored",
       "sourceCount": 1,
       "pickCount": 1,
       "sources": [
@@ -62,28 +62,26 @@
         }
       ],
       "experts": [
-        "Covers:Todd Cordell"
+        "Covers:Chris Faria"
       ],
-      "odds": [
-        "o0.5 -110"
-      ],
+      "odds": [],
       "examples": [
         {
           "source": "Covers",
-          "expert": "Todd Cordell",
-          "odds": "o0.5 -110",
-          "analysis": "Jackson Blake the entire playoffs in scoring chances during 5-on-5 play and has played almost 10 more minutes than any other Hurricanes forward in that game state. He does a lot of the facilitating for his line and should have plenty of the puck playing primarily against Noah Hanifin's pairing. Betable to -135."
+          "expert": "Chris Faria",
+          "odds": "",
+          "analysis": "Dorofeyev leads all skaters in the Final in individual expected goals (0.94), with nine shot attempts and six scoring chances through the first two games. He’s been a relatively slow starter in each series this postseason – he didn’t score until Game 4 of the first and second rounds."
         }
       ],
       "agreement": "1/2",
       "confidence": 101
     },
     {
-      "key": "CAR @ VEG|Prop|pavel dorofeyev o0.5 points (-125)",
-      "matchup": "CAR @ VEG",
+      "key": "CAR @ VGK|Prop|pavel dorofeyev o0.5 goals scored (+205)",
+      "matchup": "CAR @ VGK",
       "startsAt": "Sat, Jun 6 • 8:00 PM ET",
       "market": "Prop",
-      "selection": "Pavel Dorofeyev o0.5 Points (-125)",
+      "selection": "Pavel Dorofeyev o0.5 Goals Scored (+205)",
       "sourceCount": 1,
       "pickCount": 1,
       "sources": [
@@ -93,17 +91,17 @@
         }
       ],
       "experts": [
-        "Covers:Todd Cordell"
+        "Covers:Chris Faria"
       ],
       "odds": [
-        "o0.5 -115"
+        "o0.5 +225"
       ],
       "examples": [
         {
           "source": "Covers",
-          "expert": "Todd Cordell",
-          "odds": "o0.5 -115",
-          "analysis": "Pavel Dorofeyev ranks second on the team with six chances through two games. Of the seven Golden Knights with at least four opportunities, he is the only guy who hasn’t picked up a point. I like him to get right in Game 3. Playable to -135."
+          "expert": "Chris Faria",
+          "odds": "o0.5 +225",
+          "analysis": "While Pavel Dorofeyev hasn't scored yet in the Final, he's due for a breakout. He leads all skaters this series in individual expected goals and has six scoring chances through two games."
         }
       ],
       "agreement": "1/2",

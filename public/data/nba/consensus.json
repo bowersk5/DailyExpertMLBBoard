@@ -1,14 +1,14 @@
 {
   "sport": "nba",
   "sportLabel": "NBA",
-  "generatedAt": "2026-06-06T15:27:13.024Z",
+  "generatedAt": "2026-06-06T20:46:17.146Z",
   "sources": [
     {
       "id": "covers",
       "name": "Covers",
       "url": "https://www.covers.com/picks/nba",
       "error": null,
-      "picks": 0
+      "picks": 1
     },
     {
       "id": "pickswise",
@@ -18,12 +18,58 @@
       "picks": 0
     }
   ],
-  "picks": [],
-  "consensus": [],
+  "picks": [
+    {
+      "matchup": "SA @ NYK",
+      "startsAt": "Mon, Jun 8 • 8:30 PM ET",
+      "market": "Prop",
+      "selection": "Mikal Bridges o12.5 Points Scored (-120)",
+      "odds": "o12.5 -125",
+      "expert": "Jason Logan",
+      "analysis": "Mikal Bridges was huge in the second half of Game 2. With the Spurs blitzing Brunson, Bridges’ mid-range stroke was the Spurs’ kryptonite. He was steady on 8-for-13 shooting and anchored a third-quarter surge with Brunson and Karl-Anthony Towns on the bench. His Game 3 models flirt with 15 points and he's scored 13 or more points in nine of his last 11 postseason games.",
+      "key": "SA @ NYK|Prop|mikal bridges o12.5 points scored (-120)",
+      "sourceId": "covers",
+      "source": "Covers",
+      "url": "https://www.covers.com/picks/nba"
+    }
+  ],
+  "consensus": [
+    {
+      "key": "SA @ NYK|Prop|mikal bridges o12.5 points scored (-120)",
+      "matchup": "SA @ NYK",
+      "startsAt": "Mon, Jun 8 • 8:30 PM ET",
+      "market": "Prop",
+      "selection": "Mikal Bridges o12.5 Points Scored (-120)",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "covers",
+          "name": "Covers"
+        }
+      ],
+      "experts": [
+        "Covers:Jason Logan"
+      ],
+      "odds": [
+        "o12.5 -125"
+      ],
+      "examples": [
+        {
+          "source": "Covers",
+          "expert": "Jason Logan",
+          "odds": "o12.5 -125",
+          "analysis": "Mikal Bridges was huge in the second half of Game 2. With the Spurs blitzing Brunson, Bridges’ mid-range stroke was the Spurs’ kryptonite. He was steady on 8-for-13 shooting and anchored a third-quarter surge with Brunson and Karl-Anthony Towns on the bench. His Game 3 models flirt with 15 points and he's scored 13 or more points in nine of his last 11 postseason games."
+        }
+      ],
+      "agreement": "1/2",
+      "confidence": 101
+    }
+  ],
   "counts": {
     "sources": 2,
-    "activeSources": 0,
-    "picks": 0,
-    "consensus": 0
+    "activeSources": 1,
+    "picks": 1,
+    "consensus": 1
   }
 }
