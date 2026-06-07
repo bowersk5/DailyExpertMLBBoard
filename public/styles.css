@@ -12,8 +12,8 @@
 
   /* Text hierarchy */
   --text:        #f0eee8;
-  --text-muted:  #9896a0;
-  --text-dim:    #5c5a68;
+  --text-muted:  #c4c2cc;
+  --text-dim:    #8a8898;
 
   /* Brand accent — amber gold */
   --gold:        #d4943a;
@@ -665,7 +665,7 @@ body {
 .consensus-experts {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--text-dim);
+  color: var(--text-muted);
 }
 
 .consensus-experts strong {
@@ -674,7 +674,7 @@ body {
 
 .consensus-examples {
   font-size: 11px;
-  color: var(--text-dim);
+  color: var(--text-muted);
   margin-top: 6px;
   line-height: 1.5;
 }
