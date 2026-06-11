@@ -1,0 +1,1478 @@
+{
+  "sport": "mlb",
+  "sportLabel": "MLB",
+  "generatedAt": "2026-06-11T00:17:56.541Z",
+  "sources": [
+    {
+      "id": "covers",
+      "name": "Covers",
+      "url": "https://www.covers.com/picks/mlb",
+      "error": null,
+      "warning": null,
+      "picks": 4
+    },
+    {
+      "id": "pickswise",
+      "name": "Pickswise",
+      "url": "https://www.pickswise.com/mlb/picks/",
+      "error": null,
+      "warning": "Expected ≥3 picks but got 0 — parser may be broken",
+      "picks": 0
+    },
+    {
+      "id": "action",
+      "name": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/",
+      "error": null,
+      "warning": null,
+      "picks": 29
+    }
+  ],
+  "picks": [
+    {
+      "matchup": "MIL @ ATH",
+      "startsAt": "Wed, Jun 10 • 9:05 PM ET",
+      "market": "Total",
+      "selection": "Under 14.5",
+      "odds": "u15.0 -115",
+      "expert": "Quinn Allen",
+      "analysis": "A total of 14.5 requires sustained offense from both sides. The Athletics' bullpen owns a 2.37 FIP over the last week, while Milwaukee Brewers relief corps has posted a 3.04 xERA. Recent Brewers outbursts have inflated the number, making 15 runs difficult to reach.",
+      "made": "9 hours ago",
+      "key": "MIL @ ATH|Total|Under 14.5",
+      "sourceId": "covers",
+      "source": "Covers",
+      "url": "https://www.covers.com/picks/mlb"
+    },
+    {
+      "matchup": "MIL @ ATH",
+      "startsAt": "Wed, Jun 10 • 9:05 PM ET",
+      "market": "Moneyline",
+      "selection": "MIL Moneyline",
+      "odds": "-104",
+      "expert": "Quinn Allen",
+      "analysis": "The Milwaukee Brewers enter red-hot, posting a 144 wRC+ with 14 home runs and a 43.1% hard-hit rate over the last week. The Brewers face Jack Perkins, who owns a 4.80 xFIP and 5.14 BB/9 recently, creating opportunities for another productive offensive performance.",
+      "made": "9 hours ago",
+      "key": "MIL @ ATH|Moneyline|MIL",
+      "sourceId": "covers",
+      "source": "Covers",
+      "url": "https://www.covers.com/picks/mlb"
+    },
+    {
+      "matchup": "HOU @ LAA",
+      "startsAt": "Wed, Jun 10 • 9:38 PM ET",
+      "market": "Moneyline",
+      "selection": "HOU Moneyline",
+      "odds": "+105",
+      "expert": "Joe Osborne",
+      "analysis": "I'll continue fading the Angels after wins. They've been the worst team in baseball in that spot, posting an 8-17 record following a victory. Houston is also well-positioned against Reid Detmers, ranking among the league's best offenses versus left-handed pitching over the past month. While Detmers has pitched well, the Angels are just 4-9 in his starts. If this game is close late, the Astros' red-hot bullpen gives them another edge.",
+      "made": "6 hours ago",
+      "key": "HOU @ LAA|Moneyline|HOU",
+      "sourceId": "covers",
+      "source": "Covers",
+      "url": "https://www.covers.com/picks/mlb"
+    },
+    {
+      "matchup": "HOU @ LAA",
+      "startsAt": "Wed, Jun 10 • 9:38 PM ET",
+      "market": "Prop",
+      "selection": "3 LEG PARLAY Zach Neto o1.5 Hits+Runs+RBIs Oswald Peraza o1.5 Hits+Runs+RBIs Reid Detmers u6.5 Strikeouts Thrown Strikeouts Thrown",
+      "odds": "",
+      "expert": "Neil Parker",
+      "analysis": "Angels right-handed hitters Zach Neto and Oswald Peraza have a sneaky matchup with Astros starter Peter Lambert sporting reverse splits and allowing a healthy .365 wOBA to righty bats. Neto and Peraza both hit in the top half of the Los Angeles lineup and check in with respective .372 and .375 wOBAs against right-handed arms this season. While Angels starter Reid Detmers sports an impressive 28.5 K% this season, I’m anticipating him having a tougher time racking up punchouts with the Astros ranking sixth in wOBA while striking out at the fourth-lowest clip against southpaws.",
+      "made": "9 hours ago",
+      "key": "HOU @ LAA|Prop|3 leg parlay zach neto o1.5 hits+runs+rbis oswald peraza o1.5 hits+runs+rbis reid detmers u6.5 strikeouts thrown strikeouts thrown",
+      "sourceId": "covers",
+      "source": "Covers",
+      "url": "https://www.covers.com/picks/mlb"
+    },
+    {
+      "matchup": "NYY @ CLE",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Total",
+      "selection": "Over 7.5",
+      "odds": "-118",
+      "expert": "Doug Ziefel",
+      "analysis": "",
+      "made": "",
+      "key": "NYY @ CLE|Total|Over 7.5",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "NYY @ CLE",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Prop",
+      "selection": "C.Rodon u5.5 Ks",
+      "odds": "-110",
+      "expert": "Doug Ziefel",
+      "analysis": "",
+      "made": "",
+      "key": "NYY @ CLE|Prop|c.rodon u5.5 ks",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "NYY @ CLE",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Prop",
+      "selection": "P.Messick u5.5 Ks",
+      "odds": "-116",
+      "expert": "Frank Ammirante",
+      "analysis": "",
+      "made": "",
+      "key": "NYY @ CLE|Prop|p.messick u5.5 ks",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "NYY @ CLE",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Moneyline",
+      "selection": "NYY Moneyline",
+      "odds": "-100",
+      "expert": "Adam Kaufman",
+      "analysis": "",
+      "made": "",
+      "key": "NYY @ CLE|Moneyline|NYY",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "NYY @ CLE",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Total",
+      "selection": "Under 4",
+      "odds": "-105",
+      "expert": "💰🦡 Jake",
+      "analysis": "",
+      "made": "",
+      "key": "NYY @ CLE|Total|Under 4",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "BOS @ TB",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Total",
+      "selection": "Under 7.5",
+      "odds": "-112",
+      "expert": "Sean Zerillo",
+      "analysis": "Bet to -120",
+      "made": "",
+      "key": "BOS @ TB|Total|Under 7.5",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "BOS @ TB",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Prop",
+      "selection": "J.Caminero o1.5 Hits + Runs + RBIs",
+      "odds": "-121",
+      "expert": "RoyalsProps",
+      "analysis": "",
+      "made": "",
+      "key": "BOS @ TB|Prop|j.caminero o1.5 hits + runs + rbis",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "BOS @ TB",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Total",
+      "selection": "Over 7.5",
+      "odds": "+102",
+      "expert": "Wags Wins",
+      "analysis": "",
+      "made": "",
+      "key": "BOS @ TB|Total|Over 7.5",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "WAS @ SF",
+      "startsAt": "2026-06-10T19:45:00.000Z",
+      "market": "Total",
+      "selection": "Under 8.5",
+      "odds": "-120",
+      "expert": "Picks Office",
+      "analysis": "Join Discord for earlier access: https://discord.gg/HjKxYKdSUy\n\nOracle Park is the center of this total. A 0.93 runs factor asks both offenses to work harder for 9 runs.\nAlvarez brings a 3.54 ERA and the left-handed look San Francisco has gone 6-12 against.\nHouser is the loose piece, but the Giants bullpen sits at 3.58 ERA behind him.",
+      "made": "",
+      "key": "WAS @ SF|Total|Under 8.5",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "WAS @ SF",
+      "startsAt": "2026-06-10T19:45:00.000Z",
+      "market": "Total",
+      "selection": "Under 8",
+      "odds": "-104",
+      "expert": "Brian Bitler",
+      "analysis": "",
+      "made": "",
+      "key": "WAS @ SF|Total|Under 8",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "WAS @ SF",
+      "startsAt": "2026-06-10T19:45:00.000Z",
+      "market": "Moneyline",
+      "selection": "SF Moneyline",
+      "odds": "-110",
+      "expert": "The Pick Don",
+      "analysis": "",
+      "made": "",
+      "key": "WAS @ SF|Moneyline|SF",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "CIN @ SD",
+      "startsAt": "2026-06-10T20:10:00.000Z",
+      "market": "Prop",
+      "selection": "J.Merrill o0.5 HR",
+      "odds": "+482",
+      "expert": "Grant Neiffer",
+      "analysis": "",
+      "made": "",
+      "key": "CIN @ SD|Prop|j.merrill o0.5 hr",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "CIN @ SD",
+      "startsAt": "2026-06-10T20:10:00.000Z",
+      "market": "Prop",
+      "selection": "J.Merrill o0.5 HR",
+      "odds": "+470",
+      "expert": "Matthew Lopes",
+      "analysis": "",
+      "made": "",
+      "key": "CIN @ SD|Prop|j.merrill o0.5 hr",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "CIN @ SD",
+      "startsAt": "2026-06-10T20:10:00.000Z",
+      "market": "Prop",
+      "selection": "M.Machado o0.5 HR",
+      "odds": "+490",
+      "expert": "Matthew Lopes",
+      "analysis": "",
+      "made": "",
+      "key": "CIN @ SD|Prop|m.machado o0.5 hr",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "CIN @ SD",
+      "startsAt": "2026-06-10T20:10:00.000Z",
+      "market": "Prop",
+      "selection": "F.Tatis To Hit 1+ Home Runs Yes",
+      "odds": "+540",
+      "expert": "Matthew Lopes",
+      "analysis": "",
+      "made": "",
+      "key": "CIN @ SD|Prop|f.tatis to hit 1+ home runs yes",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "SEA @ BAL",
+      "startsAt": "2026-06-10T22:35:00.000Z",
+      "market": "Moneyline",
+      "selection": "BAL Moneyline",
+      "odds": "+105",
+      "expert": "The Degenerates",
+      "analysis": "",
+      "made": "",
+      "key": "SEA @ BAL|Moneyline|BAL",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "SEA @ BAL",
+      "startsAt": "2026-06-10T22:35:00.000Z",
+      "market": "Total",
+      "selection": "Over 9",
+      "odds": "-102",
+      "expert": "Anders",
+      "analysis": "",
+      "made": "",
+      "key": "SEA @ BAL|Total|Over 9",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "MIN @ DET",
+      "startsAt": "2026-06-10T22:40:00.000Z",
+      "market": "Prop",
+      "selection": "F.Valdez u5.5 Hits Allowed",
+      "odds": "+125",
+      "expert": "Markus Markets",
+      "analysis": "",
+      "made": "",
+      "key": "MIN @ DET|Prop|f.valdez u5.5 hits allowed",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "MIN @ DET",
+      "startsAt": "2026-06-10T22:40:00.000Z",
+      "market": "Prop",
+      "selection": "O.Arcia u0.5 Hits",
+      "odds": "+155",
+      "expert": "Derek Carty",
+      "analysis": "There is a value opportunity on Orlando Arcia's hits prop. THE BAT X is projecting him to record 0.71 hits, while oddsmakers are implying 0.86.  The model believes there is a 49% chance he records fewer than 1 hit, so there is value on the under at +150. This play is good down to at least +126.\n\nLove THE BAT X? Get all of Carty's sports betting projections at EV Analytics https://evanalytics.com/subscribe/mlb?ref=zdlkmgz",
+      "made": "",
+      "key": "MIN @ DET|Prop|o.arcia u0.5 hits",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "ARI @ MIA",
+      "startsAt": "2026-06-10T22:40:00.000Z",
+      "market": "Moneyline",
+      "selection": "ARI Moneyline",
+      "odds": "-115",
+      "expert": "Nick Martin",
+      "analysis": "",
+      "made": "",
+      "key": "ARI @ MIA|Moneyline|ARI",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "LAD @ PIT",
+      "startsAt": "2026-06-10T22:40:00.000Z",
+      "market": "Spread",
+      "selection": "LAD -0.5",
+      "odds": "-138",
+      "expert": "Austin Pendergrass",
+      "analysis": "",
+      "made": "",
+      "key": "LAD @ PIT|Spread|LAD -0.5",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "PHI @ TOR",
+      "startsAt": "2026-06-10T23:07:00.000Z",
+      "market": "Prop",
+      "selection": "V.Guerrero o1.5 Hits + Runs + RBIs",
+      "odds": "-128",
+      "expert": "Sandy Plashkes",
+      "analysis": "",
+      "made": "",
+      "key": "PHI @ TOR|Prop|v.guerrero o1.5 hits + runs + rbis",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "PHI @ TOR",
+      "startsAt": "2026-06-10T23:07:00.000Z",
+      "market": "Prop",
+      "selection": "B.Harper o0.5 HR",
+      "odds": "+390",
+      "expert": "Charlie DiSturco",
+      "analysis": "",
+      "made": "",
+      "key": "PHI @ TOR|Prop|b.harper o0.5 hr",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "TEX @ KC",
+      "startsAt": "2026-06-10T23:40:00.000Z",
+      "market": "Prop",
+      "selection": "J.Jung o1.5 Hits",
+      "odds": "+175",
+      "expert": "Kevin Thomas",
+      "analysis": "",
+      "made": "",
+      "key": "TEX @ KC|Prop|j.jung o1.5 hits",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "TEX @ KC",
+      "startsAt": "2026-06-10T23:40:00.000Z",
+      "market": "Moneyline",
+      "selection": "TEX Moneyline",
+      "odds": "-118",
+      "expert": "Kevin Thomas",
+      "analysis": "",
+      "made": "",
+      "key": "TEX @ KC|Moneyline|TEX",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "ATL @ CHW",
+      "startsAt": "2026-06-10T23:40:00.000Z",
+      "market": "Moneyline",
+      "selection": "CHW Moneyline",
+      "odds": "+124",
+      "expert": "Mike McNamara",
+      "analysis": "",
+      "made": "",
+      "key": "ATL @ CHW|Moneyline|CHW",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "ATL @ CHW",
+      "startsAt": "2026-06-10T23:40:00.000Z",
+      "market": "Total",
+      "selection": "Over 7",
+      "odds": "-115",
+      "expert": "Kenny Ducey",
+      "analysis": "",
+      "made": "",
+      "key": "ATL @ CHW|Total|Over 7",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "ATL @ CHW",
+      "startsAt": "2026-06-10T23:40:00.000Z",
+      "market": "Total",
+      "selection": "Over 7",
+      "odds": "-117",
+      "expert": "Alex Hinton",
+      "analysis": "",
+      "made": "",
+      "key": "ATL @ CHW|Total|Over 7",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    },
+    {
+      "matchup": "HOU @ LAA",
+      "startsAt": "2026-06-11T01:38:00.000Z",
+      "market": "Prop",
+      "selection": "P.Lambert o4.5 Ks",
+      "odds": "-130",
+      "expert": "Sean Koerner🔮",
+      "analysis": "Much more favorable lineup than I expected with Siri in the official lineup l. Proj closer to -160",
+      "made": "",
+      "key": "HOU @ LAA|Prop|p.lambert o4.5 ks",
+      "sourceId": "action",
+      "source": "Action Network",
+      "url": "https://www.actionnetwork.com/mlb/picks/"
+    }
+  ],
+  "consensus": [
+    {
+      "key": "CIN @ SD|Prop|j.merrill o0.5 hr",
+      "matchup": "CIN @ SD",
+      "startsAt": "2026-06-10T20:10:00.000Z",
+      "market": "Prop",
+      "selection": "J.Merrill o0.5 HR",
+      "sourceCount": 1,
+      "pickCount": 2,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Grant Neiffer",
+        "Action Network:Matthew Lopes"
+      ],
+      "odds": [
+        "+482",
+        "+470"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Grant Neiffer",
+          "odds": "+482",
+          "analysis": ""
+        },
+        {
+          "source": "Action Network",
+          "expert": "Matthew Lopes",
+          "odds": "+470",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 220
+    },
+    {
+      "key": "ATL @ CHW|Total|Over 7",
+      "matchup": "ATL @ CHW",
+      "startsAt": "2026-06-10T23:40:00.000Z",
+      "market": "Total",
+      "selection": "Over 7",
+      "sourceCount": 1,
+      "pickCount": 2,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Kenny Ducey",
+        "Action Network:Alex Hinton"
+      ],
+      "odds": [
+        "-115",
+        "-117"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Kenny Ducey",
+          "odds": "-115",
+          "analysis": ""
+        },
+        {
+          "source": "Action Network",
+          "expert": "Alex Hinton",
+          "odds": "-117",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 220
+    },
+    {
+      "key": "HOU @ LAA|Prop|3 leg parlay zach neto o1.5 hits+runs+rbis oswald peraza o1.5 hits+runs+rbis reid detmers u6.5 strikeouts thrown strikeouts thrown",
+      "matchup": "HOU @ LAA",
+      "startsAt": "Wed, Jun 10 • 9:38 PM ET",
+      "market": "Prop",
+      "selection": "3 LEG PARLAY Zach Neto o1.5 Hits+Runs+RBIs Oswald Peraza o1.5 Hits+Runs+RBIs Reid Detmers u6.5 Strikeouts Thrown Strikeouts Thrown",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "covers",
+          "name": "Covers"
+        }
+      ],
+      "experts": [
+        "Covers:Neil Parker"
+      ],
+      "odds": [],
+      "examples": [
+        {
+          "source": "Covers",
+          "expert": "Neil Parker",
+          "odds": "",
+          "analysis": "Angels right-handed hitters Zach Neto and Oswald Peraza have a sneaky matchup with Astros starter Peter Lambert sporting reverse splits and allowing a healthy .365 wOBA to righty bats. Neto and Peraza both hit in the top half of the Los Angeles lineup and check in with respective .372 and .375 wOBAs against right-handed arms this season. While Angels starter Reid Detmers sports an impressive 28.5 K% this season, I’m anticipating him having a tougher time racking up punchouts with the Astros ranking sixth in wOBA while striking out at the fourth-lowest clip against southpaws."
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "ARI @ MIA|Moneyline|ARI",
+      "matchup": "ARI @ MIA",
+      "startsAt": "2026-06-10T22:40:00.000Z",
+      "market": "Moneyline",
+      "selection": "ARI Moneyline",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Nick Martin"
+      ],
+      "odds": [
+        "-115"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Nick Martin",
+          "odds": "-115",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "PHI @ TOR|Prop|b.harper o0.5 hr",
+      "matchup": "PHI @ TOR",
+      "startsAt": "2026-06-10T23:07:00.000Z",
+      "market": "Prop",
+      "selection": "B.Harper o0.5 HR",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Charlie DiSturco"
+      ],
+      "odds": [
+        "+390"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Charlie DiSturco",
+          "odds": "+390",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "SEA @ BAL|Moneyline|BAL",
+      "matchup": "SEA @ BAL",
+      "startsAt": "2026-06-10T22:35:00.000Z",
+      "market": "Moneyline",
+      "selection": "BAL Moneyline",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:The Degenerates"
+      ],
+      "odds": [
+        "+105"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "The Degenerates",
+          "odds": "+105",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "NYY @ CLE|Prop|c.rodon u5.5 ks",
+      "matchup": "NYY @ CLE",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Prop",
+      "selection": "C.Rodon u5.5 Ks",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Doug Ziefel"
+      ],
+      "odds": [
+        "-110"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Doug Ziefel",
+          "odds": "-110",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "ATL @ CHW|Moneyline|CHW",
+      "matchup": "ATL @ CHW",
+      "startsAt": "2026-06-10T23:40:00.000Z",
+      "market": "Moneyline",
+      "selection": "CHW Moneyline",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Mike McNamara"
+      ],
+      "odds": [
+        "+124"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Mike McNamara",
+          "odds": "+124",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "CIN @ SD|Prop|f.tatis to hit 1+ home runs yes",
+      "matchup": "CIN @ SD",
+      "startsAt": "2026-06-10T20:10:00.000Z",
+      "market": "Prop",
+      "selection": "F.Tatis To Hit 1+ Home Runs Yes",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Matthew Lopes"
+      ],
+      "odds": [
+        "+540"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Matthew Lopes",
+          "odds": "+540",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "MIN @ DET|Prop|f.valdez u5.5 hits allowed",
+      "matchup": "MIN @ DET",
+      "startsAt": "2026-06-10T22:40:00.000Z",
+      "market": "Prop",
+      "selection": "F.Valdez u5.5 Hits Allowed",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Markus Markets"
+      ],
+      "odds": [
+        "+125"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Markus Markets",
+          "odds": "+125",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "HOU @ LAA|Moneyline|HOU",
+      "matchup": "HOU @ LAA",
+      "startsAt": "Wed, Jun 10 • 9:38 PM ET",
+      "market": "Moneyline",
+      "selection": "HOU Moneyline",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "covers",
+          "name": "Covers"
+        }
+      ],
+      "experts": [
+        "Covers:Joe Osborne"
+      ],
+      "odds": [
+        "+105"
+      ],
+      "examples": [
+        {
+          "source": "Covers",
+          "expert": "Joe Osborne",
+          "odds": "+105",
+          "analysis": "I'll continue fading the Angels after wins. They've been the worst team in baseball in that spot, posting an 8-17 record following a victory. Houston is also well-positioned against Reid Detmers, ranking among the league's best offenses versus left-handed pitching over the past month. While Detmers has pitched well, the Angels are just 4-9 in his starts. If this game is close late, the Astros' red-hot bullpen gives them another edge."
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "BOS @ TB|Prop|j.caminero o1.5 hits + runs + rbis",
+      "matchup": "BOS @ TB",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Prop",
+      "selection": "J.Caminero o1.5 Hits + Runs + RBIs",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:RoyalsProps"
+      ],
+      "odds": [
+        "-121"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "RoyalsProps",
+          "odds": "-121",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "TEX @ KC|Prop|j.jung o1.5 hits",
+      "matchup": "TEX @ KC",
+      "startsAt": "2026-06-10T23:40:00.000Z",
+      "market": "Prop",
+      "selection": "J.Jung o1.5 Hits",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Kevin Thomas"
+      ],
+      "odds": [
+        "+175"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Kevin Thomas",
+          "odds": "+175",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "LAD @ PIT|Spread|LAD -0.5",
+      "matchup": "LAD @ PIT",
+      "startsAt": "2026-06-10T22:40:00.000Z",
+      "market": "Spread",
+      "selection": "LAD -0.5",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Austin Pendergrass"
+      ],
+      "odds": [
+        "-138"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Austin Pendergrass",
+          "odds": "-138",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "CIN @ SD|Prop|m.machado o0.5 hr",
+      "matchup": "CIN @ SD",
+      "startsAt": "2026-06-10T20:10:00.000Z",
+      "market": "Prop",
+      "selection": "M.Machado o0.5 HR",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Matthew Lopes"
+      ],
+      "odds": [
+        "+490"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Matthew Lopes",
+          "odds": "+490",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "MIL @ ATH|Moneyline|MIL",
+      "matchup": "MIL @ ATH",
+      "startsAt": "Wed, Jun 10 • 9:05 PM ET",
+      "market": "Moneyline",
+      "selection": "MIL Moneyline",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "covers",
+          "name": "Covers"
+        }
+      ],
+      "experts": [
+        "Covers:Quinn Allen"
+      ],
+      "odds": [
+        "-104"
+      ],
+      "examples": [
+        {
+          "source": "Covers",
+          "expert": "Quinn Allen",
+          "odds": "-104",
+          "analysis": "The Milwaukee Brewers enter red-hot, posting a 144 wRC+ with 14 home runs and a 43.1% hard-hit rate over the last week. The Brewers face Jack Perkins, who owns a 4.80 xFIP and 5.14 BB/9 recently, creating opportunities for another productive offensive performance."
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "NYY @ CLE|Moneyline|NYY",
+      "matchup": "NYY @ CLE",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Moneyline",
+      "selection": "NYY Moneyline",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Adam Kaufman"
+      ],
+      "odds": [
+        "-100"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Adam Kaufman",
+          "odds": "-100",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "MIN @ DET|Prop|o.arcia u0.5 hits",
+      "matchup": "MIN @ DET",
+      "startsAt": "2026-06-10T22:40:00.000Z",
+      "market": "Prop",
+      "selection": "O.Arcia u0.5 Hits",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Derek Carty"
+      ],
+      "odds": [
+        "+155"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Derek Carty",
+          "odds": "+155",
+          "analysis": "There is a value opportunity on Orlando Arcia's hits prop. THE BAT X is projecting him to record 0.71 hits, while oddsmakers are implying 0.86.  The model believes there is a 49% chance he records fewer than 1 hit, so there is value on the under at +150. This play is good down to at least +126.\n\nLove THE BAT X? Get all of Carty's sports betting projections at EV Analytics https://evanalytics.com/subscribe/mlb?ref=zdlkmgz"
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "NYY @ CLE|Total|Over 7.5",
+      "matchup": "NYY @ CLE",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Total",
+      "selection": "Over 7.5",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Doug Ziefel"
+      ],
+      "odds": [
+        "-118"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Doug Ziefel",
+          "odds": "-118",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "BOS @ TB|Total|Over 7.5",
+      "matchup": "BOS @ TB",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Total",
+      "selection": "Over 7.5",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Wags Wins"
+      ],
+      "odds": [
+        "+102"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Wags Wins",
+          "odds": "+102",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "SEA @ BAL|Total|Over 9",
+      "matchup": "SEA @ BAL",
+      "startsAt": "2026-06-10T22:35:00.000Z",
+      "market": "Total",
+      "selection": "Over 9",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Anders"
+      ],
+      "odds": [
+        "-102"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Anders",
+          "odds": "-102",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "HOU @ LAA|Prop|p.lambert o4.5 ks",
+      "matchup": "HOU @ LAA",
+      "startsAt": "2026-06-11T01:38:00.000Z",
+      "market": "Prop",
+      "selection": "P.Lambert o4.5 Ks",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Sean Koerner🔮"
+      ],
+      "odds": [
+        "-130"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Sean Koerner🔮",
+          "odds": "-130",
+          "analysis": "Much more favorable lineup than I expected with Siri in the official lineup l. Proj closer to -160"
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "NYY @ CLE|Prop|p.messick u5.5 ks",
+      "matchup": "NYY @ CLE",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Prop",
+      "selection": "P.Messick u5.5 Ks",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Frank Ammirante"
+      ],
+      "odds": [
+        "-116"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Frank Ammirante",
+          "odds": "-116",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "WAS @ SF|Moneyline|SF",
+      "matchup": "WAS @ SF",
+      "startsAt": "2026-06-10T19:45:00.000Z",
+      "market": "Moneyline",
+      "selection": "SF Moneyline",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:The Pick Don"
+      ],
+      "odds": [
+        "-110"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "The Pick Don",
+          "odds": "-110",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "TEX @ KC|Moneyline|TEX",
+      "matchup": "TEX @ KC",
+      "startsAt": "2026-06-10T23:40:00.000Z",
+      "market": "Moneyline",
+      "selection": "TEX Moneyline",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Kevin Thomas"
+      ],
+      "odds": [
+        "-118"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Kevin Thomas",
+          "odds": "-118",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "MIL @ ATH|Total|Under 14.5",
+      "matchup": "MIL @ ATH",
+      "startsAt": "Wed, Jun 10 • 9:05 PM ET",
+      "market": "Total",
+      "selection": "Under 14.5",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "covers",
+          "name": "Covers"
+        }
+      ],
+      "experts": [
+        "Covers:Quinn Allen"
+      ],
+      "odds": [
+        "u15.0 -115"
+      ],
+      "examples": [
+        {
+          "source": "Covers",
+          "expert": "Quinn Allen",
+          "odds": "u15.0 -115",
+          "analysis": "A total of 14.5 requires sustained offense from both sides. The Athletics' bullpen owns a 2.37 FIP over the last week, while Milwaukee Brewers relief corps has posted a 3.04 xERA. Recent Brewers outbursts have inflated the number, making 15 runs difficult to reach."
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "NYY @ CLE|Total|Under 4",
+      "matchup": "NYY @ CLE",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Total",
+      "selection": "Under 4",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:💰🦡 Jake"
+      ],
+      "odds": [
+        "-105"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "💰🦡 Jake",
+          "odds": "-105",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "BOS @ TB|Total|Under 7.5",
+      "matchup": "BOS @ TB",
+      "startsAt": "2026-06-10T17:10:00.000Z",
+      "market": "Total",
+      "selection": "Under 7.5",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Sean Zerillo"
+      ],
+      "odds": [
+        "-112"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Sean Zerillo",
+          "odds": "-112",
+          "analysis": "Bet to -120"
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "WAS @ SF|Total|Under 8",
+      "matchup": "WAS @ SF",
+      "startsAt": "2026-06-10T19:45:00.000Z",
+      "market": "Total",
+      "selection": "Under 8",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Brian Bitler"
+      ],
+      "odds": [
+        "-104"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Brian Bitler",
+          "odds": "-104",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "WAS @ SF|Total|Under 8.5",
+      "matchup": "WAS @ SF",
+      "startsAt": "2026-06-10T19:45:00.000Z",
+      "market": "Total",
+      "selection": "Under 8.5",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Picks Office"
+      ],
+      "odds": [
+        "-120"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Picks Office",
+          "odds": "-120",
+          "analysis": "Join Discord for earlier access: https://discord.gg/HjKxYKdSUy\n\nOracle Park is the center of this total. A 0.93 runs factor asks both offenses to work harder for 9 runs.\nAlvarez brings a 3.54 ERA and the left-handed look San Francisco has gone 6-12 against.\nHouser is the loose piece, but the Giants bullpen sits at 3.58 ERA behind him."
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "PHI @ TOR|Prop|v.guerrero o1.5 hits + runs + rbis",
+      "matchup": "PHI @ TOR",
+      "startsAt": "2026-06-10T23:07:00.000Z",
+      "market": "Prop",
+      "selection": "V.Guerrero o1.5 Hits + Runs + RBIs",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "action",
+          "name": "Action Network"
+        }
+      ],
+      "experts": [
+        "Action Network:Sandy Plashkes"
+      ],
+      "odds": [
+        "-128"
+      ],
+      "examples": [
+        {
+          "source": "Action Network",
+          "expert": "Sandy Plashkes",
+          "odds": "-128",
+          "analysis": ""
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    }
+  ],
+  "counts": {
+    "sources": 3,
+    "activeSources": 2,
+    "picks": 33,
+    "consensus": 31
+  }
+}
