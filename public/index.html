@@ -64,6 +64,12 @@
       </div>
     </header>
 
+    <!-- Stale data warning — hidden by JS until data is >10 h old -->
+    <div id="staleWarning" class="stale-banner" hidden>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Picks data may be outdated. Trigger a refresh or wait for the next scheduled build.
+    </div>
+
     <main class="main-content">
       <div class="page-layout">
         <section class="consensus-section">
@@ -78,11 +84,52 @@
             </div>
             <h2 id="sportTitle" class="section-title">Most Agreed Picks</h2>
             <p id="consensusIntro" class="section-sub"></p>
+
+            <!-- Market filter bar — populated by JS -->
+            <div id="marketFilters" class="market-filters" role="group" aria-label="Filter by market"></div>
           </div>
+
           <div id="consensusList" class="consensus-stack"></div>
         </section>
       </div>
     </main>
+
+    <!-- Parlay Builder drawer — hidden until at least 1 pick is added -->
+    <aside id="parlayDrawer" class="parlay-drawer" hidden aria-label="Parlay builder">
+      <div class="parlay-header">
+        <div class="parlay-header__left">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span class="parlay-title">Parlay Slip</span>
+          <span id="parlayCount" class="parlay-badge">0</span>
+        </div>
+        <div class="parlay-header__right">
+          <button id="parlayToggle" class="parlay-toggle" aria-label="Toggle parlay drawer">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="parlay-body">
+        <div id="parlayList" class="parlay-legs"></div>
+
+        <div class="parlay-calc">
+          <div class="parlay-calc__row">
+            <label class="parlay-calc__label" for="parlayStake">Stake ($)</label>
+            <input id="parlayStake" class="parlay-calc__input" type="number" value="100" min="1" step="1">
+          </div>
+          <div class="parlay-calc__row">
+            <span class="parlay-calc__label">Combined odds</span>
+            <strong id="parlayOdds" class="parlay-calc__value">—</strong>
+          </div>
+          <div class="parlay-calc__row">
+            <span class="parlay-calc__label">Payout</span>
+            <strong id="parlayPayout" class="parlay-calc__value parlay-calc__value--payout">—</strong>
+          </div>
+        </div>
+
+        <button id="clearParlay" class="parlay-clear">Clear slip</button>
+      </div>
+    </aside>
 
     <template id="consensusTemplate">
       <article class="consensus-card">
@@ -102,6 +149,11 @@
           </span>
         </div>
         <p class="consensus-examples example-list"></p>
+        <p class="full-analysis" hidden></p>
+        <div class="consensus-actions">
+          <button class="expand-analysis text-btn" hidden>Read analysis ↓</button>
+          <button class="add-parlay-btn parlay-add-btn">+ Parlay</button>
+        </div>
       </article>
     </template>
 

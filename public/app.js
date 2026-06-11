@@ -1,6 +1,8 @@
 const state = {
   sport: currentSport(),
-  consensus: []
+  consensus: [],
+  activeMarket: "all",
+  parlay: [] // { key, selection, matchup, market, odds }
 };
 
 const sports = {
@@ -8,6 +10,8 @@ const sports = {
   nba: { label: "NBA", sourceUrl: "https://www.covers.com/picks/nba" },
   nhl: { label: "NHL", sourceUrl: "https://www.covers.com/picks/nhl" }
 };
+
+const STALE_THRESHOLD_HOURS = 10;
 
 const els = {
   refreshButton: document.querySelector("#refreshButton"),
@@ -19,8 +23,20 @@ const els = {
   consensusIntro: document.querySelector("#consensusIntro"),
   consensusList: document.querySelector("#consensusList"),
   consensusTemplate: document.querySelector("#consensusTemplate"),
-  sportLinks: document.querySelectorAll("[data-sport-link]")
+  sportLinks: document.querySelectorAll("[data-sport-link]"),
+  staleWarning: document.querySelector("#staleWarning"),
+  marketFilters: document.querySelector("#marketFilters"),
+  parlayDrawer: document.querySelector("#parlayDrawer"),
+  parlayCount: document.querySelector("#parlayCount"),
+  parlayList: document.querySelector("#parlayList"),
+  parlayOdds: document.querySelector("#parlayOdds"),
+  parlayPayout: document.querySelector("#parlayPayout"),
+  parlayStake: document.querySelector("#parlayStake"),
+  clearParlay: document.querySelector("#clearParlay"),
+  parlayToggle: document.querySelector("#parlayToggle")
 };
+
+// ── Data loading ─────────────────────────────────────────────────────────────
 
 async function loadConsensus(refresh = false) {
   setLoading(true);
@@ -38,9 +54,12 @@ async function loadConsensus(refresh = false) {
     renderSportChrome();
     els.fetchedAt.textContent = formatDate(consensusData.generatedAt);
     els.gameCount.textContent = consensusData.counts?.activeSources ?? 0;
-    els.consensusIntro.textContent = consensusSummary(consensusData);
 
+    checkStale(consensusData.generatedAt);
+    renderMarketFilters();
     renderConsensus();
+
+    els.consensusIntro.textContent = consensusSummary(consensusData);
   } catch (error) {
     els.consensusList.innerHTML = `<div class="empty">Could not compare picks — ${escapeHtml(error.message)}</div>`;
   } finally {
@@ -48,53 +67,59 @@ async function loadConsensus(refresh = false) {
   }
 }
 
-function consensusUrl(refresh = false) {
-  const isLocal = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
-  const params = new URLSearchParams({ sport: state.sport });
-  if (refresh) {
-    params.set("refresh", "1");
-  }
-  if (isLocal) {
-    return `/api/consensus?${params}`;
-  }
-  const cacheBust = refresh ? `?t=${Date.now()}` : "";
-  return staticConsensusUrl(cacheBust);
+// ── Stale warning ─────────────────────────────────────────────────────────────
+
+function checkStale(generatedAt) {
+  if (!generatedAt || !els.staleWarning) return;
+  const ageHours = (Date.now() - new Date(generatedAt).getTime()) / 3_600_000;
+  els.staleWarning.hidden = ageHours <= STALE_THRESHOLD_HOURS;
 }
 
-function staticConsensusUrl(cacheBust = "") {
-  // Resolve relative to the root of the site regardless of which subdirectory
-  // this script is loaded from. The data files are always at:
-  //   data/consensus.json          (MLB)
-  //   data/nba/consensus.json      (NBA)
-  //   data/nhl/consensus.json      (NHL)
-  const base = siteRoot();
-  return state.sport === "mlb"
-    ? `${base}data/consensus.json${cacheBust}`
-    : `${base}data/${state.sport}/consensus.json${cacheBust}`;
+// ── Market filters ────────────────────────────────────────────────────────────
+
+const MARKET_ORDER = ["all", "Moneyline", "Total", "Run Line", "Spread", "Prop"];
+
+function availableMarkets() {
+  const seen = new Set(state.consensus.map((p) => p.market));
+  return MARKET_ORDER.filter((m) => m === "all" || seen.has(m));
 }
 
-/**
- * Returns an absolute URL prefix pointing at the site root, so data fetches
- * work identically whether the page is at / or /nba/ or /nhl/.
- */
-function siteRoot() {
-  const { protocol, host, pathname } = window.location;
-  // pathname is e.g. "/" or "/nba/" or "/DailyExpertMLBBoard/nba/"
-  const parts = pathname.split("/").filter(Boolean);
-  // Drop any trailing sport segment so we get back to the repo root
-  const sportSegments = new Set(["mlb", "nba", "nhl"]);
-  const rootParts = parts.filter((p) => !sportSegments.has(p));
-  const rootPath = rootParts.length ? `/${rootParts.join("/")}/` : "/";
-  return `${protocol}//${host}${rootPath}`;
+function renderMarketFilters() {
+  if (!els.marketFilters) return;
+  const markets = availableMarkets();
+
+  els.marketFilters.innerHTML = markets.map((m) => {
+    const active = state.activeMarket === m ? " is-active" : "";
+    const label = m === "all" ? "All" : m;
+    return `<button class="market-filter-btn${active}" data-market="${m}">${label}</button>`;
+  }).join("");
+
+  els.marketFilters.querySelectorAll("[data-market]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.activeMarket = btn.dataset.market;
+      els.marketFilters.querySelectorAll("[data-market]").forEach((b) => {
+        b.classList.toggle("is-active", b.dataset.market === state.activeMarket);
+      });
+      renderConsensus();
+    });
+  });
 }
+
+// ── Consensus rendering ───────────────────────────────────────────────────────
 
 function renderConsensus() {
-  const common = state.consensus.filter((pick) => pick.sourceCount > 1).slice(0, 8);
-  const fallback = state.consensus.slice(0, 8);
-  const picks = common.length ? common : fallback;
+  const filtered = state.consensus
+    .filter((p) => state.activeMarket === "all" || p.market === state.activeMarket)
+    .filter((p) => p.sourceCount > 1 || state.consensus.filter((x) => x.sourceCount > 1).length === 0)
+    .slice(0, 12);
+
+  const fallback = state.consensus
+    .filter((p) => state.activeMarket === "all" || p.market === state.activeMarket)
+    .slice(0, 12);
+
+  const picks = filtered.length ? filtered : fallback;
 
   els.consensusList.innerHTML = "";
-  // Update the badge to reflect what's actually rendered, not the raw JSON count
   els.pickCount.textContent = picks.length;
 
   if (!picks.length) {
@@ -106,8 +131,12 @@ function renderConsensus() {
     const node = els.consensusTemplate.content.cloneNode(true);
     const card = node.querySelector(".consensus-card");
     const market = pick.market || "Other";
-    card.style.animationDelay = `${i * 50}ms`;
+    card.style.animationDelay = `${i * 40}ms`;
     card.setAttribute("data-market", market);
+
+    // In-parlay state
+    const inParlay = state.parlay.some((p) => p.key === pick.key);
+    card.classList.toggle("in-parlay", inParlay);
 
     node.querySelector(".market").textContent = market;
     node.querySelector(".agreement").textContent = pick.agreement;
@@ -118,8 +147,140 @@ function renderConsensus() {
     node.querySelector(".source-list").textContent = pick.sources.map((s) => s.name).join(" · ");
     node.querySelector(".example-list").textContent = sampleExamples(pick.examples);
 
+    // Full analysis expand/collapse
+    const fullAnalysis = pick.examples?.find((e) => e.analysis)?.analysis || "";
+    const expandBtn = node.querySelector(".expand-analysis");
+    const fullBlock = node.querySelector(".full-analysis");
+
+    if (fullAnalysis && expandBtn && fullBlock) {
+      fullBlock.textContent = fullAnalysis;
+      expandBtn.hidden = false;
+      expandBtn.addEventListener("click", () => {
+        const open = fullBlock.hidden === false;
+        fullBlock.hidden = open;
+        expandBtn.textContent = open ? "Read analysis ↓" : "Close ↑";
+      });
+    } else if (expandBtn) {
+      expandBtn.hidden = true;
+    }
+
+    // Parlay add/remove
+    const parlayBtn = node.querySelector(".add-parlay-btn");
+    if (parlayBtn) {
+      parlayBtn.textContent = inParlay ? "− Remove" : "+ Parlay";
+      parlayBtn.classList.toggle("in-parlay", inParlay);
+      parlayBtn.addEventListener("click", () => toggleParlay(pick));
+    }
+
     els.consensusList.append(node);
   });
+}
+
+// ── Parlay builder ────────────────────────────────────────────────────────────
+
+function toggleParlay(pick) {
+  const idx = state.parlay.findIndex((p) => p.key === pick.key);
+  if (idx >= 0) {
+    state.parlay.splice(idx, 1);
+  } else {
+    state.parlay.push({
+      key: pick.key,
+      selection: pick.selection,
+      matchup: pick.matchup,
+      market: pick.market,
+      odds: pick.odds?.[0] || ""
+    });
+  }
+  renderConsensus();
+  renderParlayDrawer();
+}
+
+function renderParlayDrawer() {
+  if (!els.parlayDrawer) return;
+
+  const count = state.parlay.length;
+  els.parlayCount.textContent = count;
+  els.parlayDrawer.hidden = count === 0;
+
+  if (count === 0) return;
+
+  // Leg list
+  els.parlayList.innerHTML = state.parlay.map((leg, i) => `
+    <div class="parlay-leg">
+      <div class="parlay-leg__info">
+        <span class="parlay-leg__selection">${escapeHtml(leg.selection)}</span>
+        <span class="parlay-leg__matchup">${escapeHtml(leg.matchup)}</span>
+      </div>
+      <div class="parlay-leg__right">
+        ${leg.odds ? `<span class="parlay-leg__odds">${escapeHtml(leg.odds)}</span>` : ""}
+        <button class="parlay-remove" data-idx="${i}" aria-label="Remove">✕</button>
+      </div>
+    </div>
+  `).join("");
+
+  els.parlayList.querySelectorAll(".parlay-remove").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.parlay.splice(Number(btn.dataset.idx), 1);
+      renderConsensus();
+      renderParlayDrawer();
+    });
+  });
+
+  // Combined odds calculation
+  const combinedDecimal = state.parlay.reduce((acc, leg) => {
+    const decimal = americanToDecimal(leg.odds);
+    return decimal ? acc * decimal : acc;
+  }, 1);
+
+  const combinedAmerican = decimalToAmerican(combinedDecimal);
+  els.parlayOdds.textContent = combinedAmerican || "—";
+
+  const stake = parseFloat(els.parlayStake?.value) || 100;
+  const payout = ((combinedDecimal - 1) * stake).toFixed(2);
+  els.parlayPayout.textContent = isFinite(payout) && combinedDecimal > 1
+    ? `$${Number(payout).toLocaleString()} profit on $${stake}`
+    : "—";
+}
+
+function americanToDecimal(odds) {
+  const n = parseFloat(odds);
+  if (!isFinite(n) || n === 0) return null;
+  return n > 0 ? n / 100 + 1 : 100 / Math.abs(n) + 1;
+}
+
+function decimalToAmerican(decimal) {
+  if (!isFinite(decimal) || decimal <= 1) return "";
+  const american = decimal >= 2
+    ? `+${Math.round((decimal - 1) * 100)}`
+    : `-${Math.round(100 / (decimal - 1))}`;
+  return american;
+}
+
+// ── Utilities ─────────────────────────────────────────────────────────────────
+
+function consensusUrl(refresh = false) {
+  const isLocal = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
+  const params = new URLSearchParams({ sport: state.sport });
+  if (refresh) params.set("refresh", "1");
+  if (isLocal) return `/api/consensus?${params}`;
+  const cacheBust = refresh ? `?t=${Date.now()}` : "";
+  return staticConsensusUrl(cacheBust);
+}
+
+function staticConsensusUrl(cacheBust = "") {
+  const base = siteRoot();
+  return state.sport === "mlb"
+    ? `${base}data/consensus.json${cacheBust}`
+    : `${base}data/${state.sport}/consensus.json${cacheBust}`;
+}
+
+function siteRoot() {
+  const { protocol, host, pathname } = window.location;
+  const parts = pathname.split("/").filter(Boolean);
+  const sportSegments = new Set(["mlb", "nba", "nhl"]);
+  const rootParts = parts.filter((p) => !sportSegments.has(p));
+  const rootPath = rootParts.length ? `/${rootParts.join("/")}/` : "/";
+  return `${protocol}//${host}${rootPath}`;
 }
 
 function setLoading(isLoading) {
@@ -158,30 +319,12 @@ function escapeHtml(value) {
   );
 }
 
-const style = document.createElement("style");
-style.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
-document.head.append(style);
-
-renderSportChrome();
-els.refreshButton.addEventListener("click", () => loadConsensus(true));
-
-loadConsensus();
-
-/**
- * Detect sport from the URL path. Works for both:
- *   /                     → mlb  (root index.html)
- *   /nba/                 → nba  (subdirectory page)
- *   /DailyExpertMLBBoard/nba/  → nba  (GitHub Pages with repo prefix)
- * Falls back to the ?sport= query param for local dev server.
- */
 function currentSport() {
   const pathParts = window.location.pathname.split("/").filter(Boolean);
   const sportFromPath = pathParts.find((part) => ["mlb", "nba", "nhl"].includes(part));
   if (sportFromPath) return sportFromPath;
-
   const querySport = new URLSearchParams(window.location.search).get("sport");
   if (["mlb", "nba", "nhl"].includes(querySport)) return querySport;
-
   return "mlb";
 }
 
@@ -189,11 +332,40 @@ function renderSportChrome() {
   const sport = sports[state.sport] || sports.mlb;
   els.sportTitle.textContent = `${sport.label} Most Agreed Picks`;
   els.sourceLink.href = sport.sourceUrl;
-
-  // Mark the active tab by matching data-sport-link to the current sport
   els.sportLinks.forEach((link) => {
     const isActive = link.dataset.sportLink === state.sport;
     link.classList.toggle("is-active", isActive);
     link.setAttribute("aria-current", isActive ? "page" : "false");
   });
 }
+
+// ── Spin keyframes ────────────────────────────────────────────────────────────
+
+const style = document.createElement("style");
+style.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
+document.head.append(style);
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+renderSportChrome();
+els.refreshButton.addEventListener("click", () => loadConsensus(true));
+
+if (els.clearParlay) {
+  els.clearParlay.addEventListener("click", () => {
+    state.parlay = [];
+    renderConsensus();
+    renderParlayDrawer();
+  });
+}
+
+if (els.parlayStake) {
+  els.parlayStake.addEventListener("input", renderParlayDrawer);
+}
+
+if (els.parlayToggle) {
+  els.parlayToggle.addEventListener("click", () => {
+    els.parlayDrawer.classList.toggle("is-collapsed");
+  });
+}
+
+loadConsensus();

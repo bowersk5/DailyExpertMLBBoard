@@ -20,19 +20,31 @@ export function decodeEntities(value) {
     .replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(Number(dec)));
 }
 
-export async function fetchHtml(url) {
-  const response = await fetch(url, {
-    headers: {
-      "accept": "text/html,application/xhtml+xml",
-      "accept-language": "en-US,en;q=0.9",
-      "user-agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36"
+/**
+ * Fetch HTML from a URL with a per-source timeout (default 15 s).
+ * Throws if the request hangs, the server errors, or the network fails.
+ */
+export async function fetchHtml(url, { timeoutMs = 15_000 } = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        "accept": "text/html,application/xhtml+xml",
+        "accept-language": "en-US,en;q=0.9",
+        "user-agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`${url} returned ${response.status} ${response.statusText}`);
     }
-  });
 
-  if (!response.ok) {
-    throw new Error(`${url} returned ${response.status} ${response.statusText}`);
+    return response.text();
+  } finally {
+    clearTimeout(timer);
   }
-
-  return response.text();
 }

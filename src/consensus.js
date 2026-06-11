@@ -5,6 +5,7 @@ export const sports = {
   mlb: {
     id: "mlb",
     label: "MLB",
+    minExpectedPicks: 3,
     sources: [
       { id: "covers", name: "Covers", url: "https://www.covers.com/picks/mlb", parser: parseCoversSource },
       { id: "pickswise", name: "Pickswise", url: "https://www.pickswise.com/mlb/picks/", parser: parsePickswiseSource },
@@ -14,6 +15,7 @@ export const sports = {
   nba: {
     id: "nba",
     label: "NBA",
+    minExpectedPicks: 1,
     sources: [
       { id: "covers", name: "Covers", url: "https://www.covers.com/picks/nba", parser: parseCoversSource },
       { id: "pickswise", name: "Pickswise", url: "https://www.pickswise.com/nba/picks/", parser: parsePickswiseSource }
@@ -22,6 +24,7 @@ export const sports = {
   nhl: {
     id: "nhl",
     label: "NHL",
+    minExpectedPicks: 1,
     sources: [
       { id: "covers", name: "Covers", url: "https://www.covers.com/picks/nhl", parser: parseCoversSource },
       { id: "pickswise", name: "Pickswise", url: "https://www.pickswise.com/nhl/picks/", parser: parsePickswiseSource }
@@ -32,9 +35,6 @@ export const sports = {
 const defaultSport = "mlb";
 
 // Sport-agnostic abbreviation aliases.
-// IMPORTANT: only add aliases that are unambiguous across all sports
-// (e.g. ARZ→ARI is safe; CHI is NOT aliased here because it means
-// Bulls in NBA and Blackhawks in NHL, not just Cubs in MLB).
 const teamAliases = {
   ARZ: "ARI",
   AZ: "ARI",
@@ -51,26 +51,25 @@ const teamAliases = {
   PHO: "PHX",
   SFG: "SF",
   UTA: "UTA",
-  VEG: "VGK",  // Covers uses VEG; Pickswise/others use VGK for Vegas Golden Knights
+  VEG: "VGK",
   WSH: "WAS"
 };
 
 // Sport-specific alias overrides applied after the base table.
-// Keyed by sport id, then abbr -> canonical.
 const sportTeamAliases = {
   mlb: {
-    CHI: "CHC",  // Chicago Cubs (MLB only)
-    LA: "LAD",   // Los Angeles Dodgers (MLB only)
-    NO: "NOP",   // not relevant in MLB but safe
-    NY: "NYY"    // default NY to Yankees in MLB (Mets use NYM)
+    CHI: "CHC",
+    LA: "LAD",
+    NO: "NOP",
+    NY: "NYY"
   },
   nba: {
-    NO: "NOP",   // New Orleans Pelicans
-    NY: "NYK",   // New York Knicks
-    GS: "GS"     // Golden State (already correct)
+    NO: "NOP",
+    NY: "NYK",
+    GS: "GS"
   },
   nhl: {
-    NO: "NSH"    // Nashville Predators sometimes abbreviated NO; treat as no-op for safety
+    NO: "NSH"
   }
 };
 
@@ -184,7 +183,14 @@ export async function fetchConsensus({ sport = defaultSport, coversHtml } = {}) 
 
   const sourceResults = settled.map((result, index) => {
     if (result.status === "fulfilled") {
-      return result.value;
+      const sr = result.value;
+      // Health check: warn if a source returned suspiciously few picks.
+      // This helps surface silent parser breakage (e.g. Next.js __NEXT_DATA__ format changes).
+      if (sr.picks.length < (config.minExpectedPicks || 1) && !sr.error) {
+        sr.warning = `Expected ≥${config.minExpectedPicks} picks but got ${sr.picks.length} — parser may be broken`;
+        console.warn(`[health] ${sr.name}: ${sr.warning}`);
+      }
+      return sr;
     }
 
     return {
@@ -203,11 +209,12 @@ export async function fetchConsensus({ sport = defaultSport, coversHtml } = {}) 
     sport: config.id,
     sportLabel: config.label,
     generatedAt: new Date().toISOString(),
-    sources: sourceResults.map(({ id, name, url, picks, error }) => ({
+    sources: sourceResults.map(({ id, name, url, picks, error, warning }) => ({
       id,
       name,
       url,
       error: error || null,
+      warning: warning || null,
       picks: picks.length
     })),
     picks: allPicks,
@@ -221,6 +228,17 @@ export async function fetchConsensus({ sport = defaultSport, coversHtml } = {}) 
   };
 }
 
+/**
+ * Build consensus from a flat list of normalised picks.
+ *
+ * Confidence scoring (revised):
+ *   - Cross-source agreement is the primary signal: +200 per unique source
+ *   - Expert count within a source is secondary: +10 per unique expert
+ *   - Recency bonus: picks published in the last 4 hours get +50
+ *
+ * This ensures a 2-source / 1-expert pick (score 410) always beats a
+ * 1-source / 5-expert pick (score 250), which the old formula got backwards.
+ */
 export function buildConsensus(picks, { totalSources = sports[defaultSport].sources.length } = {}) {
   const grouped = new Map();
 
@@ -240,7 +258,8 @@ export function buildConsensus(picks, { totalSources = sports[defaultSport].sour
       sources: [],
       experts: [],
       odds: [],
-      examples: []
+      examples: [],
+      _recentCount: 0
     };
     const sourceKey = `${pick.source}:${pick.expert || pick.source}`;
 
@@ -255,6 +274,12 @@ export function buildConsensus(picks, { totalSources = sports[defaultSport].sour
     if (pick.odds && !existing.odds.includes(pick.odds)) {
       existing.odds.push(pick.odds);
     }
+
+    // Track recency for bonus scoring
+    if (isRecent(pick.made)) {
+      existing._recentCount += 1;
+    }
+
     existing.examples.push({
       source: pick.source,
       expert: pick.expert,
@@ -265,16 +290,31 @@ export function buildConsensus(picks, { totalSources = sports[defaultSport].sour
   }
 
   return [...grouped.values()]
-    .map((pick) => ({
-      ...pick,
-      agreement: `${pick.sourceCount}/${totalSources}`,
-      confidence: pick.sourceCount * 100 + pick.pickCount
-    }))
+    .map((pick) => {
+      const { _recentCount, ...rest } = pick;
+      const confidence =
+        pick.sourceCount * 200 +
+        pick.pickCount * 10 +
+        (_recentCount > 0 ? 50 : 0);
+      return {
+        ...rest,
+        agreement: `${pick.sourceCount}/${totalSources}`,
+        confidence
+      };
+    })
     .sort((a, b) => b.confidence - a.confidence || b.pickCount - a.pickCount || a.selection.localeCompare(b.selection));
 }
 
 export function sportConfig(sport = defaultSport) {
   return sports[sport] || sports[defaultSport];
+}
+
+/** Returns true if the pick was made within the last ~4 hours. */
+function isRecent(made = "") {
+  if (/\d+\s+minutes?\s+ago/i.test(made)) return true;
+  const hourMatch = made.match(/^(\d+)\s+hours?\s+ago/i);
+  if (hourMatch && Number(hourMatch[1]) <= 4) return true;
+  return false;
 }
 
 async function fetchSource(source, config) {
@@ -308,6 +348,7 @@ function parseCoversSource(html, config) {
     odds: pick.odds,
     expert: pick.analyst,
     analysis: pick.analysis,
+    made: pick.made,
     sport: config.id
   })).filter(Boolean);
 }
@@ -397,6 +438,7 @@ function normalizePick(raw) {
     odds: normalizeOdds(raw.odds),
     expert: raw.expert || "",
     analysis: raw.analysis || "",
+    made: raw.made || "",
     key: `${matchup}|${market}|${normalized.key}`
   };
 }
