@@ -1,7 +1,7 @@
 {
   "sport": "nba",
   "sportLabel": "NBA",
-  "generatedAt": "2026-06-13T14:26:06.374Z",
+  "generatedAt": "2026-06-13T19:57:41.378Z",
   "sources": [
     {
       "id": "covers",
@@ -9,15 +9,15 @@
       "url": "https://www.covers.com/picks/nba",
       "error": null,
       "warning": null,
-      "picks": 13
+      "picks": 10
     },
     {
       "id": "pickswise",
       "name": "Pickswise",
       "url": "https://www.pickswise.com/nba/picks/",
       "error": null,
-      "warning": "Expected ≥1 picks but got 0 — parser may be broken",
-      "picks": 0
+      "warning": null,
+      "picks": 1
     },
     {
       "id": "thelines",
@@ -34,10 +34,10 @@
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
       "market": "Prop",
       "selection": "Victor Wembanyama o11.5 Total Rebounds",
-      "odds": "o11.5 +110",
+      "odds": "o11.5 +100",
       "expert": "Jason Logan",
       "analysis": "Wembanyama has fresh legs after two full days off and has to be everywhere in this do-or-die game for the Spurs, including all over the glass. He hauled in a series high 13 boards in Game 4, getting himself in position for 19 rebounding chances. San Antonio need to kept the 7-footer anchored to the paint on defense while needing him to attack inside on offense. I expect to see extra offensive rebounds from Wemby, who snatched five ORBs in Game 4. Projections range from 12 boards to 15+, with my forecast coming out at 13.7 rebounds. That should have the Over 11.5 touting vig as high as -170.",
-      "made": "2 hours ago",
+      "made": "7 hours ago",
       "key": "NYK @ SA|Prop|victor wembanyama o11.5 total rebounds",
       "sourceId": "covers",
       "source": "Covers",
@@ -51,7 +51,7 @@
       "odds": "o27.5 -118",
       "expert": "Jason Logan",
       "analysis": "We’ve seen Wembanyama return with well-rested vengeance the past two rounds. He scored 26 points in Game 1 of the NBA Finals after a three-day break and dropped 32 points after a two-day gap ahead of Game 3. Wembanyama also poured in 41 points (27 in regulation) in an OT Game 1 of the Western Conference finals following a three-day buffer between series. When aggressive, there’s very little the Knicks have done to bottle up San Antonio’s star center. And in the wake of his off nights, head coach Mitch Johnson has made a focused effort to get Wembanyama going early on. With the Spurs’ season on the line in Game 5, Wembanyama leaves it all on the floor. I expect to see the high side of his shot attempts, calling for another 25 FGAs, but with fresher legs finishing those looks and carrying him deep into the second half.",
-      "made": "19 hours ago",
+      "made": "yesterday",
       "key": "NYK @ SA|Prop|victor wembanyama o28.5 points scored",
       "sourceId": "covers",
       "source": "Covers",
@@ -62,10 +62,10 @@
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
       "market": "Spread",
       "selection": "NYK +5.5",
-      "odds": "+6.5 -135",
+      "odds": "+5.5 -110",
       "expert": "Jon Metler",
       "analysis": "There seems to be a general consensus that the New York Knicks will have a letdown in Game 5 and return home to win the NBA Finals in Game 6. I'm not buying it. Throughout these playoffs, the Knicks have been ruthless in closeout opportunities, beating the Hawks by 51, the Sixers by 30, and the Cavaliers by 37. I think New York has a legitimate chance to close out the series in San Antonio, which is why I'm happy to grab the +5.5. That’s a strong number when the film has you thinking the Knicks can win the game outright. I make the Knicks closer to a 2.5-point underdog in this matchup. I also think the Knicks discovered something in Game 4 that could carry over into Game 5: more minutes for Jose Alvarado as a screener for Brunson, a pressure-release valve, and a secondary ball-handler. If the Spurs never build that 29-point lead, the Knicks may never uncover that adjustment.",
-      "made": "20 hours ago",
+      "made": "yesterday",
       "key": "NYK @ SA|Spread|NYK +5.5",
       "sourceId": "covers",
       "source": "Covers",
@@ -76,10 +76,10 @@
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
       "market": "Prop",
       "selection": "Jalen Brunson u5.5 Total Assists",
-      "odds": "u6.5 -160",
+      "odds": "u6.5 -150",
       "expert": "Jason Logan",
       "analysis": "Those seven assists in Game 4 marked the first time in the past six postseason games that Brunson finished Over his assists total. This sudden shift in sharing the basketball wasn’t really Brunson’s doing but more a result of the Knicks having to scrap their initial offensive schemes for Game 4. Game 5 has Brown going back to his game plan of running Towns as a facilitator at the high post and involving Brunson in screen action away from ball, in order to get away from his dribble-heavy showing in Game 3’s loss and expose the switching issues that plagued the San Antonio Spurs during the Knicks’ rally. Brunson's early projections sit above six assists for Saturday, which is nothing new. His projections have repeatedly landed north of this number during the playoffs, yet the Under on assists is 6-2 in his last eight postseason showings.",
-      "made": "22 hours ago",
+      "made": "yesterday",
       "key": "NYK @ SA|Prop|jalen brunson u5.5 total assists",
       "sourceId": "covers",
       "source": "Covers",
@@ -90,10 +90,10 @@
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
       "market": "Moneyline",
       "selection": "NYK Moneyline",
-      "odds": "+168",
+      "odds": "+170",
       "expert": "Joe Osborne",
       "analysis": "The Knicks have been ruthless in closeout situations, winning their previous three road series-clinchers in these playoffs by 51, 30, and 37 points. That's not a team that lets opponents linger. San Antonio has also struggled whenever adversity strikes in this series, particularly in the fourth quarter where they've been consistently outplayed. With a championship within reach, I expect New York to deliver a focused, complete-game performance.",
-      "made": "23 hours ago",
+      "made": "yesterday",
       "key": "NYK @ SA|Moneyline|NYK",
       "sourceId": "covers",
       "source": "Covers",
@@ -118,7 +118,7 @@
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
       "market": "Prop",
       "selection": "Karl-Anthony Towns o11.5 Total Rebounds",
-      "odds": "o10.5 -140",
+      "odds": "o10.5 -139",
       "expert": "Douglas Farmer",
       "analysis": "Once Towns was back on the court in full on Wednesday, he returned to his effectiveness. He finished with 10 rebounds despite playing less than 26 minutes. He snagged seven boards once free of his shackles in the second half.",
       "made": "yesterday",
@@ -144,55 +144,13 @@
     {
       "matchup": "NYK @ SA",
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
-      "market": "Prop",
-      "selection": "Points Scored Karl-Anthony Towns o17.5 Points Scored",
-      "odds": "o16.5 -102",
-      "expert": "Jason Logan",
-      "analysis": "Karl-Anthony Towns sat for most of the first half of Game 4 but was ready to roll in the second half, playing 18 of 24 minutes. His offense, however, was understandably spotty and much like Game 3, Towns couldn’t get into rhythm. Mike Brown’s plan for Game 4 was to get Towns going early, but that went out the window. I’m not backing off KAT in Game 5. He salvaged 13 points Wednesday, not too short of his total of 17.5, considering the circumstances. Projections sit as high as 21+ with my number at 18.7 points, which should have Over 17.5 listed at -118.",
-      "made": "yesterday",
-      "key": "NYK @ SA|Prop|points scored karl-anthony towns o17.5 points scored",
-      "sourceId": "covers",
-      "source": "Covers",
-      "url": "https://www.covers.com/picks/nba"
-    },
-    {
-      "matchup": "NYK @ SA",
-      "startsAt": "Sat, Jun 13 • 8:30 PM ET",
       "market": "Parlay",
       "selection": "3 LEG PARLAY Jalen Brunson u5.5 Total Assists Jalen Brunson o2.5 3-Pointers Made 3-Pointers Made Jalen Brunson o3.5 Total Rebounds",
       "odds": "",
       "expert": "Jason Logan",
       "analysis": "Brunson’s seven assists in Game 4 had a lot to do with Towns’ foul trouble. New York wants to take the ball out of his hands and create space for his shots as a cutter. That scheme will lead to more 3-point looks, with Brunson bagging three triples in each of the past two games and game script saying the Knicks are fighting from behind. Brunson has been big on the boards, with five rebounds in each of his last three outings while putting himself in place for an average of 10.0 rebounding chances in those games.",
-      "made": "22 hours ago",
+      "made": "yesterday",
       "key": "NYK @ SA|Parlay|3 leg parlay jalen brunson u5.5 total assists jalen brunson o2.5 3-pointers made 3-pointers made jalen brunson o3.5 total rebounds",
-      "sourceId": "covers",
-      "source": "Covers",
-      "url": "https://www.covers.com/picks/nba"
-    },
-    {
-      "matchup": "NYK @ SA",
-      "startsAt": "Sat, Jun 13 • 8:30 PM ET",
-      "market": "Parlay",
-      "selection": "4 LEG PARLAY Victor Wembanyama o27.5 Points Scored Victor Wembanyama o3.5 Total Blocks Karl-Anthony Towns o17.5 Points Scored Karl-Anthony Towns o11.5 Total Rebounds",
-      "odds": "",
-      "expert": "Jason Logan",
-      "analysis": "Game 5 could be a battle of the bigs. Karl-Anthony Towns was a beast on the boards in the second half of Game 4, and his Game 5 forecasts call for as many 21+ and 14+ rebounds. Victor Wembanyama carries the hopes of Texas basketball fans Saturday. The two days of downtime will help “The Alien” rest up, with his projections as high as 29 points. Wembanyama will be contesting everything – from 3-pointers to layups. Expect an incredible two-way effort from him with the season on the line.",
-      "made": "yesterday",
-      "key": "NYK @ SA|Parlay|4 leg parlay victor wembanyama o27.5 points scored victor wembanyama o3.5 total blocks karl-anthony towns o17.5 points scored karl-anthony towns o11.5 total rebounds",
-      "sourceId": "covers",
-      "source": "Covers",
-      "url": "https://www.covers.com/picks/nba"
-    },
-    {
-      "matchup": "NYK @ SA",
-      "startsAt": "Sat, Jun 13 • 8:30 PM ET",
-      "market": "Parlay",
-      "selection": "3 LEG PARLAY Karl-Anthony Towns o17.5 Points Scored SC Stephon Castle o16.5 Points Scored",
-      "odds": "",
-      "expert": "Jason Logan",
-      "analysis": "The Spurs’ inexperience has them backed into a 3-1 hole, but that youth could also be a strength in this spot. San Antonio is just young and dumb enough to put Game 3 in the past. The extended two-day break also works in their favor, especially when it comes to recharging Victor Wembanyama’s draining batteries. He looked tired and passive in the second half Wednesday.",
-      "made": "yesterday",
-      "key": "NYK @ SA|Parlay|3 leg parlay karl-anthony towns o17.5 points scored sc stephon castle o16.5 points scored",
       "sourceId": "covers",
       "source": "Covers",
       "url": "https://www.covers.com/picks/nba"
@@ -205,45 +163,28 @@
       "odds": "",
       "expert": "Jason Logan",
       "analysis": "I might be one of the rare ones that likes San Antonio to survive Game 5. The two-day break gives Wemby rest but also allows the young Spurs to put the Game 4 collapse behind them. New York’s comeback benefited from some lucky bounces, friendly rims, and self-inflicted wounds from San Antonio. Wembanyama gets aggressive from the opening tip, both attacking the rim and cleaning the glass. His models call for 29+ and as many as 15+ boards for Game 5.",
-      "made": "19 hours ago",
+      "made": "yesterday",
       "key": "NYK @ SA|Parlay|3 leg parlay victor wembanyama o28.5 points scored victor wembanyama o11.5 total rebounds",
       "sourceId": "covers",
       "source": "Covers",
       "url": "https://www.covers.com/picks/nba"
+    },
+    {
+      "matchup": "NYK @ SAS",
+      "startsAt": "",
+      "market": "Spurs 1Q -2.5",
+      "selection": "Spurs 1Q -2.5",
+      "odds": "-105",
+      "expert": "Pickswise",
+      "analysis": "Spurs 1Q -2.5",
+      "made": "",
+      "key": "NYK @ SAS|Spurs 1Q -2.5|spurs 1q -2.5",
+      "sourceId": "pickswise",
+      "source": "Pickswise",
+      "url": "https://www.pickswise.com/nba/picks/"
     }
   ],
   "consensus": [
-    {
-      "key": "NYK @ SA|Prop|victor wembanyama o11.5 total rebounds",
-      "matchup": "NYK @ SA",
-      "startsAt": "Sat, Jun 13 • 8:30 PM ET",
-      "market": "Prop",
-      "selection": "Victor Wembanyama o11.5 Total Rebounds",
-      "sourceCount": 1,
-      "pickCount": 1,
-      "sources": [
-        {
-          "id": "covers",
-          "name": "Covers"
-        }
-      ],
-      "experts": [
-        "Covers:Jason Logan"
-      ],
-      "odds": [
-        "o11.5 +110"
-      ],
-      "examples": [
-        {
-          "source": "Covers",
-          "expert": "Jason Logan",
-          "odds": "o11.5 +110",
-          "analysis": "Wembanyama has fresh legs after two full days off and has to be everywhere in this do-or-die game for the Spurs, including all over the glass. He hauled in a series high 13 boards in Game 4, getting himself in position for 19 rebounding chances. San Antonio need to kept the 7-footer anchored to the paint on defense while needing him to attack inside on offense. I expect to see extra offensive rebounds from Wemby, who snatched five ORBs in Game 4. Projections range from 12 boards to 15+, with my forecast coming out at 13.7 rebounds. That should have the Over 11.5 touting vig as high as -170."
-        }
-      ],
-      "agreement": "1/3",
-      "confidence": 260
-    },
     {
       "key": "NYK @ SA|Parlay|3 leg parlay jalen brunson u5.5 total assists jalen brunson o2.5 3-pointers made 3-pointers made jalen brunson o3.5 total rebounds",
       "matchup": "NYK @ SA",
@@ -274,35 +215,6 @@
       "confidence": 210
     },
     {
-      "key": "NYK @ SA|Parlay|3 leg parlay karl-anthony towns o17.5 points scored sc stephon castle o16.5 points scored",
-      "matchup": "NYK @ SA",
-      "startsAt": "Sat, Jun 13 • 8:30 PM ET",
-      "market": "Parlay",
-      "selection": "3 LEG PARLAY Karl-Anthony Towns o17.5 Points Scored SC Stephon Castle o16.5 Points Scored",
-      "sourceCount": 1,
-      "pickCount": 1,
-      "sources": [
-        {
-          "id": "covers",
-          "name": "Covers"
-        }
-      ],
-      "experts": [
-        "Covers:Jason Logan"
-      ],
-      "odds": [],
-      "examples": [
-        {
-          "source": "Covers",
-          "expert": "Jason Logan",
-          "odds": "",
-          "analysis": "The Spurs’ inexperience has them backed into a 3-1 hole, but that youth could also be a strength in this spot. San Antonio is just young and dumb enough to put Game 3 in the past. The extended two-day break also works in their favor, especially when it comes to recharging Victor Wembanyama’s draining batteries. He looked tired and passive in the second half Wednesday."
-        }
-      ],
-      "agreement": "1/3",
-      "confidence": 210
-    },
-    {
       "key": "NYK @ SA|Parlay|3 leg parlay victor wembanyama o28.5 points scored victor wembanyama o11.5 total rebounds",
       "matchup": "NYK @ SA",
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
@@ -326,35 +238,6 @@
           "expert": "Jason Logan",
           "odds": "",
           "analysis": "I might be one of the rare ones that likes San Antonio to survive Game 5. The two-day break gives Wemby rest but also allows the young Spurs to put the Game 4 collapse behind them. New York’s comeback benefited from some lucky bounces, friendly rims, and self-inflicted wounds from San Antonio. Wembanyama gets aggressive from the opening tip, both attacking the rim and cleaning the glass. His models call for 29+ and as many as 15+ boards for Game 5."
-        }
-      ],
-      "agreement": "1/3",
-      "confidence": 210
-    },
-    {
-      "key": "NYK @ SA|Parlay|4 leg parlay victor wembanyama o27.5 points scored victor wembanyama o3.5 total blocks karl-anthony towns o17.5 points scored karl-anthony towns o11.5 total rebounds",
-      "matchup": "NYK @ SA",
-      "startsAt": "Sat, Jun 13 • 8:30 PM ET",
-      "market": "Parlay",
-      "selection": "4 LEG PARLAY Victor Wembanyama o27.5 Points Scored Victor Wembanyama o3.5 Total Blocks Karl-Anthony Towns o17.5 Points Scored Karl-Anthony Towns o11.5 Total Rebounds",
-      "sourceCount": 1,
-      "pickCount": 1,
-      "sources": [
-        {
-          "id": "covers",
-          "name": "Covers"
-        }
-      ],
-      "experts": [
-        "Covers:Jason Logan"
-      ],
-      "odds": [],
-      "examples": [
-        {
-          "source": "Covers",
-          "expert": "Jason Logan",
-          "odds": "",
-          "analysis": "Game 5 could be a battle of the bigs. Karl-Anthony Towns was a beast on the boards in the second half of Game 4, and his Game 5 forecasts call for as many 21+ and 14+ rebounds. Victor Wembanyama carries the hopes of Texas basketball fans Saturday. The two days of downtime will help “The Alien” rest up, with his projections as high as 29 points. Wembanyama will be contesting everything – from 3-pointers to layups. Expect an incredible two-way effort from him with the season on the line."
         }
       ],
       "agreement": "1/3",
@@ -409,13 +292,13 @@
         "Covers:Jason Logan"
       ],
       "odds": [
-        "u6.5 -160"
+        "u6.5 -150"
       ],
       "examples": [
         {
           "source": "Covers",
           "expert": "Jason Logan",
-          "odds": "u6.5 -160",
+          "odds": "u6.5 -150",
           "analysis": "Those seven assists in Game 4 marked the first time in the past six postseason games that Brunson finished Over his assists total. This sudden shift in sharing the basketball wasn’t really Brunson’s doing but more a result of the Knicks having to scrap their initial offensive schemes for Game 4. Game 5 has Brown going back to his game plan of running Towns as a facilitator at the high post and involving Brunson in screen action away from ball, in order to get away from his dribble-heavy showing in Game 3’s loss and expose the switching issues that plagued the San Antonio Spurs during the Knicks’ rally. Brunson's early projections sit above six assists for Saturday, which is nothing new. His projections have repeatedly landed north of this number during the playoffs, yet the Under on assists is 6-2 in his last eight postseason showings."
         }
       ],
@@ -440,13 +323,13 @@
         "Covers:Douglas Farmer"
       ],
       "odds": [
-        "o10.5 -140"
+        "o10.5 -139"
       ],
       "examples": [
         {
           "source": "Covers",
           "expert": "Douglas Farmer",
-          "odds": "o10.5 -140",
+          "odds": "o10.5 -139",
           "analysis": "Once Towns was back on the court in full on Wednesday, he returned to his effectiveness. He finished with 10 rebounds despite playing less than 26 minutes. He snagged seven boards once free of his shackles in the second half."
         }
       ],
@@ -471,13 +354,13 @@
         "Covers:Jon Metler"
       ],
       "odds": [
-        "+6.5 -135"
+        "+5.5 -110"
       ],
       "examples": [
         {
           "source": "Covers",
           "expert": "Jon Metler",
-          "odds": "+6.5 -135",
+          "odds": "+5.5 -110",
           "analysis": "There seems to be a general consensus that the New York Knicks will have a letdown in Game 5 and return home to win the NBA Finals in Game 6. I'm not buying it. Throughout these playoffs, the Knicks have been ruthless in closeout opportunities, beating the Hawks by 51, the Sixers by 30, and the Cavaliers by 37. I think New York has a legitimate chance to close out the series in San Antonio, which is why I'm happy to grab the +5.5. That’s a strong number when the film has you thinking the Knicks can win the game outright. I make the Knicks closer to a 2.5-point underdog in this matchup. I also think the Knicks discovered something in Game 4 that could carry over into Game 5: more minutes for Jose Alvarado as a screener for Brunson, a pressure-release valve, and a secondary ball-handler. If the Spurs never build that 29-point lead, the Knicks may never uncover that adjustment."
         }
       ],
@@ -502,13 +385,13 @@
         "Covers:Joe Osborne"
       ],
       "odds": [
-        "+168"
+        "+170"
       ],
       "examples": [
         {
           "source": "Covers",
           "expert": "Joe Osborne",
-          "odds": "+168",
+          "odds": "+170",
           "analysis": "The Knicks have been ruthless in closeout situations, winning their previous three road series-clinchers in these playoffs by 51, 30, and 37 points. That's not a team that lets opponents linger. San Antonio has also struggled whenever adversity strikes in this series, particularly in the fourth quarter where they've been consistently outplayed. With a championship within reach, I expect New York to deliver a focused, complete-game performance."
         }
       ],
@@ -516,11 +399,42 @@
       "confidence": 210
     },
     {
-      "key": "NYK @ SA|Prop|points scored karl-anthony towns o17.5 points scored",
+      "key": "NYK @ SAS|Spurs 1Q -2.5|spurs 1q -2.5",
+      "matchup": "NYK @ SAS",
+      "startsAt": "",
+      "market": "Spurs 1Q -2.5",
+      "selection": "Spurs 1Q -2.5",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "pickswise",
+          "name": "Pickswise"
+        }
+      ],
+      "experts": [
+        "Pickswise:Pickswise"
+      ],
+      "odds": [
+        "-105"
+      ],
+      "examples": [
+        {
+          "source": "Pickswise",
+          "expert": "Pickswise",
+          "odds": "-105",
+          "analysis": "Spurs 1Q -2.5"
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
+    },
+    {
+      "key": "NYK @ SA|Prop|victor wembanyama o11.5 total rebounds",
       "matchup": "NYK @ SA",
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
       "market": "Prop",
-      "selection": "Points Scored Karl-Anthony Towns o17.5 Points Scored",
+      "selection": "Victor Wembanyama o11.5 Total Rebounds",
       "sourceCount": 1,
       "pickCount": 1,
       "sources": [
@@ -533,14 +447,14 @@
         "Covers:Jason Logan"
       ],
       "odds": [
-        "o16.5 -102"
+        "o11.5 +100"
       ],
       "examples": [
         {
           "source": "Covers",
           "expert": "Jason Logan",
-          "odds": "o16.5 -102",
-          "analysis": "Karl-Anthony Towns sat for most of the first half of Game 4 but was ready to roll in the second half, playing 18 of 24 minutes. His offense, however, was understandably spotty and much like Game 3, Towns couldn’t get into rhythm. Mike Brown’s plan for Game 4 was to get Towns going early, but that went out the window. I’m not backing off KAT in Game 5. He salvaged 13 points Wednesday, not too short of his total of 17.5, considering the circumstances. Projections sit as high as 21+ with my number at 18.7 points, which should have Over 17.5 listed at -118."
+          "odds": "o11.5 +100",
+          "analysis": "Wembanyama has fresh legs after two full days off and has to be everywhere in this do-or-die game for the Spurs, including all over the glass. He hauled in a series high 13 boards in Game 4, getting himself in position for 19 rebounding chances. San Antonio need to kept the 7-footer anchored to the paint on defense while needing him to attack inside on offense. I expect to see extra offensive rebounds from Wemby, who snatched five ORBs in Game 4. Projections range from 12 boards to 15+, with my forecast coming out at 13.7 rebounds. That should have the Over 11.5 touting vig as high as -170."
         }
       ],
       "agreement": "1/3",
@@ -611,8 +525,8 @@
   ],
   "counts": {
     "sources": 3,
-    "activeSources": 1,
-    "picks": 13,
-    "consensus": 13
+    "activeSources": 2,
+    "picks": 11,
+    "consensus": 11
   }
 }

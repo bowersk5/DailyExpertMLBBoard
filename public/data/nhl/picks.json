@@ -2,7 +2,7 @@
   "title": "Free NHL Picks & Predictions - Today’s Best NHL Bets",
   "intro": "",
   "sourceUrl": "https://www.covers.com/picks/nhl",
-  "generatedAt": "2026-06-13T14:26:07.466Z",
+  "generatedAt": "2026-06-13T19:57:42.720Z",
   "games": [
     {
       "away": "CAR",
@@ -14,11 +14,11 @@
       "matchupUrl": "/sport/hockey/nhl/matchup/380816/picks",
       "picks": [
         {
-          "id": "car-veg-goals-scored-seth-jarvis-o0-5-goals-scored-245-pick-made-19-hours-ago",
+          "id": "car-veg-goals-scored-seth-jarvis-o0-5-goals-scored-245-pick-made-yesterday",
           "market": "Goals Scored",
           "selection": "Seth Jarvis o0.5 Goals Scored (+245)",
           "odds": "o0.5 +250",
-          "made": "19 hours ago",
+          "made": "yesterday",
           "analyst": "Neil Parker",
           "rating": 0,
           "projection": "",
@@ -30,7 +30,7 @@
           "market": "Best Bets,Total Saves",
           "selection": "Total Saves Brandon Bussi o21.5 Total Saves (-110)",
           "odds": "o21.5 -110",
-          "made": "20 hours ago",
+          "made": "yesterday",
           "analyst": "Neil Parker",
           "rating": 0,
           "projection": "",
@@ -42,7 +42,7 @@
           "market": "Moneyline",
           "selection": "3 LEG PARLAY o5.5 Total Seth Jarvis o0.5 Points Points +300",
           "odds": "",
-          "made": "20 hours ago",
+          "made": "yesterday",
           "analyst": "Neil Parker",
           "rating": 0,
           "projection": "",
@@ -54,11 +54,11 @@
   ],
   "picks": [
     {
-      "id": "car-veg-goals-scored-seth-jarvis-o0-5-goals-scored-245-pick-made-19-hours-ago",
+      "id": "car-veg-goals-scored-seth-jarvis-o0-5-goals-scored-245-pick-made-yesterday",
       "market": "Goals Scored",
       "selection": "Seth Jarvis o0.5 Goals Scored (+245)",
       "odds": "o0.5 +250",
-      "made": "19 hours ago",
+      "made": "yesterday",
       "analyst": "Neil Parker",
       "rating": 0,
       "projection": "",
@@ -74,7 +74,7 @@
       "market": "Best Bets,Total Saves",
       "selection": "Total Saves Brandon Bussi o21.5 Total Saves (-110)",
       "odds": "o21.5 -110",
-      "made": "20 hours ago",
+      "made": "yesterday",
       "analyst": "Neil Parker",
       "rating": 0,
       "projection": "",
@@ -90,7 +90,7 @@
       "market": "Moneyline",
       "selection": "3 LEG PARLAY o5.5 Total Seth Jarvis o0.5 Points Points +300",
       "odds": "",
-      "made": "20 hours ago",
+      "made": "yesterday",
       "analyst": "Neil Parker",
       "rating": 0,
       "projection": "",
@@ -104,11 +104,11 @@
   ],
   "bestPicks": [
     {
-      "id": "car-veg-goals-scored-seth-jarvis-o0-5-goals-scored-245-pick-made-19-hours-ago",
+      "id": "car-veg-goals-scored-seth-jarvis-o0-5-goals-scored-245-pick-made-yesterday",
       "market": "Goals Scored",
       "selection": "Seth Jarvis o0.5 Goals Scored (+245)",
       "odds": "o0.5 +250",
-      "made": "19 hours ago",
+      "made": "yesterday",
       "analyst": "Neil Parker",
       "rating": 0,
       "projection": "",
@@ -124,7 +124,7 @@
       "market": "Best Bets,Total Saves",
       "selection": "Total Saves Brandon Bussi o21.5 Total Saves (-110)",
       "odds": "o21.5 -110",
-      "made": "20 hours ago",
+      "made": "yesterday",
       "analyst": "Neil Parker",
       "rating": 0,
       "projection": "",
@@ -140,7 +140,7 @@
       "market": "Moneyline",
       "selection": "3 LEG PARLAY o5.5 Total Seth Jarvis o0.5 Points Points +300",
       "odds": "",
-      "made": "20 hours ago",
+      "made": "yesterday",
       "analyst": "Neil Parker",
       "rating": 0,
       "projection": "",
@@ -161,5 +161,5 @@
   },
   "sport": "nhl",
   "sportLabel": "NHL",
-  "fetchedAt": "2026-06-13T14:26:07.466Z"
+  "fetchedAt": "2026-06-13T19:57:42.720Z"
 }

@@ -1,7 +1,7 @@
 {
   "sport": "nhl",
   "sportLabel": "NHL",
-  "generatedAt": "2026-06-13T14:26:08.277Z",
+  "generatedAt": "2026-06-13T19:57:43.677Z",
   "sources": [
     {
       "id": "covers",
@@ -16,7 +16,7 @@
       "name": "Pickswise",
       "url": "https://www.pickswise.com/nhl/picks/",
       "error": null,
-      "warning": "Expected ≥1 picks but got 0 — parser may be broken",
+      "warning": null,
       "picks": 0
     },
     {
@@ -37,7 +37,7 @@
       "odds": "o0.5 +250",
       "expert": "Neil Parker",
       "analysis": "Jarvis has only scored three times with an 8.8 shooting percentage across the past 12 games despite racking up 4.8 individual expected goals and 14 high-danger scoring chances. Considering he’s cashed in three straight 30-goal regular seasons with a 16.1 SH% and plays in all situations, the go-to winger is an excellent target to score in Game 6 down to +210.",
-      "made": "19 hours ago",
+      "made": "yesterday",
       "key": "CAR @ VGK|Prop|seth jarvis o0.5 goals scored",
       "sourceId": "covers",
       "source": "Covers",
@@ -51,7 +51,7 @@
       "odds": "o21.5 -110",
       "expert": "Neil Parker",
       "analysis": "This saves total is too low for Bussi. In addition to winning consecutive starts, he was particularly sharp in Game 5 with 23 saves and 2.84 goals saved above expected. Plus, the Golden Knights have consistently tilted the ice in their favor for stretches throughout the series, and I'm anticipating Vegas placing an even higher emphasis on testing Bussi early and often in this elimination game.",
-      "made": "20 hours ago",
+      "made": "yesterday",
       "key": "CAR @ VGK|Prop|total saves brandon bussi o21.5 total saves",
       "sourceId": "covers",
       "source": "Covers",
@@ -65,7 +65,7 @@
       "odds": "",
       "expert": "Neil Parker",
       "analysis": "I’m expecting the Carolina edge in overall depth in front of Brandon Bussi being the difference in Game 6. The two teams have also combined for 39 goals with six or more in all five games, and with the potential for earlier empty-net situations in an elimination game, I’m anticipating another high-scoring bout. Finally, Hurricanes winger Seth Jarvis has marked the scoresheet in three of the past four games and paces Carolina forwards in ice time and on-ice expected goals during the series.",
-      "made": "20 hours ago",
+      "made": "yesterday",
       "key": "CAR @ VGK|Parlay|3 leg parlay o5.5 total seth jarvis o0.5 points points",
       "sourceId": "covers",
       "source": "Covers",

@@ -16,7 +16,7 @@ async function main() {
     await writeSportData(config, sportDir);
   }
 
-  // Write per-sport index.html files for GitHub Pages routing.
+  // Write sport pages so GitHub Pages can serve /nba/ and /nhl/.
   for (const config of Object.values(sports)) {
     if (config.id !== "mlb") {
       await writeSportHtml(config);
@@ -29,7 +29,7 @@ async function writeSportData(config, sportDir) {
   const outputFile = join(sportDir, "picks.json");
   const consensusFile = join(sportDir, "consensus.json");
 
-  // Fetch the Covers page once and reuse the HTML for both picks and consensus.
+  // Fetch Covers once so picks.json and consensus.json use the same page data.
   const html = await fetchCoversHtmlWithExpandedPages(coversSource.url, config.id);
 
   const parsed = parseCoversPicks(html, { sport: config.id, sourceUrl: coversSource.url });
@@ -44,13 +44,13 @@ async function writeSportData(config, sportDir) {
   await writeFile(outputFile, `${JSON.stringify(payload, null, 2)}\n`);
   console.log(`Wrote ${payload.picks.length} parsed ${config.label} expert picks (${payload.counts.expertPicks} listed) to ${outputFile}`);
 
-  // Consensus is best-effort: one unavailable source should not block deploys.
+  // If a consensus source fails, still publish the Covers picks.
   try {
     const consensus = await fetchConsensus({ sport: config.id, coversHtml: html });
     await writeFile(consensusFile, `${JSON.stringify(consensus, null, 2)}\n`);
     console.log(`Wrote ${consensus.counts.consensus} ${config.label} consensus groups to ${consensusFile}`);
 
-    // Log parser health warnings so CI surfacing is visible in the build log.
+    // Print parser warnings in CI so source changes are easy to spot.
     for (const source of consensus.sources) {
       if (source.warning) {
         console.warn(`[health] ${config.label}/${source.name}: ${source.warning}`);

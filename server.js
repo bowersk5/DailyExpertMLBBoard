@@ -145,7 +145,7 @@ async function sportPageHtml(sport) {
 }
 
 async function serveStatic(pathname, res) {
-  // Root → serve index.html as-is.
+  // The root page is the MLB page.
   if (pathname === "/") {
     try {
       const body = await readFile(join(publicDir, "index.html"));
@@ -158,9 +158,7 @@ async function serveStatic(pathname, res) {
     return;
   }
 
-  // Sport landing pages (/nba, /nba/, /nhl, /nhl/) — serve a patched version
-  // of index.html with sport-specific title and ../-prefixed asset paths so
-  // styles.css and app.js resolve correctly from the subdirectory.
+  // Sport pages reuse index.html, with titles and relative asset paths adjusted.
   if (isSportPath(pathname)) {
     try {
       const slug = pathname.replace(/^\/|\/$/g, "");
@@ -174,7 +172,7 @@ async function serveStatic(pathname, res) {
     return;
   }
 
-  // Everything else: CSS, JS, JSON data files, etc.
+  // Serve static files from public/.
   const safePath = normalize(pathname).replace(/^(\.\.[/\\])+/, "");
   const filePath = join(publicDir, safePath);
 

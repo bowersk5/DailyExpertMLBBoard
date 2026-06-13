@@ -29,7 +29,7 @@ export const sports = {
     minExpectedPicks: 1,
     sources: [
       { id: "covers",    name: "Covers",      url: "https://www.covers.com/picks/nhl",         parser: parseCoversSource },
-      { id: "pickswise", name: "Pickswise",   url: "https://www.pickswise.com/nhl/picks/",     parser: parsePickswiseSource },
+      { id: "pickswise", name: "Pickswise",   url: "https://www.pickswise.com/nhl/picks/",     parser: parsePickswiseSource, minExpectedPicks: 0 },
       { id: "thelines",  name: "The Lines",   url: "https://www.thelines.com/picks/nhl/",      parser: parseTheLinesSource }
     ]
   }
@@ -37,9 +37,10 @@ export const sports = {
 
 const defaultSport = "mlb";
 
-// Sport-agnostic abbreviation aliases.
+// Team abbreviations that need a common spelling across sources.
 const teamAliases = {
   ARZ: "ARI",
+  ATH: "OAK",
   AZ: "ARI",
   BKN: "BRK",
   CHA: "CHA",
@@ -58,7 +59,7 @@ const teamAliases = {
   WSH: "WAS"
 };
 
-// Sport-specific alias overrides applied after the base table.
+// These aliases only apply within one sport.
 const sportTeamAliases = {
   mlb: { CHI: "CHC", LA: "LAD", NO: "NOP", NY: "NYY" },
   nba: { NO: "NOP", NY: "NYK", GS: "GS" },
@@ -109,8 +110,9 @@ export async function fetchConsensus({ sport = defaultSport, coversHtml } = {}) 
   const sourceResults = settled.map((result, index) => {
     if (result.status === "fulfilled") {
       const sr = result.value;
-      if (sr.picks.length < (config.minExpectedPicks || 1) && !sr.error) {
-        sr.warning = `Expected ≥${config.minExpectedPicks} picks but got ${sr.picks.length} — parser may be broken`;
+      const minExpectedPicks = sr.minExpectedPicks ?? config.minExpectedPicks ?? 1;
+      if (minExpectedPicks > 0 && sr.picks.length < minExpectedPicks && !sr.error) {
+        sr.warning = `Expected ≥${minExpectedPicks} picks but got ${sr.picks.length} — parser may be broken`;
         console.warn(`[health] ${sr.name}: ${sr.warning}`);
       }
       return sr;
@@ -238,10 +240,10 @@ function fetchSourceFromHtml(source, html, config) {
     source: source.name,
     url: source.url
   }));
-  return { id: source.id, name: source.name, url: source.url, picks };
+  return { id: source.id, name: source.name, url: source.url, picks, minExpectedPicks: source.minExpectedPicks };
 }
 
-// ── Covers ────────────────────────────────────────────────────────────────────
+// Covers source parser.
 
 function parseCoversSource(html, config) {
   const data = parseCoversPicks(html, {
@@ -261,28 +263,42 @@ function parseCoversSource(html, config) {
   })).filter(Boolean);
 }
 
-// ── Pickswise ─────────────────────────────────────────────────────────────────
+// Pickswise source parser.
 //
-// Pickswise uses Next.js. The pick data is embedded in a __NEXT_DATA__ JSON
-// blob, but the exact path within that blob has changed over time. This parser
-// probes every known path in priority order so that future restructuring is
-// handled gracefully rather than silently returning 0 picks.
+// Pickswise has used two page formats:
+// - older pages put pick data in a __NEXT_DATA__ JSON script
+// - newer pages stream rendered rows through self.__next_f.push(...)
+// Try both formats so a site change does not silently remove every pick.
 
 function parsePickswiseSource(html, config) {
   const data = readNextData(html);
 
   if (!data) {
-    console.warn(`[pickswise/${config.id}] No __NEXT_DATA__ found in HTML`);
-    return [];
+    const picks = parsePickswiseFlightRows(html, config);
+    if (picks.length > 0) {
+      console.log(`[pickswise/${config.id}] Found ${picks.length} rendered pick row(s)`);
+      return picks;
+    }
+    if (!pickswiseHasNoPicks(html, config.id)) {
+      console.warn(`[pickswise/${config.id}] No __NEXT_DATA__ or rendered pick rows found in HTML`);
+    }
+    return picks;
   }
 
   const records = probePickswisePaths(data, config.id);
 
   if (records.length === 0) {
-    // Log the top-level keys so we can quickly update the path list.
-    const topKeys = Object.keys(data?.props?.pageProps || {}).join(", ") || "(empty)";
-    console.warn(`[pickswise/${config.id}] 0 games found. pageProps keys: ${topKeys}`);
-    return [];
+    const picks = parsePickswiseFlightRows(html, config);
+    if (picks.length > 0) {
+      console.log(`[pickswise/${config.id}] Found ${picks.length} rendered pick row(s)`);
+      return picks;
+    }
+    if (!pickswiseHasNoPicks(html, config.id)) {
+      // Show the available page data keys so the parser is easier to update.
+      const topKeys = Object.keys(data?.props?.pageProps || {}).join(", ") || "(empty)";
+      console.warn(`[pickswise/${config.id}] 0 games found. pageProps keys: ${topKeys}`);
+    }
+    return picks;
   }
 
   console.log(`[pickswise/${config.id}] Found ${records.length} game(s)`);
@@ -312,32 +328,93 @@ function parsePickswiseSource(html, config) {
   return picks.filter(Boolean);
 }
 
+function parsePickswiseFlightRows(html, config) {
+  const flight = readNextFlightPayload(html);
+  if (!flight) return [];
+
+  const picks = [];
+  const seen = new Set();
+  const rowPattern = /\["\$","tr","[^"\\]+",\{[\s\S]*?"children":"([A-Z]{2,4})\s+vs\s+([A-Z]{2,4})"[\s\S]*?\]\]\}\],\["\$","td",null,\{"className":"px-4 py-3","children":\["\$","p",null,\{"className":"text-body-bold text-primary-blue-dark","children":"([^"\\]+)"\}\]\}\][\s\S]*?"children":"([+-]?\d+|—)"/g;
+
+  let match;
+  while ((match = rowPattern.exec(flight)) !== null) {
+    const [, away, home, selection, odds] = match;
+    const key = `${away}|${home}|${selection}|${odds}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    const pick = normalizePick({
+      matchup: `${away} @ ${home}`,
+      away,
+      home,
+      market: pickswiseMarketFromSelection(selection),
+      selection,
+      odds: odds === "—" ? "" : odds,
+      expert: "Pickswise",
+      analysis: selection,
+      sport: config.id
+    });
+    if (pick) picks.push(pick);
+  }
+
+  return picks;
+}
+
+function pickswiseMarketFromSelection(selection = "") {
+  const clean = cleanText(selection);
+  const prefix = clean.match(/^([A-Za-z ]+)\s+-\s+/)?.[1];
+  if (prefix) return prefix;
+  if (/\b[+-]\d+(?:\.\d+)?\b/.test(clean)) return "Spread";
+  return clean;
+}
+
+function pickswiseHasNoPicks(html, sport) {
+  const label = sportConfig(sport).label;
+  const noPicksPattern = new RegExp(`no\\s+(?:${label}|National \\w+(?: \\w+)*)\\s+Picks`, "i");
+  return noPicksPattern.test(`${stripHtml(html)} ${readNextFlightPayload(html)}`);
+}
+
+function readNextFlightPayload(html) {
+  const chunks = [];
+  const pattern = /self\.__next_f\.push\(\[1,"((?:\\.|[^"\\])*)"\]\)<\/script>/g;
+  let match;
+
+  while ((match = pattern.exec(html)) !== null) {
+    try {
+      chunks.push(JSON.parse(`"${match[1]}"`));
+    } catch {
+      // Keep reading; another streamed chunk may still contain pick rows.
+    }
+  }
+
+  return chunks.join("");
+}
+
 /**
- * Probe all known/plausible __NEXT_DATA__ paths for Pickswise pick data.
+ * Try known __NEXT_DATA__ paths for Pickswise pick data.
  * Returns the first non-empty array of game records found, or [].
  */
 function probePickswisePaths(data, sport) {
   const path = `/${sport}/picks/`;
   const pp = data?.props?.pageProps;
 
-  // Each candidate is either an object keyed by URL path, or a direct array.
-  // We try them in priority order, most-recently-known first.
+  // Each candidate is either an array of picks or an object keyed by page path.
   const candidates = [
-    pp?.initialState?.sportPredictionsPicks,    // original working path
-    pp?.picks,                                  // flat array
-    pp?.data?.picks,                            // nested under data
-    pp?.predictions,                            // predictions key
-    pp?.pageData?.picks,                        // pageData wrapper
-    pp?.[sport]?.picks,                         // sport-specific key
-    pp?.initialData?.picks,                     // initialData wrapper
-    pp?.serverState?.picks,                     // serverState wrapper
-    pp?.dehydratedState?.queries?.[0]?.state?.data?.picks  // react-query hydration
+    pp?.initialState?.sportPredictionsPicks,
+    pp?.picks,
+    pp?.data?.picks,
+    pp?.predictions,
+    pp?.pageData?.picks,
+    pp?.[sport]?.picks,
+    pp?.initialData?.picks,
+    pp?.serverState?.picks,
+    pp?.dehydratedState?.queries?.[0]?.state?.data?.picks
   ];
 
   for (const candidate of candidates) {
     if (!candidate) continue;
 
-    // Object keyed by URL path → find matching key
+    // Some page data is keyed by URL path, such as /mlb/picks/.
     if (typeof candidate === "object" && !Array.isArray(candidate)) {
       const records =
         candidate[path] ||
@@ -346,14 +423,14 @@ function probePickswisePaths(data, sport) {
       if (Array.isArray(records) && records.length > 0) return records;
     }
 
-    // Direct array
+    // Other page data is already an array of games.
     if (Array.isArray(candidate) && candidate.length > 0) return candidate;
   }
 
   return [];
 }
 
-// ── Action Network ────────────────────────────────────────────────────────────
+// Action Network source parser.
 
 function parseActionSource(html, config) {
   const data = readNextData(html);
@@ -384,29 +461,19 @@ function parseActionSource(html, config) {
   return picks.filter(Boolean);
 }
 
-// ── The Lines ─────────────────────────────────────────────────────────────────
+// The Lines source parser.
 //
-// TheLines.com is a WordPress site — picks are published as individual article
-// pages linked from a picks index (e.g. /picks/nba/). Each article contains
-// structured pick data in the body text: team abbreviations, market type,
-// selection, and odds are consistently formatted in the headline and lede.
+// The Lines publishes picks as article links on a sport picks page.
+// We parse the article titles because they usually contain the matchup,
+// market, selection, and odds.
 //
-// Strategy:
-//   1. Parse the index page to find today's article hrefs.
-//   2. For each article (up to 8), fetch and extract the pick data from
-//      the structured headline / lede paragraph.
-//   3. Normalise into the standard pick shape.
-//
-// This is inherently fragile — if TheLines redesigns their article format,
-// this parser will need updating. The health-check warning will surface that.
+// This is fragile by nature. If their article titles change, the health
+// warning should make that visible during builds.
 
 function parseTheLinesSource(html, config) {
   const picks = [];
 
-  // Find article links on the picks index page.
-  // TheLines uses WordPress standard archive structure:
-  //   <h2 class="entry-title"><a href="...">Article Title</a></h2>
-  // OR article elements with class="post" containing an <a> with the URL.
+  // First try the normal WordPress title markup.
   const articlePattern = /<(?:h2|h3)[^>]*class="[^"]*(?:entry-title|post-title)[^"]*"[^>]*>[\s\S]*?<a[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
   const fallbackPattern = /<a[^>]+href="(https:\/\/www\.thelines\.com\/picks\/[a-z]+\/[^"]+)"[^>]*class="[^"]*"[^>]*>([\s\S]*?)<\/a>/gi;
 
@@ -421,7 +488,7 @@ function parseTheLinesSource(html, config) {
     }
   }
 
-  // Fallback: scan all pick-URL-shaped links
+  // If title markup changes, scan every link that looks like a pick article.
   if (articles.length === 0) {
     while ((match = fallbackPattern.exec(html)) !== null) {
       const href = match[1];
@@ -432,19 +499,18 @@ function parseTheLinesSource(html, config) {
     }
   }
 
-  // Extract pick data from article titles / excerpts available on the index page.
+  // Extract pick data from article titles on the index page.
   // TheLines titles follow patterns like:
   //   "NYY vs BOS Picks and Predictions: Yankees Moneyline -130"
   //   "NBA Finals Game 4 Picks: Spurs vs Knicks Best Bets"
-  // We parse directly from the index HTML rather than fetching each article,
-  // keeping the source within the zero-HTTP-request spirit of the project.
+  // This avoids fetching every article during each build.
   for (const article of articles.slice(0, 10)) {
     const pick = extractTheLinesPickFromTitle(article.title, config.id);
     if (pick) picks.push(pick);
   }
 
   if (picks.length === 0 && articles.length === 0) {
-    // Dump a small sample of what we found so debugging is easier
+    // Print a short sample so parser failures are easier to debug.
     const sample = html.slice(0, 2000).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").slice(0, 500);
     console.warn(`[thelines/${config.id}] No articles found. HTML sample: ${sample}`);
   } else {
@@ -455,16 +521,15 @@ function parseTheLinesSource(html, config) {
 }
 
 /**
- * Returns true if an article title/href looks like it's about today's picks
- * for the given sport (not an older article or a different sport).
+ * Return true when the article looks like a current pick for this sport.
  */
 function isRecentTheLinesArticle(title, href, sport) {
   const lower = title.toLowerCase();
   const hrefLower = href.toLowerCase();
 
-  // Must be in the correct sport's picks subdirectory
+  // Prefer the correct sport's picks page.
   if (!hrefLower.includes(`/picks/${sport}/`) && !hrefLower.includes(`/${sport}/picks/`)) {
-    // Also accept generic /picks/ URLs that mention the sport in the title
+    // Also accept generic pick URLs when the title names the sport.
     if (!hrefLower.includes("/picks/")) return false;
     const sportKeywords = {
       mlb: ["mlb", "baseball"],
@@ -474,14 +539,14 @@ function isRecentTheLinesArticle(title, href, sport) {
     if (!sportKeywords[sport]?.some((kw) => lower.includes(kw))) return false;
   }
 
-  // Exclude obviously non-pick pages (futures, odds, news, reviews)
+  // Skip pages that are not daily picks.
   if (/futures|odds|review|promo|bonus|code/i.test(title)) return false;
 
   return true;
 }
 
 /**
- * Attempt to extract a normalised pick from a TheLines article title.
+ * Extract a normalized pick from a The Lines article title.
  *
  * Supported title patterns:
  *   "TOR vs BOS Pick: Over 6.5 (-115) | MLB Best Bet"
@@ -490,7 +555,7 @@ function isRecentTheLinesArticle(title, href, sport) {
  *   "MLB Best Bets Today: Under 8 Brewers vs Athletics"
  */
 function extractTheLinesPickFromTitle(title, sport) {
-  // Try to find team abbreviations or team names
+  // First look for team abbreviations.
   const abbrPairPattern = /\b([A-Z]{2,4})\s+(?:vs?\.?|@)\s+([A-Z]{2,4})\b/;
   const abbrMatch = title.match(abbrPairPattern);
 
@@ -499,7 +564,7 @@ function extractTheLinesPickFromTitle(title, sport) {
     away = normalizeTeamAbbr(abbrMatch[1], sport);
     home = normalizeTeamAbbr(abbrMatch[2], sport);
   } else {
-    // Try team names
+    // If abbreviations are missing, try full team names.
     const namePairPattern = /\b(\w[\w\s]+?)\s+(?:vs?\.?|@)\s+(\w[\w\s]+?)\b(?:\s+(?:Picks?|Predictions?|Best Bet))/i;
     const nameMatch = title.match(namePairPattern);
     if (nameMatch) {
@@ -511,19 +576,19 @@ function extractTheLinesPickFromTitle(title, sport) {
   if (!away || !home) return null;
   const matchup = `${away} @ ${home}`;
 
-  // Extract pick details after the colon
+  // The pick usually appears after the first colon.
   const colonIdx = title.indexOf(":");
   const pickText = colonIdx >= 0 ? title.slice(colonIdx + 1).trim() : title;
 
-  // Detect market
+  // Infer the market from the pick text.
   const market = normalizeMarket("", pickText, "");
 
-  // Build a normalised pick
+  // Build the shared pick shape used by consensus.
   const normalized = normalizePick({
     matchup,
     startsAt: "",
     market,
-    selection: pickText.replace(/\s*\|.*$/, "").trim(), // strip | suffix
+    selection: pickText.replace(/\s*\|.*$/, "").trim(),
     odds: extractOddsFromText(pickText),
     expert: "The Lines",
     analysis: title,
@@ -534,13 +599,13 @@ function extractTheLinesPickFromTitle(title, sport) {
   return normalized;
 }
 
-/** Pull a simple American odds string from free text, e.g. "(-115)" or "+130". */
+/** Pull an American odds value from text, such as "(-115)" or "+130". */
 function extractOddsFromText(text) {
   const match = text.match(/\(([+-]\d+)\)|([+-]\d{3,4})\b/);
   return match ? (match[1] || match[2]) : "";
 }
 
-// ── Shared normalisation helpers ──────────────────────────────────────────────
+// Shared normalization helpers.
 
 export function normalizePick(raw) {
   const sport = raw.sport || "";

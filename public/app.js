@@ -2,7 +2,9 @@ const state = {
   sport: currentSport(),
   consensus: [],
   activeMarket: "all",
-  parlay: [] // { key, selection, matchup, market, odds }
+  // Each parlay item stores: key, selection, matchup, market, and odds.
+  parlay: [],
+  theme: currentTheme()
 };
 
 const sports = {
@@ -26,6 +28,8 @@ const els = {
   sportLinks: document.querySelectorAll("[data-sport-link]"),
   staleWarning: document.querySelector("#staleWarning"),
   marketFilters: document.querySelector("#marketFilters"),
+  themeToggle: document.querySelector("#themeToggle"),
+  themeToggleText: document.querySelector("#themeToggleText"),
   parlayDrawer: document.querySelector("#parlayDrawer"),
   parlayCount: document.querySelector("#parlayCount"),
   parlayList: document.querySelector("#parlayList"),
@@ -36,7 +40,51 @@ const els = {
   parlayToggle: document.querySelector("#parlayToggle")
 };
 
-// ── Data loading ─────────────────────────────────────────────────────────────
+// Set up the saved light or dark theme.
+
+function currentTheme() {
+  const savedTheme = readSavedTheme();
+  if (savedTheme) return savedTheme;
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+function readSavedTheme() {
+  try {
+    const savedTheme = localStorage.getItem("theme");
+    return ["light", "dark"].includes(savedTheme) ? savedTheme : "";
+  } catch {
+    return "";
+  }
+}
+
+function saveTheme(theme) {
+  try {
+    localStorage.setItem("theme", theme);
+  } catch {
+    // Storage can fail in private browsing; the visual toggle still works.
+  }
+}
+
+function applyTheme(theme) {
+  state.theme = theme;
+  document.documentElement.dataset.theme = theme;
+
+  if (!els.themeToggle) return;
+  const isLight = theme === "light";
+  els.themeToggle.setAttribute("aria-pressed", String(isLight));
+  els.themeToggle.setAttribute("aria-label", `Switch to ${isLight ? "dark" : "light"} mode`);
+  if (els.themeToggleText) {
+    els.themeToggleText.textContent = isLight ? "Light" : "Dark";
+  }
+}
+
+function toggleTheme() {
+  const nextTheme = state.theme === "light" ? "dark" : "light";
+  applyTheme(nextTheme);
+  saveTheme(nextTheme);
+}
+
+// Load consensus data and update the page.
 
 async function loadConsensus(refresh = false) {
   setLoading(true);
@@ -72,7 +120,7 @@ async function loadConsensus(refresh = false) {
   }
 }
 
-// ── Stale warning ─────────────────────────────────────────────────────────────
+// Show a warning when the generated data is old.
 
 function checkStale(generatedAt) {
   if (!generatedAt || !els.staleWarning) return;
@@ -80,7 +128,7 @@ function checkStale(generatedAt) {
   els.staleWarning.hidden = ageHours <= STALE_THRESHOLD_HOURS;
 }
 
-// ── Market filters ────────────────────────────────────────────────────────────
+// Build the market filter buttons from the available picks.
 
 const MARKET_ORDER = ["all", "Moneyline", "Total", "Run Line", "Spread", "Prop", "Parlay"];
 
@@ -110,7 +158,7 @@ function renderMarketFilters() {
   });
 }
 
-// ── Consensus rendering ───────────────────────────────────────────────────────
+// Render the visible consensus cards.
 
 function renderConsensus() {
   const filtered = state.consensus
@@ -139,7 +187,7 @@ function renderConsensus() {
     card.style.animationDelay = `${i * 40}ms`;
     card.setAttribute("data-market", market);
 
-    // In-parlay state
+    // Mark picks that are already in the parlay slip.
     const inParlay = state.parlay.some((p) => p.key === pick.key);
     card.classList.toggle("in-parlay", inParlay);
 
@@ -152,7 +200,7 @@ function renderConsensus() {
     node.querySelector(".source-list").textContent = pick.sources.map((s) => s.name).join(" · ");
     node.querySelector(".example-list").textContent = sampleExamples(pick.examples);
 
-    // Full analysis expand/collapse
+    // Let users expand the first available analysis note.
     const fullAnalysis = pick.examples?.find((e) => e.analysis)?.analysis || "";
     const expandBtn = node.querySelector(".expand-analysis");
     const fullBlock = node.querySelector(".full-analysis");
@@ -169,7 +217,7 @@ function renderConsensus() {
       expandBtn.hidden = true;
     }
 
-    // Parlay add/remove
+    // Add or remove this pick from the parlay slip.
     const parlayBtn = node.querySelector(".add-parlay-btn");
     if (parlayBtn) {
       parlayBtn.textContent = inParlay ? "− Remove" : "+ Parlay";
@@ -181,7 +229,7 @@ function renderConsensus() {
   });
 }
 
-// ── Parlay builder ────────────────────────────────────────────────────────────
+// Keep the parlay slip in sync with selected picks.
 
 function toggleParlay(pick) {
   const idx = state.parlay.findIndex((p) => p.key === pick.key);
@@ -209,7 +257,7 @@ function renderParlayDrawer() {
 
   if (count === 0) return;
 
-  // Leg list
+  // Render each pick in the slip.
   els.parlayList.innerHTML = state.parlay.map((leg, i) => `
     <div class="parlay-leg">
       <div class="parlay-leg__info">
@@ -231,7 +279,7 @@ function renderParlayDrawer() {
     });
   });
 
-  // Combined odds calculation
+  // Calculate combined American odds and estimated profit.
   const combinedDecimal = state.parlay.reduce((acc, leg) => {
     const decimal = americanToDecimal(leg.odds);
     return decimal ? acc * decimal : acc;
@@ -261,7 +309,7 @@ function decimalToAmerican(decimal) {
   return american;
 }
 
-// ── Utilities ─────────────────────────────────────────────────────────────────
+// Shared helper functions.
 
 function consensusUrl(refresh = false) {
   const isLocal = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
@@ -368,16 +416,18 @@ function renderSportChrome() {
   });
 }
 
-// ── Spin keyframes ────────────────────────────────────────────────────────────
+// Add the refresh-button spinner animation.
 
 const style = document.createElement("style");
 style.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
 document.head.append(style);
 
-// ── Init ──────────────────────────────────────────────────────────────────────
+// Start the page.
 
 renderSportChrome();
+applyTheme(state.theme);
 els.refreshButton.addEventListener("click", () => loadConsensus(true));
+els.themeToggle?.addEventListener("click", toggleTheme);
 
 if (els.clearParlay) {
   els.clearParlay.addEventListener("click", () => {

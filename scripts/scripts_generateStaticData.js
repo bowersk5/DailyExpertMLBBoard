@@ -16,9 +16,7 @@ async function main() {
     await writeSportData(config, sportDir);
   }
 
-  // Write per-sport index.html files into public/nba/, public/nhl/, etc. so
-  // GitHub Pages can serve them without server-side routing. These are generated
-  // from public/index.html with sport-specific title and asset path adjustments.
+  // Write sport pages so GitHub Pages can serve /nba/ and /nhl/.
   for (const config of Object.values(sports)) {
     if (config.id !== "mlb") {
       await writeSportHtml(config);
@@ -31,7 +29,7 @@ async function writeSportData(config, sportDir) {
   const outputFile = join(sportDir, "picks.json");
   const consensusFile = join(sportDir, "consensus.json");
 
-  // Fetch the Covers page once and reuse the HTML for both picks and consensus.
+  // Fetch Covers once so picks.json and consensus.json use the same page data.
   const html = await fetchHtml(coversSource.url);
 
   const parsed = parseCoversPicks(html, { sport: config.id, sourceUrl: coversSource.url });
@@ -46,7 +44,7 @@ async function writeSportData(config, sportDir) {
   await writeFile(outputFile, `${JSON.stringify(payload, null, 2)}\n`);
   console.log(`Wrote ${payload.counts.picks} ${config.label} expert picks to ${outputFile}`);
 
-  // Consensus is best-effort: one unavailable source should not block deploys.
+  // If a consensus source fails, still publish the Covers picks.
   try {
     const consensus = await fetchConsensus({ sport: config.id, coversHtml: html });
     await writeFile(consensusFile, `${JSON.stringify(consensus, null, 2)}\n`);
@@ -58,12 +56,7 @@ async function writeSportData(config, sportDir) {
 }
 
 async function writeSportHtml(config) {
-  // Read the root index.html and patch it for the subdirectory sport page:
-  //   - Update <title>
-  //   - Update brand-label text
-  //   - Rewrite asset paths from relative to ../relative
-  //   - Rewrite sport tab hrefs to use ../ prefix
-  //   - Update the sourceLink href
+  // Reuse the root page, then adjust title, source link, and relative paths.
   const rootHtml = await readFile(join(publicDir, "index.html"), "utf8");
 
   const sportDir = join(publicDir, config.id);

@@ -7,11 +7,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+      (() => {
+        try {
+          const savedTheme = localStorage.getItem("theme");
+          const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+          document.documentElement.dataset.theme = savedTheme || (prefersLight ? "light" : "dark");
+        } catch {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
 
-    <!-- Ambient background -->
+    <!-- Background glow shapes. -->
     <div class="ambient" aria-hidden="true">
       <div class="ambient-orb ambient-orb--1"></div>
       <div class="ambient-orb ambient-orb--2"></div>
@@ -52,6 +63,10 @@
           </div>
         </div>
         <div class="header-actions">
+          <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+            <span class="theme-toggle__icon" aria-hidden="true"></span>
+            <span id="themeToggleText" class="theme-toggle__text">Dark</span>
+          </button>
           <a id="sourceLink" class="btn-ghost" href="https://www.covers.com/picks/mlb" target="_blank" rel="noreferrer">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Source
@@ -64,7 +79,7 @@
       </div>
     </header>
 
-    <!-- Stale data warning — hidden by JS until data is >10 h old -->
+    <!-- Hidden until the generated data is more than 10 hours old. -->
     <div id="staleWarning" class="stale-banner" hidden>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       Picks data may be outdated. Scheduled builds run at 2:30 PM UTC / 10:30 AM ET and 10:00 PM UTC / 6:00 PM ET.
@@ -85,7 +100,7 @@
             <h2 id="sportTitle" class="section-title">Most Agreed Picks</h2>
             <p id="consensusIntro" class="section-sub"></p>
 
-            <!-- Market filter bar — populated by JS -->
+            <!-- JavaScript adds the market filter buttons here. -->
             <div id="marketFilters" class="market-filters" role="group" aria-label="Filter by market"></div>
           </div>
 
@@ -94,7 +109,7 @@
       </div>
     </main>
 
-    <!-- Parlay Builder drawer — hidden until at least 1 pick is added -->
+    <!-- Hidden until the user adds at least one pick. -->
     <aside id="parlayDrawer" class="parlay-drawer is-collapsed" hidden aria-label="Parlay builder">
       <div class="parlay-header">
         <div class="parlay-header__left">

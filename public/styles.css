@@ -1,27 +1,35 @@
-/* ===================================================
-   ROOT & DESIGN TOKENS
-   =================================================== */
+/* Shared colors, type, spacing, and layout values. */
 :root {
-  /* Core palette — deep slate + warm cream */
+  /* Main page colors. */
   --bg:          #09090e;
   --surface:     #0f0f17;
   --surface-2:   #161622;
   --surface-3:   #1e1e2e;
   --border:      rgba(255,255,255,0.07);
   --border-2:    rgba(255,255,255,0.12);
+  --header-bg:   rgba(9, 9, 14, 0.85);
+  --drawer-bg:   rgba(15, 15, 23, 0.97);
+  --subtle-bg:   rgba(255,255,255,0.03);
+  --hover-bg:    rgba(255,255,255,0.04);
+  --strong-hover-bg: rgba(255,255,255,0.06);
+  --footer-bg:   rgba(255,255,255,0.015);
+  --shadow-strong: rgba(0,0,0,0.6);
+  --shadow-soft: rgba(0,0,0,0.5);
+  --selection-bg: rgba(212,148,58,0.2);
+  --color-scheme: dark;
 
-  /* Text hierarchy */
+  /* Text colors. */
   --text:        #f0eee8;
   --text-muted:  #c4c2cc;
   --text-dim:    #8a8898;
 
-  /* Brand accent — amber gold */
+  /* Brand accent colors. */
   --gold:        #d4943a;
   --gold-light:  #e8b86d;
   --gold-dim:    rgba(212, 148, 58, 0.1);
   --gold-glow:   rgba(212, 148, 58, 0.2);
 
-  /* Market palette */
+  /* Pick market colors. */
   --ml:          #4ade80;
   --ml-dim:      rgba(74, 222, 128, 0.08);
   --ml-border:   rgba(74, 222, 128, 0.2);
@@ -38,34 +46,80 @@
   --prop-dim:    rgba(192, 132, 252, 0.08);
   --prop-border: rgba(192, 132, 252, 0.2);
 
-  /* Warning */
+  /* Warning banner colors. */
   --warn:        #fbbf24;
   --warn-dim:    rgba(251, 191, 36, 0.08);
   --warn-border: rgba(251, 191, 36, 0.25);
 
-  /* Typography */
+  /* Fonts. */
   --font-display: 'Playfair Display', Georgia, serif;
   --font-ui:      'Syne', sans-serif;
   --font-mono:    'IBM Plex Mono', monospace;
 
-  /* Spatial */
+  /* Corner radius values. */
   --r-sm:  3px;
   --r-md:  8px;
   --r-lg:  14px;
   --r-xl:  20px;
 
-  /* Layout */
+  /* Page width. */
   --content-max: 1400px;
 
-  /* Parlay drawer height */
+  /* Fixed parlay drawer height. */
   --parlay-h: 400px;
 }
 
-/* ===================================================
-   RESET
-   =================================================== */
+:root[data-theme="light"] {
+  --bg:          #f7f3ea;
+  --surface:     #fffaf0;
+  --surface-2:   #f2eadc;
+  --surface-3:   #ebe0cf;
+  --border:      rgba(65, 52, 37, 0.13);
+  --border-2:    rgba(65, 52, 37, 0.22);
+  --header-bg:   rgba(247, 243, 234, 0.86);
+  --drawer-bg:   rgba(255, 250, 240, 0.97);
+  --subtle-bg:   rgba(65, 52, 37, 0.045);
+  --hover-bg:    rgba(65, 52, 37, 0.07);
+  --strong-hover-bg: rgba(65, 52, 37, 0.1);
+  --footer-bg:   rgba(65, 52, 37, 0.035);
+  --shadow-strong: rgba(64, 47, 25, 0.18);
+  --shadow-soft: rgba(64, 47, 25, 0.14);
+  --selection-bg: rgba(212,148,58,0.24);
+  --color-scheme: light;
+
+  --text:        #201b16;
+  --text-muted:  #574d41;
+  --text-dim:    #827263;
+
+  --gold:        #9b641d;
+  --gold-light:  #7d4e13;
+  --gold-dim:    rgba(155, 100, 29, 0.12);
+  --gold-glow:   rgba(155, 100, 29, 0.22);
+
+  --ml:          #16803d;
+  --ml-dim:      rgba(22, 128, 61, 0.09);
+  --ml-border:   rgba(22, 128, 61, 0.22);
+
+  --total:       #b35a12;
+  --total-dim:   rgba(179, 90, 18, 0.09);
+  --total-border:rgba(179, 90, 18, 0.22);
+
+  --rl:          #1d63b7;
+  --rl-dim:      rgba(29, 99, 183, 0.09);
+  --rl-border:   rgba(29, 99, 183, 0.22);
+
+  --prop:        #7c3bb3;
+  --prop-dim:    rgba(124, 59, 179, 0.09);
+  --prop-border: rgba(124, 59, 179, 0.22);
+
+  --warn:        #946300;
+  --warn-dim:    rgba(148, 99, 0, 0.1);
+  --warn-border: rgba(148, 99, 0, 0.24);
+}
+
+/* Base page setup. */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; color-scheme: dark; }
+html { scroll-behavior: smooth; color-scheme: var(--color-scheme); }
 
 body {
   font-family: var(--font-ui);
@@ -76,7 +130,7 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  /* Reserve bottom space for the fixed parlay drawer when visible */
+  /* Leave room for the fixed parlay drawer when it is open. */
   padding-bottom: 0;
 }
 
@@ -84,9 +138,7 @@ body.parlay-open {
   padding-bottom: var(--parlay-h);
 }
 
-/* ===================================================
-   AMBIENT BACKGROUND
-   =================================================== */
+/* Background glow shapes. */
 .ambient {
   position: fixed;
   inset: 0;
@@ -109,6 +161,10 @@ body.parlay-open {
   right: -100px;
   background: radial-gradient(circle, rgba(212,148,58,0.4), transparent 70%);
   animation: orb-drift 18s ease-in-out infinite alternate;
+}
+
+:root[data-theme="light"] .ambient-orb {
+  opacity: 0.16;
 }
 
 .ambient-orb--2 {
@@ -134,14 +190,12 @@ body.parlay-open {
   to   { transform: translate(40px, 30px) scale(1.1); }
 }
 
-/* ===================================================
-   HEADER
-   =================================================== */
+/* Header and top controls. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(9, 9, 14, 0.85);
+  background: var(--header-bg);
   backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border);
 }
@@ -300,6 +354,46 @@ body.parlay-open {
   flex-shrink: 0;
 }
 
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--border-2);
+  border-radius: 999px;
+  background: var(--subtle-bg);
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--border-2);
+  background: var(--hover-bg);
+}
+
+.theme-toggle__icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--gold-light);
+  box-shadow: inset -5px -3px 0 rgba(9,9,14,0.82);
+  transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+}
+
+:root[data-theme="light"] .theme-toggle__icon {
+  background: var(--gold);
+  box-shadow: inset 0 0 0 3px rgba(255,250,240,0.82), 0 0 0 4px var(--gold-dim);
+  transform: rotate(45deg) scale(0.86);
+}
+
 .btn-ghost {
   display: inline-flex;
   align-items: center;
@@ -322,7 +416,7 @@ body.parlay-open {
 .btn-ghost:hover {
   border-color: var(--border-2);
   color: var(--text);
-  background: rgba(255,255,255,0.04);
+  background: var(--hover-bg);
 }
 
 .btn-primary {
@@ -351,9 +445,7 @@ body.parlay-open {
 .btn-primary:active  { transform: scale(0.97); }
 .btn-primary:disabled { opacity: 0.4; cursor: wait; }
 
-/* ===================================================
-   STALE BANNER
-   =================================================== */
+/* Warning shown when generated data is old. */
 .stale-banner {
   display: flex;
   align-items: center;
@@ -370,9 +462,7 @@ body.parlay-open {
   z-index: 1;
 }
 
-/* ===================================================
-   PAGE LAYOUT
-   =================================================== */
+/* Main page layout. */
 .main-content {
   position: relative;
   z-index: 1;
@@ -385,9 +475,7 @@ body.parlay-open {
   display: block;
 }
 
-/* ===================================================
-   SECTION HEADER
-   =================================================== */
+/* Consensus section heading and sport tabs. */
 .section-header {
   margin-bottom: 24px;
 }
@@ -436,7 +524,7 @@ body.parlay-open {
   padding: 4px;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  background: rgba(255,255,255,0.03);
+  background: var(--subtle-bg);
 }
 
 .sport-tab {
@@ -454,12 +542,10 @@ body.parlay-open {
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
 }
-.sport-tab:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+.sport-tab:hover { color: var(--text); background: var(--hover-bg); }
 .sport-tab.is-active { color: var(--gold-light); background: var(--gold-dim); }
 
-/* ===================================================
-   MARKET FILTER BAR
-   =================================================== */
+/* Market filter buttons. */
 .market-filters {
   display: flex;
   flex-wrap: wrap;
@@ -485,7 +571,7 @@ body.parlay-open {
 .market-filter-btn:hover {
   color: var(--text-muted);
   border-color: var(--border-2);
-  background: rgba(255,255,255,0.03);
+  background: var(--subtle-bg);
 }
 .market-filter-btn.is-active {
   color: var(--gold-light);
@@ -493,9 +579,7 @@ body.parlay-open {
   background: var(--gold-dim);
 }
 
-/* ===================================================
-   CONSENSUS SECTION
-   =================================================== */
+/* Consensus cards. */
 .consensus-section {
   width: 100%;
 }
@@ -542,7 +626,7 @@ body.parlay-open {
   transform: translateX(3px);
 }
 
-/* In-parlay highlight */
+/* Highlight cards already added to the parlay slip. */
 .consensus-card.in-parlay {
   border-color: rgba(212,148,58,0.4);
   box-shadow: 0 0 0 1px rgba(212,148,58,0.15), inset 0 0 40px rgba(212,148,58,0.04);
@@ -627,7 +711,7 @@ body.parlay-open {
   line-height: 1.5;
 }
 
-/* Expandable full analysis */
+/* Expanded analysis text inside a card. */
 .full-analysis {
   font-size: 12px;
   line-height: 1.7;
@@ -637,7 +721,7 @@ body.parlay-open {
   border-top: 1px dashed var(--border);
 }
 
-/* Card action row */
+/* Buttons at the bottom of a card. */
 .consensus-actions {
   display: flex;
   align-items: center;
@@ -646,7 +730,7 @@ body.parlay-open {
   gap: 8px;
 }
 
-/* Generic text button */
+/* Small text-only buttons. */
 .text-btn {
   background: none;
   border: none;
@@ -661,7 +745,7 @@ body.parlay-open {
 }
 .text-btn:hover { color: var(--text-muted); }
 
-/* Parlay add button on card */
+/* Button that adds a card to the parlay slip. */
 .parlay-add-btn {
   height: 26px;
   padding: 0 10px;
@@ -689,16 +773,14 @@ body.parlay-open {
   background: rgba(212,148,58,0.12);
 }
 
-/* ===================================================
-   PARLAY DRAWER
-   =================================================== */
+/* Fixed parlay slip. */
 .parlay-drawer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 200;
-  background: rgba(15, 15, 23, 0.97);
+  background: var(--drawer-bg);
   backdrop-filter: blur(20px) saturate(180%);
   border-top: 1px solid var(--border-2);
   max-height: var(--parlay-h);
@@ -849,10 +931,10 @@ body.parlay-open {
 }
 .parlay-remove:hover {
   color: var(--text);
-  background: rgba(255,255,255,0.06);
+  background: var(--strong-hover-bg);
 }
 
-/* Parlay calculator */
+/* Stake, odds, and payout fields in the parlay slip. */
 .parlay-calc {
   display: flex;
   flex-direction: column;
@@ -921,12 +1003,10 @@ body.parlay-open {
 .parlay-clear:hover {
   color: var(--text);
   border-color: var(--border-2);
-  background: rgba(255,255,255,0.04);
+  background: var(--hover-bg);
 }
 
-/* ===================================================
-   PICK GRID / CARD (unchanged from original)
-   =================================================== */
+/* Older pick-card styles kept for any remaining pick grid views. */
 .pick-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -952,7 +1032,7 @@ body.parlay-open {
 
 .pick-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px var(--border-2);
+  box-shadow: 0 20px 60px var(--shadow-strong), 0 0 0 1px var(--border-2);
 }
 
 .pick-card__accent { height: 3px; background: var(--border-2); flex-shrink: 0; }
@@ -963,12 +1043,12 @@ body.parlay-open {
 .pick-card[data-market="Prop"] .pick-card__accent,
 .pick-card[data-market="Game Prop"] .pick-card__accent { background: var(--prop); }
 
-.pick-card[data-market="Moneyline"]:hover  { box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(74,222,128,0.06); }
-.pick-card[data-market="Total"]:hover      { box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(251,146,60,0.06); }
+.pick-card[data-market="Moneyline"]:hover  { box-shadow: 0 20px 60px var(--shadow-soft), 0 0 30px rgba(74,222,128,0.06); }
+.pick-card[data-market="Total"]:hover      { box-shadow: 0 20px 60px var(--shadow-soft), 0 0 30px rgba(251,146,60,0.06); }
 .pick-card[data-market="Run Line"]:hover,
-.pick-card[data-market="Spread"]:hover     { box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(96,165,250,0.06); }
+.pick-card[data-market="Spread"]:hover     { box-shadow: 0 20px 60px var(--shadow-soft), 0 0 30px rgba(96,165,250,0.06); }
 .pick-card[data-market="Prop"]:hover,
-.pick-card[data-market="Game Prop"]:hover  { box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(192,132,252,0.06); }
+.pick-card[data-market="Game Prop"]:hover  { box-shadow: 0 20px 60px var(--shadow-soft), 0 0 30px rgba(192,132,252,0.06); }
 
 .pick-card__inner {
   display: flex;
@@ -1038,9 +1118,7 @@ body.parlay-open {
   flex-wrap: wrap;
 }
 
-/* ===================================================
-   BADGES
-   =================================================== */
+/* Market and odds badges. */
 .badge {
   font-family: var(--font-mono);
   font-size: 10px;
@@ -1097,6 +1175,7 @@ body.parlay-open {
   line-height: 1.7;
   color: var(--text-muted);
   display: -webkit-box;
+  line-clamp: 4;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -1109,7 +1188,7 @@ body.parlay-open {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  background: rgba(255,255,255,0.015);
+  background: var(--footer-bg);
 }
 
 .pick-analyst {
@@ -1127,9 +1206,7 @@ body.parlay-open {
   letter-spacing: 0.05em;
 }
 
-/* ===================================================
-   EMPTY STATES
-   =================================================== */
+/* Empty states. */
 .empty {
   grid-column: 1 / -1;
   padding: 56px 32px;
@@ -1142,9 +1219,7 @@ body.parlay-open {
   letter-spacing: 0.05em;
 }
 
-/* ===================================================
-   RESPONSIVE
-   =================================================== */
+/* Smaller screen layouts. */
 @media (max-width: 1024px) {
   .consensus-stack {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -1189,22 +1264,16 @@ body.parlay-open {
   }
 }
 
-/* ===================================================
-   SCROLLBAR
-   =================================================== */
+/* Scrollbars. */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-2); }
 
-/* ===================================================
-   TEXT SELECTION
-   =================================================== */
-::selection { background: rgba(212,148,58,0.2); color: var(--text); }
+/* Selected text. */
+::selection { background: var(--selection-bg); color: var(--text); }
 
-/* ===================================================
-   FOCUS
-   =================================================== */
+/* Keyboard focus. */
 :focus-visible {
   outline: 2px solid rgba(212,148,58,0.5);
   outline-offset: 2px;

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildConsensus, normalizePick } from "../src/consensus.js";
+import { buildConsensus, normalizePick, sports } from "../src/consensus.js";
 
 test("groups normalized picks by matchup, market, and selection", () => {
   const consensus = buildConsensus([
@@ -75,3 +75,31 @@ test("keeps Covers parlay cards as consensus picks", () => {
     "3 LEG PARLAY SA Moneyline Victor Wembanyama o28.5 Points Scored Victor Wembanyama o11.5 Total Rebounds"
   );
 });
+
+test("parses Pickswise streamed pick rows when __NEXT_DATA__ is absent", () => {
+  const flight = `42:["$","tbody",null,{"children":[${[
+    pickswiseFlightRow("418", "LAD vs CWS", "Run Line - Los Angeles Dodgers -1.5", "-125"),
+    pickswiseFlightRow("424", "ARI vs CIN", "Moneyline - Arizona Diamondbacks", "-147")
+  ].join(",")}]}]`;
+  const html = `<script>self.__next_f.push([1,${JSON.stringify(flight)}])</script>`;
+  const pickswise = sports.mlb.sources.find((source) => source.id === "pickswise");
+  const picks = pickswise.parser(html, sports.mlb);
+
+  assert.equal(picks.length, 2);
+  assert.equal(picks[0].matchup, "LAD @ CHW");
+  assert.equal(picks[0].market, "Run Line");
+  assert.equal(picks[0].selection, "LAD -1.5");
+  assert.equal(picks[0].odds, "-125");
+  assert.equal(picks[1].selection, "ARI Moneyline");
+});
+
+function pickswiseFlightRow(id, matchup, selection, odds) {
+  return [
+    `["$","tr","${id}",{"className":"border-t border-border odd:bg-white even:bg-gray-light-bg","children":[`,
+    `["$","td",null,{"className":"px-4 py-3","children":[["$","p",null,{"className":"text-body-bold text-primary-blue-dark","children":"${matchup}"}],["$","p",null,{"className":"text-caption text-primary-gray mt-0.5","children":""}]]}],`,
+    `["$","td",null,{"className":"px-4 py-3","children":["$","p",null,{"className":"text-body-bold text-primary-blue-dark","children":"${selection}"}]}],`,
+    `["$","td",null,{"className":"px-4 py-3 whitespace-nowrap","children":["$","span",null,{"className":"text-body text-yellow-danger","children":"3⭐"}]}],`,
+    `["$","td",null,{"className":"px-4 py-3","children":["$","span",null,{"className":"text-body-bold text-primary-green","children":"${odds}"}]}]`,
+    "]}]"
+  ].join("");
+}
