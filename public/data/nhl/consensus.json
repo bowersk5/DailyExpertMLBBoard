@@ -1,7 +1,7 @@
 {
   "sport": "nhl",
   "sportLabel": "NHL",
-  "generatedAt": "2026-06-13T14:13:54.666Z",
+  "generatedAt": "2026-06-13T14:26:08.277Z",
   "sources": [
     {
       "id": "covers",
@@ -65,7 +65,7 @@
       "odds": "",
       "expert": "Neil Parker",
       "analysis": "I’m expecting the Carolina edge in overall depth in front of Brandon Bussi being the difference in Game 6. The two teams have also combined for 39 goals with six or more in all five games, and with the potential for earlier empty-net situations in an elimination game, I’m anticipating another high-scoring bout. Finally, Hurricanes winger Seth Jarvis has marked the scoresheet in three of the past four games and paces Carolina forwards in ice time and on-ice expected goals during the series.",
-      "made": "19 hours ago",
+      "made": "20 hours ago",
       "key": "CAR @ VGK|Parlay|3 leg parlay o5.5 total seth jarvis o0.5 points points",
       "sourceId": "covers",
       "source": "Covers",

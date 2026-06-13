@@ -1,7 +1,7 @@
 {
   "sport": "nba",
   "sportLabel": "NBA",
-  "generatedAt": "2026-06-13T14:13:53.172Z",
+  "generatedAt": "2026-06-13T14:26:06.374Z",
   "sources": [
     {
       "id": "covers",
@@ -37,7 +37,7 @@
       "odds": "o11.5 +110",
       "expert": "Jason Logan",
       "analysis": "Wembanyama has fresh legs after two full days off and has to be everywhere in this do-or-die game for the Spurs, including all over the glass. He hauled in a series high 13 boards in Game 4, getting himself in position for 19 rebounding chances. San Antonio need to kept the 7-footer anchored to the paint on defense while needing him to attack inside on offense. I expect to see extra offensive rebounds from Wemby, who snatched five ORBs in Game 4. Projections range from 12 boards to 15+, with my forecast coming out at 13.7 rebounds. That should have the Over 11.5 touting vig as high as -170.",
-      "made": "1 hours ago",
+      "made": "2 hours ago",
       "key": "NYK @ SA|Prop|victor wembanyama o11.5 total rebounds",
       "sourceId": "covers",
       "source": "Covers",
@@ -90,7 +90,7 @@
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
       "market": "Moneyline",
       "selection": "NYK Moneyline",
-      "odds": "+166",
+      "odds": "+168",
       "expert": "Joe Osborne",
       "analysis": "The Knicks have been ruthless in closeout situations, winning their previous three road series-clinchers in these playoffs by 51, 30, and 37 points. That's not a team that lets opponents linger. San Antonio has also struggled whenever adversity strikes in this series, particularly in the fourth quarter where they've been consistently outplayed. With a championship within reach, I expect New York to deliver a focused, complete-game performance.",
       "made": "23 hours ago",
@@ -502,13 +502,13 @@
         "Covers:Joe Osborne"
       ],
       "odds": [
-        "+166"
+        "+168"
       ],
       "examples": [
         {
           "source": "Covers",
           "expert": "Joe Osborne",
-          "odds": "+166",
+          "odds": "+168",
           "analysis": "The Knicks have been ruthless in closeout situations, winning their previous three road series-clinchers in these playoffs by 51, 30, and 37 points. That's not a team that lets opponents linger. San Antonio has also struggled whenever adversity strikes in this series, particularly in the fourth quarter where they've been consistently outplayed. With a championship within reach, I expect New York to deliver a focused, complete-game performance."
         }
       ],

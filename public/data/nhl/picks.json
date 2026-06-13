@@ -2,7 +2,7 @@
   "title": "Free NHL Picks & Predictions - Today’s Best NHL Bets",
   "intro": "",
   "sourceUrl": "https://www.covers.com/picks/nhl",
-  "generatedAt": "2026-06-13T14:13:53.759Z",
+  "generatedAt": "2026-06-13T14:26:07.466Z",
   "games": [
     {
       "away": "CAR",
@@ -42,7 +42,7 @@
           "market": "Moneyline",
           "selection": "3 LEG PARLAY o5.5 Total Seth Jarvis o0.5 Points Points +300",
           "odds": "",
-          "made": "19 hours ago",
+          "made": "20 hours ago",
           "analyst": "Neil Parker",
           "rating": 0,
           "projection": "",
@@ -90,7 +90,7 @@
       "market": "Moneyline",
       "selection": "3 LEG PARLAY o5.5 Total Seth Jarvis o0.5 Points Points +300",
       "odds": "",
-      "made": "19 hours ago",
+      "made": "20 hours ago",
       "analyst": "Neil Parker",
       "rating": 0,
       "projection": "",
@@ -140,7 +140,7 @@
       "market": "Moneyline",
       "selection": "3 LEG PARLAY o5.5 Total Seth Jarvis o0.5 Points Points +300",
       "odds": "",
-      "made": "19 hours ago",
+      "made": "20 hours ago",
       "analyst": "Neil Parker",
       "rating": 0,
       "projection": "",
@@ -161,5 +161,5 @@
   },
   "sport": "nhl",
   "sportLabel": "NHL",
-  "fetchedAt": "2026-06-13T14:13:53.759Z"
+  "fetchedAt": "2026-06-13T14:26:07.466Z"
 }

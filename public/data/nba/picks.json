@@ -2,7 +2,7 @@
   "title": "Free NBA Picks & Predictions - Today’s Best NBA Bets",
   "intro": "",
   "sourceUrl": "https://www.covers.com/picks/nba",
-  "generatedAt": "2026-06-13T14:13:52.200Z",
+  "generatedAt": "2026-06-13T14:26:05.450Z",
   "games": [
     {
       "away": "NY",
@@ -14,11 +14,11 @@
       "matchupUrl": "/sport/basketball/nba/matchup/380822/picks",
       "picks": [
         {
-          "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-1-hour",
+          "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-2-hour",
           "market": "Total Rebounds",
           "selection": "Victor Wembanyama o11.5 Total Rebounds (+110)",
           "odds": "o11.5 +110",
-          "made": "1 hours ago",
+          "made": "2 hours ago",
           "analyst": "Jason Logan",
           "rating": 0,
           "projection": "",
@@ -65,7 +65,7 @@
           "id": "ny-sa-moneyline-ny-170-pick-made-23-hours-ago",
           "market": "Moneyline",
           "selection": "NY (+170)",
-          "odds": "+166",
+          "odds": "+168",
           "made": "23 hours ago",
           "analyst": "Joe Osborne",
           "rating": 0,
@@ -174,11 +174,11 @@
   ],
   "picks": [
     {
-      "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-1-hour",
+      "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-2-hour",
       "market": "Total Rebounds",
       "selection": "Victor Wembanyama o11.5 Total Rebounds (+110)",
       "odds": "o11.5 +110",
-      "made": "1 hours ago",
+      "made": "2 hours ago",
       "analyst": "Jason Logan",
       "rating": 0,
       "projection": "",
@@ -241,7 +241,7 @@
       "id": "ny-sa-moneyline-ny-170-pick-made-23-hours-ago",
       "market": "Moneyline",
       "selection": "NY (+170)",
-      "odds": "+166",
+      "odds": "+168",
       "made": "23 hours ago",
       "analyst": "Joe Osborne",
       "rating": 0,
@@ -384,11 +384,11 @@
   ],
   "bestPicks": [
     {
-      "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-1-hour",
+      "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-2-hour",
       "market": "Total Rebounds",
       "selection": "Victor Wembanyama o11.5 Total Rebounds (+110)",
       "odds": "o11.5 +110",
-      "made": "1 hours ago",
+      "made": "2 hours ago",
       "analyst": "Jason Logan",
       "rating": 0,
       "projection": "",
@@ -419,7 +419,7 @@
       "id": "ny-sa-moneyline-ny-170-pick-made-23-hours-ago",
       "market": "Moneyline",
       "selection": "NY (+170)",
-      "odds": "+166",
+      "odds": "+168",
       "made": "23 hours ago",
       "analyst": "Joe Osborne",
       "rating": 0,
@@ -521,5 +521,5 @@
   },
   "sport": "nba",
   "sportLabel": "NBA",
-  "fetchedAt": "2026-06-13T14:13:52.200Z"
+  "fetchedAt": "2026-06-13T14:26:05.450Z"
 }
