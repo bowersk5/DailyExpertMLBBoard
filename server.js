@@ -56,7 +56,7 @@ async function fetchDailyPicks(sport, force = false) {
     return entry.payload;
   }
 
-  const html = await fetchHtml(coversSource.url);
+  const html = await fetchCoversHtmlWithExpandedPages(coversSource.url, config.id);
   const parsed = parseCoversPicks(html, { sport: config.id, sourceUrl: coversSource.url });
   entry.dateKey = key;
   entry.fetchedAt = new Date().toISOString();
@@ -75,15 +75,48 @@ async function fetchDailyPicks(sport, force = false) {
 async function fetchDailyConsensus(sport, force = false) {
   const { config, entry } = cacheForSport(sport);
   const key = todayKey();
+  const coversSource = config.sources.find((source) => source.id === "covers");
 
   if (!force && entry.dateKey === key && entry.consensus) {
     return entry.consensus;
   }
 
-  const payload = await fetchConsensus({ sport: config.id });
+  const coversHtml = await fetchCoversHtmlWithExpandedPages(coversSource.url, config.id);
+  const payload = await fetchConsensus({ sport: config.id, coversHtml });
   entry.dateKey = key;
   entry.consensus = payload;
   return payload;
+}
+
+async function fetchCoversHtmlWithExpandedPages(sourceUrl, sport) {
+  const html = await fetchHtml(sourceUrl);
+  const parsed = parseCoversPicks(html, { sport, sourceUrl });
+  const expandedPages = await Promise.all(parsed.games
+    .filter((game) => game.matchupUrl)
+    .map(async (game) => {
+      const url = new URL(game.matchupUrl, sourceUrl).href;
+      try {
+        const pageHtml = await fetchHtml(url);
+        return wrapExpandedPage(game, pageHtml);
+      } catch {
+        return "";
+      }
+    }));
+
+  return [html, ...expandedPages.filter(Boolean)].join("\n");
+}
+
+function wrapExpandedPage(game, html) {
+  const metadata = encodeURIComponent(JSON.stringify({
+    away: game.away,
+    home: game.home,
+    matchup: game.matchup,
+    startsAt: game.startsAt,
+    expertPicks: game.expertPicks,
+    computerPicks: game.computerPicks,
+    matchupUrl: game.matchupUrl
+  }));
+  return `<!-- COVERS_EXPANDED_START ${metadata} -->\n${html}\n<!-- COVERS_EXPANDED_END -->`;
 }
 
 /**

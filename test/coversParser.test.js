@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseCoversMlbPicks } from "../src/coversParser.js";
+import { parseCoversMlbPicks, parseCoversPicks } from "../src/coversParser.js";
 
 test("parses Covers MLB pick blocks into games and ranked picks", () => {
   const html = `
@@ -37,6 +37,7 @@ test("parses Covers MLB pick blocks into games and ranked picks", () => {
 
   assert.equal(result.counts.games, 1);
   assert.equal(result.counts.picks, 2);
+  assert.equal(result.counts.parsedPicks, 2);
   assert.equal(result.games[0].matchup, "DET @ CHW");
   assert.equal(result.games[0].expertPicks, 2);
   assert.equal(result.games[0].computerPicks, 10);
@@ -69,5 +70,35 @@ test("filters out picks made days ago", () => {
 
   const result = parseCoversMlbPicks(html);
   assert.equal(result.counts.picks, 0, "stale picks should be filtered out");
+  assert.equal(result.counts.parsedPicks, 0, "stale picks should not be parsed as current picks");
   assert.equal(result.counts.games, 0, "game with only stale picks should be dropped");
+});
+
+test("preserves Covers listed pick counts when some cards are hidden", () => {
+  const html = `
+    <html><head><title>Free NBA Picks</title></head><body>
+      <h1>NBA Picks</h1>
+      <p>Free NBA Expert and Computer Picks For Every Game June 13, 2026</p>
+      <div>NY @ SA Sat, Jun 13 • 8:30 PM ET</div>
+      <div>13 Expert Picks 6 Computer Picks</div>
+      <div>Total Rebounds</div>
+      <div>Victor Wembanyama o11.5 Total Rebounds (+110)</div>
+      <div>Best Odds</div>
+      <div>o11.5 +110</div>
+      <div>Pick made: an hour ago</div>
+      <div>Jason Logan</div>
+      <div>Senior Betting Analyst</div>
+      <div>Analysis</div>
+      <p>Wembanyama should attack the glass.</p>
+      <div>View 19 Picks</div>
+      <h2>What are Covers’ NBA Free picks and predictions?</h2>
+    </body></html>
+  `;
+
+  const result = parseCoversPicks(html, { sport: "nba", sourceUrl: "https://www.covers.com/picks/nba" });
+
+  assert.equal(result.counts.picks, 13);
+  assert.equal(result.counts.expertPicks, 13);
+  assert.equal(result.counts.parsedPicks, 1);
+  assert.equal(result.counts.computerPicks, 6);
 });

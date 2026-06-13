@@ -41,7 +41,12 @@ const els = {
 async function loadConsensus(refresh = false) {
   setLoading(true);
   try {
-    const consensusResponse = await fetch(consensusUrl(refresh));
+    const [consensusResponse, picksResult] = await Promise.all([
+      fetch(consensusUrl(refresh)),
+      fetch(picksUrl(refresh))
+        .then(async (response) => response.ok ? response.json() : null)
+        .catch(() => null)
+    ]);
     const consensusData = await consensusResponse.json();
 
     if (!consensusResponse.ok) {
@@ -59,7 +64,7 @@ async function loadConsensus(refresh = false) {
     renderMarketFilters();
     renderConsensus();
 
-    els.consensusIntro.textContent = consensusSummary(consensusData);
+    els.consensusIntro.textContent = consensusSummary(consensusData, picksResult);
   } catch (error) {
     els.consensusList.innerHTML = `<div class="empty">Could not compare picks — ${escapeHtml(error.message)}</div>`;
   } finally {
@@ -77,7 +82,7 @@ function checkStale(generatedAt) {
 
 // ── Market filters ────────────────────────────────────────────────────────────
 
-const MARKET_ORDER = ["all", "Moneyline", "Total", "Run Line", "Spread", "Prop"];
+const MARKET_ORDER = ["all", "Moneyline", "Total", "Run Line", "Spread", "Prop", "Parlay"];
 
 function availableMarkets() {
   const seen = new Set(state.consensus.map((p) => p.market));
@@ -274,6 +279,22 @@ function staticConsensusUrl(cacheBust = "") {
     : `${base}data/${state.sport}/consensus.json${cacheBust}`;
 }
 
+function picksUrl(refresh = false) {
+  const isLocal = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
+  const params = new URLSearchParams({ sport: state.sport });
+  if (refresh) params.set("refresh", "1");
+  if (isLocal) return `/api/picks?${params}`;
+  const cacheBust = refresh ? `?t=${Date.now()}` : "";
+  return staticPicksUrl(cacheBust);
+}
+
+function staticPicksUrl(cacheBust = "") {
+  const base = siteRoot();
+  return state.sport === "mlb"
+    ? `${base}data/picks.json${cacheBust}`
+    : `${base}data/${state.sport}/picks.json${cacheBust}`;
+}
+
 function siteRoot() {
   const { protocol, host, pathname } = window.location;
   const parts = pathname.split("/").filter(Boolean);
@@ -290,10 +311,18 @@ function setLoading(isLoading) {
     : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Refresh`;
 }
 
-function consensusSummary(data) {
+function consensusSummary(data, picksData = null) {
   const sources = (data.sources || []).filter((s) => !s.error && s.picks > 0);
   const names = sources.map((s) => s.name).join(", ");
-  return `${data.counts?.picks || 0} ${data.sportLabel || sports[state.sport].label} expert picks across ${names || "available sources"}.`;
+  const listedPicks = picksData?.counts?.expertPicks;
+  const parsedPicks = picksData?.counts?.parsedPicks ?? data.counts?.picks ?? 0;
+  const sportLabel = data.sportLabel || sports[state.sport].label;
+
+  if (listedPicks && listedPicks !== parsedPicks) {
+    return `${listedPicks} ${sportLabel} expert picks listed on Covers; ${parsedPicks} currently available for consensus cards across ${names || "available sources"}.`;
+  }
+
+  return `${parsedPicks} ${sportLabel} expert picks across ${names || "available sources"}.`;
 }
 
 function sampleExamples(examples = []) {

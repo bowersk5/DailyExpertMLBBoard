@@ -2,7 +2,7 @@
   "title": "Free NHL Picks & Predictions - Today’s Best NHL Bets",
   "intro": "",
   "sourceUrl": "https://www.covers.com/picks/nhl",
-  "generatedAt": "2026-06-13T13:48:50.031Z",
+  "generatedAt": "2026-06-13T14:08:14.199Z",
   "games": [
     {
       "away": "CAR",
@@ -11,6 +11,7 @@
       "startsAt": "Sun, Jun 14 • 8:00 PM ET",
       "expertPicks": 3,
       "computerPicks": 0,
+      "matchupUrl": "/sport/hockey/nhl/matchup/380816/picks",
       "picks": [
         {
           "id": "car-veg-goals-scored-seth-jarvis-o0-5-goals-scored-245-pick-made-19-hours-ago",
@@ -22,6 +23,18 @@
           "rating": 0,
           "projection": "",
           "analysis": "Jarvis has only scored three times with an 8.8 shooting percentage across the past 12 games despite racking up 4.8 individual expected goals and 14 high-danger scoring chances. Considering he’s cashed in three straight 30-goal regular seasons with a 16.1 SH% and plays in all situations, the go-to winger is an excellent target to score in Game 6 down to +210.",
+          "source": "Covers"
+        },
+        {
+          "id": "car-veg-best-bets-total-saves-total-saves-brandon-bussi-o21-5-total-saves-110-pi",
+          "market": "Best Bets,Total Saves",
+          "selection": "Total Saves Brandon Bussi o21.5 Total Saves (-110)",
+          "odds": "o21.5 -110",
+          "made": "20 hours ago",
+          "analyst": "Neil Parker",
+          "rating": 0,
+          "projection": "",
+          "analysis": "This saves total is too low for Bussi. In addition to winning consecutive starts, he was particularly sharp in Game 5 with 23 saves and 2.84 goals saved above expected. Plus, the Golden Knights have consistently tilted the ice in their favor for stretches throughout the series, and I'm anticipating Vegas placing an even higher emphasis on testing Bussi early and often in this elimination game.",
           "source": "Covers"
         },
         {
@@ -50,6 +63,22 @@
       "rating": 0,
       "projection": "",
       "analysis": "Jarvis has only scored three times with an 8.8 shooting percentage across the past 12 games despite racking up 4.8 individual expected goals and 14 high-danger scoring chances. Considering he’s cashed in three straight 30-goal regular seasons with a 16.1 SH% and plays in all situations, the go-to winger is an excellent target to score in Game 6 down to +210.",
+      "source": "Covers",
+      "matchup": "CAR @ VEG",
+      "startsAt": "Sun, Jun 14 • 8:00 PM ET",
+      "away": "CAR",
+      "home": "VEG"
+    },
+    {
+      "id": "car-veg-best-bets-total-saves-total-saves-brandon-bussi-o21-5-total-saves-110-pi",
+      "market": "Best Bets,Total Saves",
+      "selection": "Total Saves Brandon Bussi o21.5 Total Saves (-110)",
+      "odds": "o21.5 -110",
+      "made": "20 hours ago",
+      "analyst": "Neil Parker",
+      "rating": 0,
+      "projection": "",
+      "analysis": "This saves total is too low for Bussi. In addition to winning consecutive starts, he was particularly sharp in Game 5 with 23 saves and 2.84 goals saved above expected. Plus, the Golden Knights have consistently tilted the ice in their favor for stretches throughout the series, and I'm anticipating Vegas placing an even higher emphasis on testing Bussi early and often in this elimination game.",
       "source": "Covers",
       "matchup": "CAR @ VEG",
       "startsAt": "Sun, Jun 14 • 8:00 PM ET",
@@ -91,6 +120,22 @@
       "home": "VEG"
     },
     {
+      "id": "car-veg-best-bets-total-saves-total-saves-brandon-bussi-o21-5-total-saves-110-pi",
+      "market": "Best Bets,Total Saves",
+      "selection": "Total Saves Brandon Bussi o21.5 Total Saves (-110)",
+      "odds": "o21.5 -110",
+      "made": "20 hours ago",
+      "analyst": "Neil Parker",
+      "rating": 0,
+      "projection": "",
+      "analysis": "This saves total is too low for Bussi. In addition to winning consecutive starts, he was particularly sharp in Game 5 with 23 saves and 2.84 goals saved above expected. Plus, the Golden Knights have consistently tilted the ice in their favor for stretches throughout the series, and I'm anticipating Vegas placing an even higher emphasis on testing Bussi early and often in this elimination game.",
+      "source": "Covers",
+      "matchup": "CAR @ VEG",
+      "startsAt": "Sun, Jun 14 • 8:00 PM ET",
+      "away": "CAR",
+      "home": "VEG"
+    },
+    {
       "id": "car-veg-moneyline-3-leg-parlay-o5-5-total-seth-jarvis-o0-5-points-points-300-pic",
       "market": "Moneyline",
       "selection": "3 LEG PARLAY o5.5 Total Seth Jarvis o0.5 Points Points +300",
@@ -109,11 +154,12 @@
   ],
   "counts": {
     "games": 1,
-    "picks": 2,
-    "expertPicks": 2,
+    "picks": 3,
+    "expertPicks": 3,
+    "parsedPicks": 3,
     "computerPicks": 0
   },
   "sport": "nhl",
   "sportLabel": "NHL",
-  "fetchedAt": "2026-06-13T13:48:50.031Z"
+  "fetchedAt": "2026-06-13T14:08:14.199Z"
 }

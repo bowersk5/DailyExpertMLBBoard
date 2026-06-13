@@ -1,7 +1,7 @@
 {
   "sport": "nhl",
   "sportLabel": "NHL",
-  "generatedAt": "2026-06-13T13:48:50.837Z",
+  "generatedAt": "2026-06-13T14:08:15.320Z",
   "sources": [
     {
       "id": "covers",
@@ -9,7 +9,7 @@
       "url": "https://www.covers.com/picks/nhl",
       "error": null,
       "warning": null,
-      "picks": 2
+      "picks": 3
     },
     {
       "id": "pickswise",
@@ -39,6 +39,20 @@
       "analysis": "Jarvis has only scored three times with an 8.8 shooting percentage across the past 12 games despite racking up 4.8 individual expected goals and 14 high-danger scoring chances. Considering he’s cashed in three straight 30-goal regular seasons with a 16.1 SH% and plays in all situations, the go-to winger is an excellent target to score in Game 6 down to +210.",
       "made": "19 hours ago",
       "key": "CAR @ VGK|Prop|seth jarvis o0.5 goals scored",
+      "sourceId": "covers",
+      "source": "Covers",
+      "url": "https://www.covers.com/picks/nhl"
+    },
+    {
+      "matchup": "CAR @ VGK",
+      "startsAt": "Sun, Jun 14 • 8:00 PM ET",
+      "market": "Prop",
+      "selection": "Total Saves Brandon Bussi o21.5 Total Saves",
+      "odds": "o21.5 -110",
+      "expert": "Neil Parker",
+      "analysis": "This saves total is too low for Bussi. In addition to winning consecutive starts, he was particularly sharp in Game 5 with 23 saves and 2.84 goals saved above expected. Plus, the Golden Knights have consistently tilted the ice in their favor for stretches throughout the series, and I'm anticipating Vegas placing an even higher emphasis on testing Bussi early and often in this elimination game.",
+      "made": "20 hours ago",
+      "key": "CAR @ VGK|Prop|total saves brandon bussi o21.5 total saves",
       "sourceId": "covers",
       "source": "Covers",
       "url": "https://www.covers.com/picks/nhl"
@@ -118,12 +132,43 @@
       ],
       "agreement": "1/3",
       "confidence": 210
+    },
+    {
+      "key": "CAR @ VGK|Prop|total saves brandon bussi o21.5 total saves",
+      "matchup": "CAR @ VGK",
+      "startsAt": "Sun, Jun 14 • 8:00 PM ET",
+      "market": "Prop",
+      "selection": "Total Saves Brandon Bussi o21.5 Total Saves",
+      "sourceCount": 1,
+      "pickCount": 1,
+      "sources": [
+        {
+          "id": "covers",
+          "name": "Covers"
+        }
+      ],
+      "experts": [
+        "Covers:Neil Parker"
+      ],
+      "odds": [
+        "o21.5 -110"
+      ],
+      "examples": [
+        {
+          "source": "Covers",
+          "expert": "Neil Parker",
+          "odds": "o21.5 -110",
+          "analysis": "This saves total is too low for Bussi. In addition to winning consecutive starts, he was particularly sharp in Game 5 with 23 saves and 2.84 goals saved above expected. Plus, the Golden Knights have consistently tilted the ice in their favor for stretches throughout the series, and I'm anticipating Vegas placing an even higher emphasis on testing Bussi early and often in this elimination game."
+        }
+      ],
+      "agreement": "1/3",
+      "confidence": 210
     }
   ],
   "counts": {
     "sources": 3,
     "activeSources": 1,
-    "picks": 2,
-    "consensus": 2
+    "picks": 3,
+    "consensus": 3
   }
 }

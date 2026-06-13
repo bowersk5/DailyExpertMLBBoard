@@ -15,7 +15,18 @@ const marketNames = new Set([
   "Hits Allowed",
   "Pitcher Strikeouts",
   "Runs Batted In",
-  "Stolen Bases"
+  "Stolen Bases",
+  "Total Points",
+  "Points Scored",
+  "Total Rebounds",
+  "Total Assists",
+  "Total Threes",
+  "Total Steals",
+  "Total Blocks",
+  "Points",
+  "Rebounds",
+  "Assists",
+  "Shots on Goal"
 ]);
 
 export function parseCoversMlbPicks(html, sourceUrl = "https://www.covers.com/picks/mlb") {
@@ -26,10 +37,17 @@ export function parseCoversPicks(html, { sport = "mlb", sourceUrl = `https://www
   const sportLabel = sport.toUpperCase();
   const title = readTitle(html);
   const cardGames = parseCardMarkup(html, sport);
+  const expandedGames = parseExpandedMarkup(html);
 
   if (cardGames.length) {
-    const picks = flattenPicks(cardGames);
-    return buildPayload({ title, html, sourceUrl, games: cardGames, picks, sportLabel });
+    const games = mergeExpandedGames(cardGames, expandedGames);
+    const picks = flattenPicks(games);
+    return buildPayload({ title, html, sourceUrl, games, picks, sportLabel });
+  }
+
+  if (expandedGames.length) {
+    const picks = flattenPicks(expandedGames);
+    return buildPayload({ title, html, sourceUrl, games: expandedGames, picks, sportLabel });
   }
 
   const text = htmlToLines(html);
@@ -95,6 +113,8 @@ function buildPayload({ title, html, sourceUrl, games, picks, sportLabel }) {
     }))
     .filter((game) => game.picks.length > 0);
   const expertPicks = picks.filter(isTodayExpertPick);
+  const listedExpertPicks = sumListedPicks(expertGames, "expertPicks", expertPicks.length);
+  const listedComputerPicks = sumListedPicks(expertGames, "computerPicks", 0);
 
   return {
     title,
@@ -108,11 +128,17 @@ function buildPayload({ title, html, sourceUrl, games, picks, sportLabel }) {
     bestPicks: rankPicks(expertPicks).slice(0, 8),
     counts: {
       games: expertGames.length,
-      picks: expertPicks.length,
-      expertPicks: expertPicks.length,
-      computerPicks: 0
+      picks: listedExpertPicks,
+      expertPicks: listedExpertPicks,
+      parsedPicks: expertPicks.length,
+      computerPicks: listedComputerPicks
     }
   };
+}
+
+function sumListedPicks(games, key, fallback) {
+  const total = games.reduce((sum, game) => sum + (Number(game[key]) || 0), 0);
+  return total || fallback;
 }
 
 /** Keep only picks from a human expert published today (not days ago). */
@@ -137,6 +163,7 @@ function parseGameCard(cardHtml, sport) {
   const counts = htmlToLines(cardHtml.match(/pick-cards-counter-badge[\s\S]*?<\/div>/i)?.[0] || "").join(" ");
   const expert = counts.match(/(\d+)\s+Expert Picks?/i);
   const computer = counts.match(/(\d+)\s+Computer Picks?/i);
+  const matchupUrl = decodeEntities(cardHtml.match(/href="([^"]+\/matchup\/\d+\/picks)"/i)?.[1] || "");
 
   if (teams.length < 2) {
     return null;
@@ -149,11 +176,66 @@ function parseGameCard(cardHtml, sport) {
     startsAt,
     expertPicks: expert ? Number(expert[1]) : 0,
     computerPicks: computer ? Number(computer[1]) : 0,
+    matchupUrl,
     picks: []
   };
 
   game.picks = parsePickCards(cardHtml, game);
   return game;
+}
+
+function parseExpandedMarkup(html) {
+  const sections = [...html.matchAll(/<!-- COVERS_EXPANDED_START ([^ ]+) -->([\s\S]*?)<!-- COVERS_EXPANDED_END -->/g)];
+
+  return sections.map((section) => {
+    const game = readExpandedGame(section[1]);
+    if (!game) return null;
+    return {
+      ...game,
+      picks: parsePickCards(section[2], game)
+    };
+  }).filter(Boolean);
+}
+
+function readExpandedGame(encoded) {
+  try {
+    const game = JSON.parse(decodeURIComponent(encoded));
+    if (!game.away || !game.home) return null;
+    return {
+      away: game.away,
+      home: game.home,
+      matchup: game.matchup || `${game.away} @ ${game.home}`,
+      startsAt: game.startsAt || "",
+      expertPicks: Number(game.expertPicks) || 0,
+      computerPicks: Number(game.computerPicks) || 0,
+      matchupUrl: game.matchupUrl || ""
+    };
+  } catch {
+    return null;
+  }
+}
+
+function mergeExpandedGames(cardGames, expandedGames) {
+  if (!expandedGames.length) return cardGames;
+
+  return cardGames.map((game) => {
+    const expanded = expandedGames.find((candidate) => candidate.matchup === game.matchup);
+    if (!expanded || expanded.picks.length <= game.picks.length) return game;
+    return {
+      ...game,
+      picks: dedupePicks(expanded.picks)
+    };
+  });
+}
+
+function dedupePicks(picks) {
+  const seen = new Set();
+  return picks.filter((pick) => {
+    const key = `${pick.market}|${pick.selection}|${pick.analyst}|${pick.made}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function parsePickCards(cardHtml, game) {

@@ -30,7 +30,7 @@ async function writeSportData(config, sportDir) {
   const consensusFile = join(sportDir, "consensus.json");
 
   // Fetch the Covers page once and reuse the HTML for both picks and consensus.
-  const html = await fetchHtml(coversSource.url);
+  const html = await fetchCoversHtmlWithExpandedPages(coversSource.url, config.id);
 
   const parsed = parseCoversPicks(html, { sport: config.id, sourceUrl: coversSource.url });
   const payload = {
@@ -42,7 +42,7 @@ async function writeSportData(config, sportDir) {
   };
 
   await writeFile(outputFile, `${JSON.stringify(payload, null, 2)}\n`);
-  console.log(`Wrote ${payload.counts.picks} ${config.label} expert picks to ${outputFile}`);
+  console.log(`Wrote ${payload.picks.length} parsed ${config.label} expert picks (${payload.counts.expertPicks} listed) to ${outputFile}`);
 
   // Consensus is best-effort: one unavailable source should not block deploys.
   try {
@@ -60,6 +60,38 @@ async function writeSportData(config, sportDir) {
     console.error(`${config.label} consensus fetch failed — writing empty placeholder:`, error.message);
     await writeFile(consensusFile, `${JSON.stringify(emptyConsensus(config), null, 2)}\n`);
   }
+}
+
+async function fetchCoversHtmlWithExpandedPages(sourceUrl, sport) {
+  const html = await fetchHtml(sourceUrl);
+  const parsed = parseCoversPicks(html, { sport, sourceUrl });
+  const expandedPages = await Promise.all(parsed.games
+    .filter((game) => game.matchupUrl)
+    .map(async (game) => {
+      const url = new URL(game.matchupUrl, sourceUrl).href;
+      try {
+        const pageHtml = await fetchHtml(url);
+        return wrapExpandedPage(game, pageHtml);
+      } catch (error) {
+        console.warn(`[covers/${sport}] Expanded picks fetch failed for ${url}: ${error.message}`);
+        return "";
+      }
+    }));
+
+  return [html, ...expandedPages.filter(Boolean)].join("\n");
+}
+
+function wrapExpandedPage(game, html) {
+  const metadata = encodeURIComponent(JSON.stringify({
+    away: game.away,
+    home: game.home,
+    matchup: game.matchup,
+    startsAt: game.startsAt,
+    expertPicks: game.expertPicks,
+    computerPicks: game.computerPicks,
+    matchupUrl: game.matchupUrl
+  }));
+  return `<!-- COVERS_EXPANDED_START ${metadata} -->\n${html}\n<!-- COVERS_EXPANDED_END -->`;
 }
 
 async function writeSportHtml(config) {
