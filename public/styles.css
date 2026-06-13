@@ -678,6 +678,14 @@ body.parlay-open {
   font-weight: 500;
   letter-spacing: 0.06em;
   color: var(--rl);
+  margin-bottom: 4px;
+}
+
+.consensus-start-time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-dim);
   margin-bottom: 10px;
 }
 

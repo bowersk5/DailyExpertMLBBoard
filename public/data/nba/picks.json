@@ -2,7 +2,7 @@
   "title": "Free NBA Picks & Predictions - Today’s Best NBA Bets",
   "intro": "",
   "sourceUrl": "https://www.covers.com/picks/nba",
-  "generatedAt": "2026-06-13T20:06:48.971Z",
+  "generatedAt": "2026-06-13T20:12:51.245Z",
   "games": [
     {
       "away": "NY",
@@ -10,15 +10,15 @@
       "matchup": "NY @ SA",
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
       "expertPicks": 13,
-      "computerPicks": 9,
+      "computerPicks": 7,
       "matchupUrl": "/sport/basketball/nba/matchup/380822/picks",
       "picks": [
         {
-          "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-7-hour",
+          "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-8-hour",
           "market": "Total Rebounds",
           "selection": "Victor Wembanyama o11.5 Total Rebounds (+110)",
           "odds": "o11.5 +100",
-          "made": "7 hours ago",
+          "made": "8 hours ago",
           "analyst": "Jason Logan",
           "rating": 0,
           "projection": "",
@@ -138,11 +138,11 @@
   ],
   "picks": [
     {
-      "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-7-hour",
+      "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-8-hour",
       "market": "Total Rebounds",
       "selection": "Victor Wembanyama o11.5 Total Rebounds (+110)",
       "odds": "o11.5 +100",
-      "made": "7 hours ago",
+      "made": "8 hours ago",
       "analyst": "Jason Logan",
       "rating": 0,
       "projection": "",
@@ -300,11 +300,11 @@
   ],
   "bestPicks": [
     {
-      "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-7-hour",
+      "id": "ny-sa-total-rebounds-victor-wembanyama-o11-5-total-rebounds-110-pick-made-8-hour",
       "market": "Total Rebounds",
       "selection": "Victor Wembanyama o11.5 Total Rebounds (+110)",
       "odds": "o11.5 +100",
-      "made": "7 hours ago",
+      "made": "8 hours ago",
       "analyst": "Jason Logan",
       "rating": 0,
       "projection": "",
@@ -433,9 +433,9 @@
     "picks": 13,
     "expertPicks": 13,
     "parsedPicks": 10,
-    "computerPicks": 9
+    "computerPicks": 7
   },
   "sport": "nba",
   "sportLabel": "NBA",
-  "fetchedAt": "2026-06-13T20:06:48.971Z"
+  "fetchedAt": "2026-06-13T20:12:51.245Z"
 }

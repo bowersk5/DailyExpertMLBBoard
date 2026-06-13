@@ -195,6 +195,12 @@ function renderConsensus() {
     node.querySelector(".agreement").textContent = pick.agreement;
     node.querySelector(".selection").textContent = pick.selection;
     node.querySelector(".matchup").textContent = pick.matchup;
+    const startTime = node.querySelector(".start-time");
+    if (startTime) {
+      const formattedStart = formatStartTime(pick.startsAt);
+      startTime.textContent = formattedStart ? `Starts ${formattedStart}` : "";
+      startTime.hidden = !formattedStart;
+    }
     node.querySelector(".source-count") && (node.querySelector(".source-count").textContent = pick.sourceCount);
     node.querySelector(".pick-count").textContent = pick.pickCount;
     node.querySelector(".source-list").textContent = pick.sources.map((s) => s.name).join(" · ");
@@ -388,6 +394,21 @@ function formatDate(value) {
     hour: "numeric",
     minute: "2-digit"
   }).format(new Date(value));
+}
+
+function formatStartTime(value) {
+  if (!value) return "";
+  if (!Number.isNaN(Date.parse(value))) {
+    return new Intl.DateTimeFormat(undefined, {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZoneName: "short"
+    }).format(new Date(value));
+  }
+  return value;
 }
 
 function escapeHtml(value) {

@@ -8,6 +8,7 @@ The production site is static GitHub Pages output from `public/`. For local deve
 
 - Sport-specific pages for MLB, NBA, and NHL.
 - Consensus cards grouped by matchup, market, and selection.
+- Game start times shown on consensus cards when the source data provides them.
 - Source agreement, expert counts, sample pick sources, and expandable analysis text.
 - Market filters for moneyline, totals, run line/spread, props, and parlays.
 - A small parlay slip that calculates combined American odds and estimated profit.
