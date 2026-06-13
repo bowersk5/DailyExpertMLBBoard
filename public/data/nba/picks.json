@@ -2,7 +2,7 @@
   "title": "Free NBA Picks & Predictions - Today’s Best NBA Bets",
   "intro": "",
   "sourceUrl": "https://www.covers.com/picks/nba",
-  "generatedAt": "2026-06-13T14:08:12.789Z",
+  "generatedAt": "2026-06-13T14:13:52.200Z",
   "games": [
     {
       "away": "NY",
@@ -10,7 +10,7 @@
       "matchup": "NY @ SA",
       "startsAt": "Sat, Jun 13 • 8:30 PM ET",
       "expertPicks": 13,
-      "computerPicks": 8,
+      "computerPicks": 7,
       "matchupUrl": "/sport/basketball/nba/matchup/380822/picks",
       "picks": [
         {
@@ -517,9 +517,9 @@
     "picks": 13,
     "expertPicks": 13,
     "parsedPicks": 13,
-    "computerPicks": 8
+    "computerPicks": 7
   },
   "sport": "nba",
   "sportLabel": "NBA",
-  "fetchedAt": "2026-06-13T14:08:12.789Z"
+  "fetchedAt": "2026-06-13T14:13:52.200Z"
 }

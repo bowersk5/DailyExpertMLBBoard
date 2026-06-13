@@ -95,7 +95,7 @@
     </main>
 
     <!-- Parlay Builder drawer — hidden until at least 1 pick is added -->
-    <aside id="parlayDrawer" class="parlay-drawer" hidden aria-label="Parlay builder">
+    <aside id="parlayDrawer" class="parlay-drawer is-collapsed" hidden aria-label="Parlay builder">
       <div class="parlay-header">
         <div class="parlay-header__left">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -103,7 +103,7 @@
           <span id="parlayCount" class="parlay-badge">0</span>
         </div>
         <div class="parlay-header__right">
-          <button id="parlayToggle" class="parlay-toggle" aria-label="Toggle parlay drawer">
+          <button id="parlayToggle" class="parlay-toggle" aria-label="Toggle parlay drawer" aria-expanded="false">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
           </button>
         </div>

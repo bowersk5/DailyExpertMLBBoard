@@ -392,8 +392,10 @@ if (els.parlayStake) {
 }
 
 if (els.parlayToggle) {
+  els.parlayToggle.setAttribute("aria-expanded", String(!els.parlayDrawer.classList.contains("is-collapsed")));
   els.parlayToggle.addEventListener("click", () => {
-    els.parlayDrawer.classList.toggle("is-collapsed");
+    const collapsed = els.parlayDrawer.classList.toggle("is-collapsed");
+    els.parlayToggle.setAttribute("aria-expanded", String(!collapsed));
   });
 }
 
